@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>GeneWlan</title>
+  
+  <subtitle>PHI0.618-远看山有色，近听水无声；春去花还在，人来鸟不惊。</subtitle>
+  <link href="http://genewlan.github.io/atom.xml" rel="self"/>
+  
+  <link href="http://genewlan.github.io/"/>
+  <updated>2023-03-20T18:31:52.064Z</updated>
+  <id>http://genewlan.github.io/</id>
+  
+  <author>
+    <name>ZhangLei</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://genewlan.github.io/2023/03/21/hello-world/"/>
+    <id>http://genewlan.github.io/2023/03/21/hello-world/</id>
+    <published>2023-03-20T18:32:53.153Z</published>
+    <updated>2023-03-20T18:31:52.064Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+</feed>
