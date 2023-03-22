@@ -1,21 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hello World</title>
-    <url>/2023/03/21/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+    <title>Exploring the Unknowns of Biological Complexity--The Interconnectedness of Genomics, Metagenomics, and Comparative Genomics.</title>
+    <url>/2023/03/21/Exploring-the-Unknowns-of-Biological-Complexity/</url>
+    <content><![CDATA[<p>Hello everyone, I am a Bioinformatics researcher specializing in statistical modeling. My research focuses on organism evolution, which spans across three closely related fields - Genomics, metagenomics, and comparative genomics.</p>
+<p>Genomics studies the entire genome of an organism, metagenomics studies the genetic material of an entire community of organisms, and comparative genomics examines the similarities and differences in the genomes of different organisms. The relationship between these fields lies in their ability to provide a comprehensive understanding of the genetic makeup of organisms, communities, and evolutionary relationships.</p>
+<p>My research interests include DNA molecular evolution and the emergence of encoding information. I am passionate about unraveling the mysteries of biological complexity and excited about the innovative research emerging in the field.</p>
+<p>Advancements in sequencing technologies and computational analysis methods have made it possible to study increasingly complex genetic systems, including those of non-model organisms and entire ecosystems. By integrating genomics, metagenomics, and comparative genomics, researchers can identify and study the genetic basis of complex traits, such as disease susceptibility and environmental adaptation.</p>
+<p>With my academic background in Bioinformatics and Computer Science, I am equipped with the skills to apply statistical modeling techniques to biology research. Through this blog, I hope to learn from other fields to better develop my research and connect with like-minded individuals who share my interest in exploring the unknowns of the biological field.</p>
+<p>The relationship between genomics, metagenomics, and comparative genomics is essential in understanding genetics and the complex biological systems in which they operate. The potential applications of these fields are vast, and their continued development and integration will bring about new insights and discoveries in genetics and beyond.</p>
+<p>In summary, this blog serves as a platform for me to share my experiences, engage in discussions with others, and continue learning and growing. My ultimate goal is to work collaboratively to explore new knowledge in the biological field and contribute to its advancement.</p>
+<p>Title: The Interconnectedness of Genomics, Metagenomics, and Comparative Genomics in Organism Evolution.</p>
 ]]></content>
   </entry>
 </search>

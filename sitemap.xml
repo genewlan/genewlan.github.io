@@ -2,9 +2,9 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://genewlan.github.io/2023/03/21/hello-world/</loc>
+    <loc>http://genewlan.github.io/2023/03/21/Exploring-the-Unknowns-of-Biological-Complexity/</loc>
     
-    <lastmod>2023-03-20</lastmod>
+    <lastmod>2023-03-22</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -13,7 +13,7 @@
 
   <url>
     <loc>http://genewlan.github.io/</loc>
-    <lastmod>2023-03-21</lastmod>
+    <lastmod>2023-03-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
