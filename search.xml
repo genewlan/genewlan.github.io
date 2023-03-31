@@ -1,18 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Unraveling the Intricacies of Biological Complexity--- Delving into the Synergy of Genomics, Metagenomics, and Comparative Genomics</title>
-    <url>/2023/03/21/Exploring-the-Unknowns-of-Biological-Complexity/</url>
-    <content><![CDATA[<p>Greetings esteemed colleagues and fellow enthusiasts in the realm of bioinformatics research. As a scientist with expertise in statistical modeling and a fervent interest in organismal evolution, my primary focus lies at the intersection of three intimately connected domains: Genomics, metagenomics, and comparative genomics.</p>
-<p>Genomics concerns itself with the comprehensive study of an organism’s genome, while metagenomics delves into the collective genetic material of entire communities of organisms. Comparative genomics, on the other hand, scrutinizes the similarities and disparities in the genomes of distinct organisms. The intricate relationship binding these fields together is their collective capacity to furnish a holistic understanding of the genetic constitution of organisms, communities, and the evolutionary associations that permeate them.</p>
-<p>My research pursuits encompass DNA molecular evolution and the genesis of encoding information. I am ardent about deciphering the enigmas of biological intricacy and eagerly anticipate the groundbreaking research that continues to surface in the field.</p>
-<p>Recent advancements in sequencing technologies, coupled with state-of-the-art computational analysis methodologies, have facilitated the study of increasingly elaborate genetic systems. These encompass non-model organisms and even entire ecosystems. By amalgamating genomics, metagenomics, and comparative genomics, researchers can pinpoint and investigate the genetic foundations of multifaceted traits, such as susceptibility to diseases and adaptation to environmental conditions.</p>
-<p>My academic provenance in bioinformatics and computer science has endowed me with the necessary skills to apply sophisticated statistical modeling techniques to biological research. Through this scholarly blog, I aspire to assimilate knowledge from other domains, refine my research objectives, and engage with like-minded individuals who share my zeal for probing the uncharted territories within the biological sphere.</p>
-<p>The interdependence of genomics, metagenomics, and comparative genomics is of paramount significance in our endeavor to comprehend genetics and the elaborate biological systems in which they operate. The potential applications of these fields are immense, and their ongoing development and integration promise to yield novel insights and discoveries in genetics and beyond.</p>
-<p>In essence, this blog serves as a conduit for me to disseminate my experiences, foster meaningful discourse with others, and perpetually learn and evolve. My ultimate aspiration is to collaborate with fellow researchers to uncover novel knowledge within the biological domain and contribute to its ongoing advancement.</p>
-]]></content>
-  </entry>
-  <entry>
     <title>分子指纹与其应用</title>
     <url>/2023/03/24/GUN1D/</url>
     <content><![CDATA[<p>在化学领域，分子的描述和搜索是非常重要的问题，因为分子的物理性质和化学活性是由其化学结构和拓扑结构等特征决定的。因此，为了理解和预测分子的性质和行为，需要一种有效的方法来描述和比较分子的化学特征和结构。</p>
@@ -94,6 +82,18 @@
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">......</span><br><span class="line">Epoch 96, Loss: 0.0000</span><br><span class="line">Epoch 97, Loss: 0.0000</span><br><span class="line">Epoch 98, Loss: 0.0000</span><br><span class="line">Epoch 99, Loss: 0.0000</span><br><span class="line">Epoch 100, Loss: 0.0000</span><br><span class="line">预测的溶解度为 0.3516</span><br></pre></td></tr></table></figure>
 
 <p>预告：如何依据gan网络生成生成新化合物，以对接靶蛋白</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Unraveling the Intricacies of Biological Complexity--- Delving into the Synergy of Genomics, Metagenomics, and Comparative Genomics</title>
+    <url>/2023/03/21/Exploring-the-Unknowns-of-Biological-Complexity/</url>
+    <content><![CDATA[<p>Greetings esteemed colleagues and fellow enthusiasts in the realm of bioinformatics research. As a scientist with expertise in statistical modeling and a fervent interest in organismal evolution, my primary focus lies at the intersection of three intimately connected domains: Genomics, metagenomics, and comparative genomics.</p>
+<p>Genomics concerns itself with the comprehensive study of an organism’s genome, while metagenomics delves into the collective genetic material of entire communities of organisms. Comparative genomics, on the other hand, scrutinizes the similarities and disparities in the genomes of distinct organisms. The intricate relationship binding these fields together is their collective capacity to furnish a holistic understanding of the genetic constitution of organisms, communities, and the evolutionary associations that permeate them.</p>
+<p>My research pursuits encompass DNA molecular evolution and the genesis of encoding information. I am ardent about deciphering the enigmas of biological intricacy and eagerly anticipate the groundbreaking research that continues to surface in the field.</p>
+<p>Recent advancements in sequencing technologies, coupled with state-of-the-art computational analysis methodologies, have facilitated the study of increasingly elaborate genetic systems. These encompass non-model organisms and even entire ecosystems. By amalgamating genomics, metagenomics, and comparative genomics, researchers can pinpoint and investigate the genetic foundations of multifaceted traits, such as susceptibility to diseases and adaptation to environmental conditions.</p>
+<p>My academic provenance in bioinformatics and computer science has endowed me with the necessary skills to apply sophisticated statistical modeling techniques to biological research. Through this scholarly blog, I aspire to assimilate knowledge from other domains, refine my research objectives, and engage with like-minded individuals who share my zeal for probing the uncharted territories within the biological sphere.</p>
+<p>The interdependence of genomics, metagenomics, and comparative genomics is of paramount significance in our endeavor to comprehend genetics and the elaborate biological systems in which they operate. The potential applications of these fields are immense, and their ongoing development and integration promise to yield novel insights and discoveries in genetics and beyond.</p>
+<p>In essence, this blog serves as a conduit for me to disseminate my experiences, foster meaningful discourse with others, and perpetually learn and evolve. My ultimate aspiration is to collaborate with fellow researchers to uncover novel knowledge within the biological domain and contribute to its ongoing advancement.</p>
 ]]></content>
   </entry>
 </search>
