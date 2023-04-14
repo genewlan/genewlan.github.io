@@ -6,7 +6,7 @@
   <link href="http://genewlan.github.io/atom.xml" rel="self"/>
   
   <link href="http://genewlan.github.io/"/>
-  <updated>2023-03-31T14:00:01.831Z</updated>
+  <updated>2023-04-14T09:31:31.106Z</updated>
   <id>http://genewlan.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>GANs网络在二维平面的实现</title>
+    <link href="http://genewlan.github.io/2023/04/14/GAN2D/"/>
+    <id>http://genewlan.github.io/2023/04/14/GAN2D/</id>
+    <published>2023-04-14T06:57:17.710Z</published>
+    <updated>2023-04-14T09:31:31.106Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h1 id=&quot;GUNs的发迹史——刨根问底儿&quot;&gt;&lt;a href=&quot;#GUNs的发迹史——刨根问底儿&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>分子指纹与其应用</title>
