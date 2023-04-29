@@ -6,7 +6,7 @@
   <link href="http://genewlan.github.io/atom.xml" rel="self"/>
   
   <link href="http://genewlan.github.io/"/>
-  <updated>2023-04-14T09:31:31.106Z</updated>
+  <updated>2023-04-29T04:18:11.945Z</updated>
   <id>http://genewlan.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>five industrial algorithm</title>
+    <link href="http://genewlan.github.io/2023/04/29/five-industrial-algorithm/"/>
+    <id>http://genewlan.github.io/2023/04/29/five-industrial-algorithm/</id>
+    <published>2023-04-29T02:33:08.000Z</published>
+    <updated>2023-04-29T04:18:11.945Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;p&gt;&lt;img</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>GANs网络在二维平面的实现</title>

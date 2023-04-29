@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://genewlan.github.io/2023/04/29/five-industrial-algorithm/</loc>
+    
+    <lastmod>2023-04-29</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://genewlan.github.io/2023/04/14/GAN2D/</loc>
     
     <lastmod>2023-04-14</lastmod>
@@ -31,7 +40,7 @@
 
   <url>
     <loc>http://genewlan.github.io/</loc>
-    <lastmod>2023-04-14</lastmod>
+    <lastmod>2023-04-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
