@@ -6,7 +6,7 @@
   <link href="http://genewlan.github.io/atom.xml" rel="self"/>
   
   <link href="http://genewlan.github.io/"/>
-  <updated>2023-05-16T12:45:16.081Z</updated>
+  <updated>2023-05-31T15:58:04.167Z</updated>
   <id>http://genewlan.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Linear_programming</title>
+    <link href="http://genewlan.github.io/2023/05/31/Linear-programming/"/>
+    <id>http://genewlan.github.io/2023/05/31/Linear-programming/</id>
+    <published>2023-05-31T15:53:30.000Z</published>
+    <updated>2023-05-31T15:58:04.167Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;说在前面——线性规划的解本质上就是找到单纯形的顶点，并且定位顶点在哪里，那么其解的组成部分就包括两部分，前半部分代表顶点坐标，后半部分代表定位该坐标的数值信息，其实就是顶点坐标到超平面的截距。&lt;/strong&gt;&lt;/p&gt;
+&lt;h1</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>如何避免建模中的陷阱</title>

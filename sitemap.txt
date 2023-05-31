@@ -1,3 +1,4 @@
+http://genewlan.github.io/2023/05/31/Linear-programming/
 http://genewlan.github.io/2023/05/16/how-to-modeling/
 http://genewlan.github.io/2023/04/14/GAN2D/
 http://genewlan.github.io/2023/04/29/five-industrial-algorithm/

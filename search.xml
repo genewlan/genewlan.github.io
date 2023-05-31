@@ -488,4 +488,312 @@
 <h1 id="final"><a href="#final" class="headerlink" title="final"></a>final</h1><p>Therefore, you have to approach ML in much the same way you would any other aspect of research: with an open mind, a willingness to keep up with recent developments, and the humility to accept you don’t know everything</p>
 ]]></content>
   </entry>
+  <entry>
+    <title>Linear_programming</title>
+    <url>/2023/05/31/Linear-programming/</url>
+    <content><![CDATA[<p>[TOC]</p>
+<p><strong>说在前面——线性规划的解本质上就是找到单纯形的顶点，并且定位顶点在哪里，那么其解的组成部分就包括两部分，前半部分代表顶点坐标，后半部分代表定位该坐标的数值信息，其实就是顶点坐标到超平面的截距。</strong></p>
+<h1 id="线性规划"><a href="#线性规划" class="headerlink" title="线性规划"></a>线性规划</h1><p>1939年，苏联学者Kantorovich为前苏联政府解决生产、优化等问题时提出了极值问题，并且提出了解乘数法的新方法，可惜他的工作在当时并未引起足够的重视。事实上，他所提出的问题正是线性规划的雏形。</p>
+<p>与此同时，美国的线性规划研究获得了飞快的发展。1941年，Hitchcock提出运输问题；1945年，Stigler提出了营养问题；1947年，Koopmans提出了经济问题。而奠定线性规划整套理论方法的，还要说是G.B.Dantzig，他被誉为“线性规划之父”。他在1947年担任美国空军审计官的数学顾问，为找到解决问题的机制化工具，提出了“在一组线性方程或不等式约束下，求某一线性形式极小值问题的数学模型”，这便是“线性规划”（linear programming）这一经典优化模型。同年夏天，Dantzig提出了该问题的通用解法——<strong>单纯形算法</strong>(Simplex method)。这个算法在后来被评为20世纪最伟大的算法之一。而“线性规划”这一名字的由来是在之后1948年，Koopmans和Dantzig在海滩散步时共同想出的。</p>
+<p>尽管单纯形法作为解决线性规划的有效方法在学术界具有统治地位，但是1971年，Klee和Minty两位学者构造出一个例子，该例子下单纯形法的运作需要访问指数数量级别的顶点，也就是说，**在最坏情况下，单纯形法是一个指数时间算法(exponential-time algorithm)**。Dantzig在得知这个消息后感叹到他的噩梦到来了，单纯形法并不是在任何情况下都是高效可行的。那么，是否有更加高效的算法，比如多项式时间算法(polynomial-time algorithm)，来解决线性规划问题呢？8年后，即1979年，L.G.Khachiyan发明了椭球算法(ellipsoid method)，这是第一个解决线性规划问题的多项式时间算法。但是，这个算法虽然理论上是多项式时间运行，但是算法被证明是不切实际的，这个算法的杰出贡献是在理论层面告诉世人，线性规划是可以用多项式时间算法来解决的，同时也启发了学者在更加深入的优化领域进行算法开发。1984年，N.Karmarkar发明了内点算法(interior point method)，这是线性规划第一个实际可用的多项式时间算法。</p>
+<p>以上摘自：李崇楠CSDN博客，【运筹OR帷幄】社区</p>
+<h2 id="线性规划标准形式"><a href="#线性规划标准形式" class="headerlink" title="线性规划标准形式"></a>线性规划标准形式</h2><p>$$<br>\begin{aligned}<br>\min_{x} \quad &amp; c^Tx \<br>\text{s.t.} \quad &amp; Ax \leq b \<br>&amp; x \geq 0\end{aligned}<br>$$</p>
+<p>其中，$x$ 是一个 $n$ 维列向量，$A$ 是一个 $m \times n$ 的矩阵，$b$ 是一个 $m$ 维列向量，$c$ 是一个 $n$ 维列向量。这个问题的含义是，在满足 $m$ 个<strong>线性不等式</strong>约束条件 $Ax \leq b$ 的前提下，最小化 $c^Tx$ 的值。另外，$x \geq 0$ 表示问题的解必须满足非负性条件。线性函数可以理解为每一项未知数(变量)的最高次数为1，即不会出现$x$次幂数超过1的情况。</p>
+<p>实际问题中，线性规划常有着不同的形式。如最大化/最小化，绝对值约束等，这不利于算法的表示及推导**。为解决这一问题，引入线性规划的标准形，数学形式可以表示为：<br>$$<br>\begin{aligned}<br>\max\quad &amp; z = c_1x_1+c_2x_2+\cdots+c_nx_n\<br>\mbox{s.t.}\quad<br>&amp;a_{11}x_1+a_{12}x_2+\cdots+a_{1n}x_n=b_1\<br>&amp;a_{21}x_1+a_{22}x_2+\cdots+a_{2n}x_n=b_2\<br>&amp; \quad \vdots \<br>&amp;a_{m1}x_1+a_{m2}x_2+\cdots+a_{mn}x_n=b_m\<br>&amp; x_1 \geq 0, x_2 \geq 0, \cdots, x_n \geq 0<br>\end{aligned}<br>$$</p>
+<h2 id="线性规划适用范围"><a href="#线性规划适用范围" class="headerlink" title="线性规划适用范围"></a>线性规划适用范围</h2><ol>
+<li>目标函数的系数是固定的常数</li>
+<li>要求决策变量非负数</li>
+<li>线性约束中的常数与决策变量的系数，都是已知且保持不变的常数。如果参数会变化的，且变化范围已知，就要进行鲁棒优化(robust optimization)、随机优化(stochastic optimization)等</li>
+</ol>
+<h2 id="线性模型等效转化"><a href="#线性模型等效转化" class="headerlink" title="线性模型等效转化"></a>线性模型等效转化</h2><p>如果有一个非标准形的线性规划，那么如何等效地转化为标准形，下面是非标转化的例子：</p>
+<p>$$<br>\begin{aligned}<br>\min\quad &amp; 3x_1-2x_2-4|x_3|  \quad \<br>\mbox{s.t.}\quad<br>&amp;-x_1+2|x_2|\leq -5 \quad  \<br>&amp; 3x_2-x_3 \geq 6 \quad  \<br>&amp; 2x_1+x_3=12 \quad  \<br>&amp; x_1,x_2 \geq 0  \quad<br>\end{aligned}<br>$$</p>
+<h3 id="目标函数最大化"><a href="#目标函数最大化" class="headerlink" title="目标函数最大化"></a>目标函数最大化</h3><p>针对目标函数是最小化的模型我可以将原问题的**目标函数乘以$-1$**，并最大化这个新的目标函数。在本例中，目标函数可以转化为<br>$$<br>\max\quad -3x_1+2x_2+4|x_3|<br>$$</p>
+<h3 id="消除约束"><a href="#消除约束" class="headerlink" title="消除约束"></a>消除约束</h3><p>引入松弛变量（slack variable）松弛变量均满足非负约束。对“小于等于约束”，我们加上一个松弛变量$s_1$；对“大于等于约束”，我们减去松弛变量 $s_2$。不等式约束都转换成了等式约束：<br>$$<br>3x_2-x_3-s_2=6<br>$$</p>
+<h3 id="消除自由变量"><a href="#消除自由变量" class="headerlink" title="消除自由变量"></a>消除自由变量</h3><p>在转换的时候，需要对绝对值符号内的项进行正负号判断，将原本含有绝对值符号的式子拆分成两个不含绝对值符号的式子。考虑到绝对值符号可能出现在目标函数中，也可能出现在约束条件中，接下来我们给出两种示例。</p>
+<h4 id="情况1：目标函数有绝对值"><a href="#情况1：目标函数有绝对值" class="headerlink" title="情况1：目标函数有绝对值"></a>情况1：目标函数有绝对值</h4><p>本例中目标函数值的第三项含有绝对值符号$|x_3|$,其中$x_3$为自由变量。我们引入两个变量$x_3^+,x_3^-$ ,定义为:<br>$$<br>\begin{aligned}<br>x_3^+=<br>\begin{cases}<br>x_3&amp;\mbox{if $x_3\geq0$}\\<br>0&amp;\mbox{otherwise}<br>\end{cases}<br>\end{aligned}<br>$$</p>
+<p>$$<br>\begin{aligned}<br>x_3^-=<br>\begin{cases}<br>-x_3&amp;\mbox{if $x_3\leq0$}\\<br>0&amp;\mbox{otherwise}<br>\end{cases}<br>\end{aligned}<br>$$</p>
+<p>由变量定义可知，$x_3^+,x_3^-$一定都是非负的，并且$x_3=x_3^+-x_3^-,|x_3|=x_3^++x_3^-$。 <strong>此外，要注意二次约束(quadratic constraint)的情况</strong></p>
+<p>情况2：约束条件有绝对值</p>
+<p>1、转化<br>$$<br>\begin{aligned}<br>\begin{cases}<br>-x_1+2x_2\leq-5&amp;\mbox{if $x_2 \geq 0$}\\<br>-x_1-2x_2\leq-5&amp;\mbox{if $x_2 \leq 0$}<br>\end{cases}<br>\end{aligned}<br>$$<br>2、消除约束<br>$$<br>\begin{aligned}<br>\begin{cases}<br>-x_1+2x_2+s_1=-5 \quad{if\quad x_2 \geq 0}\<br>-x_1-2x_2+s_1=-5\quad{if\quad x_2 \leq 0}<br>\end{cases}<br>\end{aligned}<br>$$<br>总之可以转化为以下标准形式<br>$$<br>\begin{aligned}<br>\max\quad &amp; -3x_1+2x_2+4x_3^++4x_3^-+0s_1+0s_2  \quad \<br>\mbox{s.t.}\quad<br>&amp;-x_1+2x_2+s_1 = -5 \quad  \<br>&amp; 3x_2-x_3^++x_3^–s_2 = 6 \quad  \<br>&amp; 2x_1+x_3^+-x_3^-=12 \quad  \<br>&amp; x_1,x_2,x_3^+,x_3^-,s_1,s_2 \geq 0  \quad<br>\end{aligned}<br>$$<br>或：<br>$$<br>\begin{aligned}<br>\max\quad &amp; -3x_1+2x_2+4x_3^++4x_3^-+0s_1+0s_2  \quad \<br>\mbox{s.t.}\quad<br>&amp;-x_1-2x_2+s_1 = -5 \quad  \<br>&amp; 3x_2-x_3^++x_3^–s_2 = 6 \quad  \<br>&amp; 2x_1+x_3^+-x_3^-=12 \quad  \<br>&amp; x_1,x_2,x_3^+,x_3^-,s_1,s_2 \geq 0  \quad<br>\end{aligned}<br>$$</p>
+<h2 id="线性规划求解"><a href="#线性规划求解" class="headerlink" title="线性规划求解"></a>线性规划求解</h2><h3 id="图解法"><a href="#图解法" class="headerlink" title="图解法"></a>图解法</h3><p>图解法（Graphical Method）是一种直观的线性规划求解方法，适用于二元或三元线性规划问题。</p>
+<p>该方法的基本思想是将可行域绘制成图形，并在图形上寻找最优解。对于二元线性规划问题，可以将可行域绘制成平面直角坐标系中的一个多边形。然后，可以通过计算目标函数在可行域的各个顶点处的取值，来确定最优解所对应的顶点。对于三元线性规划问题，可以将可行域绘制成三维空间中的一个多面体。然后，通过计算目标函数在可行域的各个顶点处的取值，来确定最优解所对应的顶点。虽然图解法在二元或三元线性规划问题上比较直观，但对于高维或大规模问题，绘制可行域非常困难。</p>
+<h3 id="图解法步骤"><a href="#图解法步骤" class="headerlink" title="图解法步骤"></a><strong>图解法步骤</strong></h3><p><strong>建立坐标系；找半平面，找可行域；画等线值；找最优解</strong></p>
+<p>几个重要概念：</p>
+<h4 id="可行域和最优解"><a href="#可行域和最优解" class="headerlink" title="可行域和最优解"></a><strong>可行域和最优解</strong></h4><p><img src="/2023/05/31/Linear-programming/lp2.jpg"></p>
+<h4 id="基变量与基可行解"><a href="#基变量与基可行解" class="headerlink" title="基变量与基可行解"></a>基变量与基可行解</h4><p>考虑$n$个变量、$m$个线性方程所构建的方程组$A\textbf{x}=\textbf{b}$，假设$n\ge m$且$A$有$m\times m$的满秩子矩阵（该子矩阵称为<strong>基</strong>），令$n-m$个变量等于0，然后根据克莱姆法则可知能够求出满足$A\textbf{x}=\textbf{b}$的其余$m$个变量的唯一值。此时这$n-m$个变量就是<strong>非基变量</strong>，其余$m$个变量就是<strong>基变量</strong>。而由上述基变量和非基变量组成的变量叫做<strong>基解</strong>。</p>
+<p>如果上述讨论的线性方程组$A\textbf{x}=\textbf{b}$的基解满足线性规划模型中的符号约束，那么它就是<strong>基可行解</strong>。</p>
+<img src="/2023/05/31/Linear-programming/20200826211341954.png" style="zoom:67%;">
+
+<p><strong>其中，基可行解通过线性变换可以得到所有的可行解</strong>，即基可行解是可行解中，<strong>线性无关</strong>（仿射独立）且<strong>主元乘积</strong>最小的集合。</p>
+<h4 id="二元问题：花最少的钱，获得最多的营养"><a href="#二元问题：花最少的钱，获得最多的营养" class="headerlink" title="二元问题：花最少的钱，获得最多的营养"></a>二元问题：花最少的钱，获得最多的营养</h4><p>首先画出两个约束条件的直线，并找出它们的交点。交点即为可行域的顶点之一。然后将目标函数的等高线绘制在可行域内，找出与目标函数等高线相切的顶点，即为最优解。</p>
+<table>
+<thead>
+<tr>
+<th>维生素</th>
+<th>奶(g)中含</th>
+<th>蛋(g)中含</th>
+<th>每日需求</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Vc (mg)</td>
+<td>2 x</td>
+<td>4 y</td>
+<td>40</td>
+</tr>
+<tr>
+<td>Vb (mg)</td>
+<td>3 x</td>
+<td>2 y</td>
+<td>50</td>
+</tr>
+<tr>
+<td>单价 (US$)</td>
+<td>3 x</td>
+<td>2.5 y</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>$$<br>\begin{aligned}\min_{x} \quad &amp; 3x + 2.5y \\text{s.t.} \quad &amp; 2x + 4y \geq 40 \&amp; 3x + 2y \geq 50 \&amp; x, y \geq 0\end{aligned}<br>$$</p>
+<p><strong>对偶问题：花最多的钱买最少的商品</strong><br>$$<br>\begin{aligned}\max_{x} \quad &amp; 40x + 50y \\text{s.t.} \quad &amp; 2x + 4y \leq 3 \&amp; 3x + 2y \leq 2.5 \&amp; x, y \geq 0\end{aligned}<br>$$<br><strong>二者的最优解一致</strong></p>
+<h1 id="凸分析"><a href="#凸分析" class="headerlink" title="凸分析"></a>凸分析</h1><p><strong>先记住一句话：几乎所有的最优性条件和对偶关系都是通过某种凸集的分离或者支撑性质建立起来的</strong></p>
+<h2 id="凸集定义"><a href="#凸集定义" class="headerlink" title="凸集定义"></a>凸集定义</h2><p>如果一个集合$C$是凸集,那么我们可以说，对于集合内任意两点$x$、$y$，$z=\theta x+（1-\theta)y$ 也在$C$里面。注意到，当$\theta$等于0的时候，$z = y$, 当$\theta$等于1的时候, $z = x$, 也就是说从几何角度来理解z是一条连接$x$和$y$的线段。如下：</p>
+<p><img src="/2023/05/31/Linear-programming/Snipaste_2023-05-29_19-26-13.png"></p>
+<p><strong>other定义：凸组合（convex combination）、凸壳（Convex Hull）、空间多面体(Polyhedron)</strong></p>
+<h2 id="单纯形法（Simplex-Method）"><a href="#单纯形法（Simplex-Method）" class="headerlink" title="单纯形法（Simplex Method）"></a><strong>单纯形法（Simplex Method）</strong></h2><p>单纯形法通过在多面体的顶点（称为“单纯形”）上迭代地移动来寻找最优解。在每一步中，算法尝试在当前单纯形中寻找一个更好的顶点，直到找到最优解为止。该算法非常高效，并且可以解决许多实际问题，例如生产计划、资源分配、运输问题等。</p>
+<p>Dantzig在1953年又提出了改进单纯形法，目的是降低迭代过程中的累积误差；美国数学家Carlton Edward Lemke于1954年提出对偶单纯形法，来解决原问题难以求解，但是对偶问题方便求解的问题。然而，单纯形法的一个缺点是它可能会遇到所谓的“退化”情况，导致算法效率急剧下降。为了克服这个问题，人们在单纯形法的基础上发展了一些改进算法，例如内点法、Karmarkar算法等。</p>
+<p><strong>步骤</strong>：化标准型；求基可行解，列初始单纯型表；检验非基变量检验数，得最优解/高斯消去法迭代，检验非基变量检验数，循环，直到取得最优解。</p>
+<p>总的来说：单纯形法的求解过程，就是不断地寻求变量出入基的循环迭代过程，每次迭代都达到降低目标函数值（或增大目标函数值）的目的，最终得到最优解。</p>
+<h3 id="单纯形法的基本思想"><a href="#单纯形法的基本思想" class="headerlink" title="单纯形法的基本思想"></a>单纯形法的基本思想</h3><p><strong>[1]Dimitris Bertsimas, John N. Tsitsiklis, Introduction to Linear Optimization. Athena Scientific, Belmont, Massachusetts. P120—123.</strong></p>
+<p><strong>[2]<a href="https://github.com/Operations-Research-Science">https://github.com/Operations-Research-Science</a></strong></p>
+<p><strong>[3]<a href="https://www.kennethwong.tech/zh/post/simplex/">https://www.kennethwong.tech/zh/post/simplex/</a></strong></p>
+<p>大致思路是，使用动态规划的思维，将约束拆分，与目标函数合并成二维向量。类似这样：<br>$$<br>\left[ \begin{smallmatrix} A_1 \  c_1 \ \end{smallmatrix} \right]x_1+\left[ \begin{smallmatrix} A_2 \  c_2 \ \end{smallmatrix} \right]x_2+..+\left[ \begin{smallmatrix} A_n \  c_n \ \end{smallmatrix} \right]x_n=\left[ \begin{smallmatrix} b \  z \ \end{smallmatrix} \right] \nonumber<br>$$<br>将拆分后所得的点[$A_1,c_1,A_2,c_2..A_n,c_n$]进行抽象，把线性规划转化为凸组合优化问题。即：够构造出$(b,z)$的使得$z$值最小的关于$(A_i,c_i)$的<strong>凸组合</strong>，所有的凸组合构成了一个<strong>凸包</strong>，目标函数（目标函数在凸组合中的映射为<strong>需求线</strong>）与凸包相交点即为可行解。进一步地，如果向量线性独立，由这些线性独立的向量组成的凸包称为$k$<strong>维单纯形</strong>。</p>
+<p>这里简单比喻一下。四面体的四条边可以看作四维空间的基（线性无关），这些基进行线性组合，组成了凸包，这些凸包的形状是凸四面体，这些凸四面体称为三维单纯形。</p>
+<p>下然后就是在这些单纯形的顶点进行基变换寻找出最优解。需要指出的是：<strong>一组基对应一组可行解，单纯形的顶点对应一组基，基和单纯形的顶点式一一对应的</strong>。</p>
+<p><strong>线性规划的解本质上就是找到单纯形的顶点，并且定位顶点在哪里，那么其解的组成部分就包括两部分，前半部分代表顶点坐标，后半部分代表定位该坐标的数值信息，其实就是顶点坐标到超平面的截距。</strong></p>
+<p>接下来就是遍历顶点，直到最优。</p>
+<p>事情要是这么简单就好了，遍历顶点其实不现实，因此需要找到一些聪明一点的方法，将一些垃圾排除在计算范围外。下面，我们从最基础的单纯形法开始。</p>
+<h3 id="单纯形法求解过程"><a href="#单纯形法求解过程" class="headerlink" title="单纯形法求解过程"></a>单纯形法求解过程</h3><p>$$<br>\begin{aligned}\max\quad  &amp; z=2x_1+3x_2 \nonumber\\text{s.t.}\quad &amp; x_1+2x_2\le8 \nonumber\ \quad &amp; 4x_1\le16 \nonumber\ \quad &amp; 4x_2\le12 \nonumber\ \quad &amp; x_1,x_2\ge0 \nonumber\\end{aligned}<br>$$</p>
+<p>转换为标准型<br>$$<br>\begin{aligned}\max\quad  &amp; z-2x_1-3x_2=0 \nonumber\\text{s.t.}\quad &amp; x_1+2x_2+s_1=8 \nonumber\ \quad &amp; 4x_1+s_2=16 \nonumber\ \quad &amp; 4x_2+s_3=12 \nonumber\ \quad &amp; x_1,x_2,s_1,s_2,s_3\ge0 \nonumber\\end{aligned}<br>$$<br>1、绘制单纯形表</p>
+<table>
+<thead>
+<tr>
+<th>$x_1$</th>
+<th>$x_2$</th>
+<th>$s_1$</th>
+<th>$s_2$</th>
+<th>$s_ 3$</th>
+<th>$b$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>8</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>16</td>
+</tr>
+<tr>
+<td>0</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>12</td>
+</tr>
+</tbody></table>
+<p>2、每次迭代都需要找到<strong>极大无关组</strong>作为<strong>初始基变量</strong>，这是用来保证求取的解处在顶点上，即：可以保证该解为基可行解[<strong>见证明</strong>]。</p>
+<table>
+<thead>
+<tr>
+<th>$C_b$</th>
+<th>$x_1$</th>
+<th>$x_2$</th>
+<th>$s_1$</th>
+<th>$s_2$</th>
+<th>$s_3$</th>
+<th>$b$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td>2</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td></td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td><strong>1</strong></td>
+<td><strong>0</strong></td>
+<td><strong>0</strong></td>
+<td>8</td>
+</tr>
+<tr>
+<td>0</td>
+<td>4</td>
+<td>0</td>
+<td><strong>0</strong></td>
+<td><strong>1</strong></td>
+<td><strong>0</strong></td>
+<td>16</td>
+</tr>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>4</td>
+<td><strong>0</strong></td>
+<td><strong>0</strong></td>
+<td><strong>1</strong></td>
+<td>12</td>
+</tr>
+</tbody></table>
+<p>此时，进入计算的是$s_1$  $s_2$  $s_3$，叫<strong>基变量</strong>，其余的称为<strong>非基变量</strong>，全部为0。</p>
+<p>相当于这样：<br>$$<br>\begin{aligned}\max\quad  &amp; z-2x_1-3x_2=0 \nonumber\\text{s.t.}\quad &amp; s_1=8-x_1-2x_2 \nonumber\ \quad &amp; s_2=16-4x_1 \nonumber\ \quad &amp; s_3=12-4x_2 \nonumber\\end{aligned}<br>$$<br>此时的解称为初始可行解，上面的解为$[0,0,8,16,12]$</p>
+<p>先验证一下：$z= 0<em>2+0</em>3+..+=0$</p>
+<p>所有解均为非负，满足条件，完。</p>
+<p>想得美，这么简单的话还要计算机做什么~</p>
+<p>下面来检验一下：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>$C_b$</th>
+<th>$x_1$</th>
+<th>$x_2$</th>
+<th>$s_1$</th>
+<th>$s_2$</th>
+<th>$s_3$</th>
+<th>$b$</th>
+<th>$out=b/x_2$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td>2</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>s1</td>
+<td>0</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+<td>0</td>
+<td>8</td>
+<td>4</td>
+</tr>
+<tr>
+<td>s2</td>
+<td>0</td>
+<td>4</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>16</td>
+<td>-</td>
+</tr>
+<tr>
+<td>s3</td>
+<td>0</td>
+<td>0</td>
+<td><strong>4</strong></td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+<td>12</td>
+<td>3</td>
+</tr>
+<tr>
+<td></td>
+<td>$in$</td>
+<td>2</td>
+<td>3</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>in是入基变量校验数，计算方法如下：</p>
+<p>$x_1=2-(0×1+0×4+..+)=2&gt;0$</p>
+<p>$x_2=3-(0×2+0×0+..+)=3&gt;0$</p>
+<p>均大于0，说明是有贡献的，所以选$X_2$作为入基变量，同时，$2&gt;3$,所以选择$x_2$作为入基变量。</p>
+<p>为什么是这样呢？</p>
+<p>可以记住这样一句话：它表示在可行解空间中，目标函数值移动时，每单位距离的变化量。</p>
+<p>就是说：<strong>在$x_1,x_2,s_1,s_2,s_3$与原点组成的向量空间中，非基变量（初始为远点）向目标函数$2x_1+3x_2$移动时，与x_1的法向量$[1,0,0,0,0]$的夹角为$arctan2$。</strong></p>
+<p>了解这个之后，剩下的就很简单了，看反正切图像</p>
+<p><img src="/2023/05/31/Linear-programming/Snipaste_2023-05-31_23-11-41.png"></p>
+<p>如果小与0，则说明加角为负值，贡献减少，如果为正值，说明夹角为正，贡献增加。</p>
+<p>因此，<strong>b表示，目标函数分别到非基向量的截距。</strong></p>
+<p>接下来就很简单了，循环上面的步骤</p>
+<p><img src="/2023/05/31/Linear-programming/Snipaste_2023-05-31_23-46-36.png"></p>
+<p><img src="/2023/05/31/Linear-programming/Snipaste_2023-05-31_23-46-57.png" alt="Snipaste_2023-05-31_23-46-57"></p>
+<p><img src="/2023/05/31/Linear-programming/Snipaste_2023-05-31_23-47-13.png" alt="Snipaste_2023-05-31_23-47-13"></p>
+<p>最终求得最优解为14。</p>
+<h4 id="线性规划求解-1"><a href="#线性规划求解-1" class="headerlink" title="线性规划求解"></a>线性规划求解</h4><p>$$<br>\begin{aligned}\max_{x} \quad &amp; 3x_1 + 2x_2 + 2.9x_3 \ \text{s.t.} \quad &amp; 8x_1 + 2x_2 + 10x_3 \leq 300 \ &amp; 10x_1 + 5x_2 + 8x_3 \leq 400 \ &amp; 2x_1 + 13x_2 + 10x_3 \leq 420 \ &amp; x_1, x_2, x_3 \geq 0\end{aligned}<br>$$</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">library<span class="punctuation">(</span>Rglpk<span class="punctuation">)</span></span><br><span class="line">x1<span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">8</span><span class="punctuation">,</span><span class="number">10</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">)</span></span><br><span class="line">x2<span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">2</span><span class="punctuation">,</span><span class="number">5</span><span class="punctuation">,</span><span class="number">13</span><span class="punctuation">)</span></span><br><span class="line">x3<span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">10</span><span class="punctuation">,</span><span class="number">8</span><span class="punctuation">,</span><span class="number">10</span><span class="punctuation">)</span></span><br><span class="line">mat<span class="operator">&lt;-</span> data.frame<span class="punctuation">(</span>x1<span class="punctuation">,</span>x2<span class="punctuation">,</span>x3<span class="punctuation">)</span></span><br><span class="line">dir <span class="operator">&lt;-</span> <span class="built_in">rep</span><span class="punctuation">(</span><span class="string">&quot;&lt;=&quot;</span><span class="punctuation">,</span><span class="number">3</span><span class="punctuation">)</span></span><br><span class="line">rhs <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">300</span><span class="punctuation">,</span><span class="number">400</span><span class="punctuation">,</span><span class="number">420</span><span class="punctuation">)</span> </span><br><span class="line">obj <span class="operator">&lt;-</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">3</span><span class="punctuation">,</span><span class="number">2</span><span class="punctuation">,</span><span class="number">2.9</span><span class="punctuation">)</span> </span><br><span class="line"></span><br><span class="line">Rglpk_solve_LP<span class="punctuation">(</span>obj<span class="punctuation">,</span> mat<span class="punctuation">,</span> dir<span class="punctuation">,</span> rhs<span class="punctuation">,</span> <span class="built_in">max</span> <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight latex"><table><tr><td class="code"><pre><span class="line"><span class="built_in">$</span>optimum  <span class="params">#</span>求解器找到的最优目标函数值。</span><br><span class="line">[1] 135.2667</span><br><span class="line"><span class="built_in">$</span>solution <span class="params">#</span>决策变量的最优值。</span><br><span class="line">[1] 22.533333 23.200000  7.333333</span><br><span class="line"><span class="built_in">$</span>status  <span class="params">#</span>是否取得最优，0为取到最优</span><br><span class="line">[1] 0</span><br><span class="line"><span class="built_in">$</span>solution<span class="built_in">_</span>dual<span class="params">#</span>约束条件的最优对偶变量值（拉格朗日乘子）</span><br><span class="line">[1] 0 0 0</span><br><span class="line"><span class="built_in">$</span>auxiliary <span class="params">#</span>附加信息</span><br><span class="line"><span class="built_in">$</span>auxiliary<span class="built_in">$</span>primal  <span class="params">#</span>原始问题的解</span><br><span class="line">[1] 300 400 420</span><br><span class="line"><span class="built_in">$</span>auxiliary<span class="built_in">$</span>dual  <span class="params">##</span>对偶问题的解</span><br><span class="line">[1] 0.03000000 0.26666667 0.04666667</span><br><span class="line"><span class="built_in">$</span>sensitivity<span class="built_in">_</span>report  <span class="params">#</span>是否输出敏感性分析报告</span><br><span class="line">[1] NA</span><br></pre></td></tr></table></figure>
+
+<p>1] 马国瑜. 线性规划的发展历史[J]. 北京化工大学学报(自然科学版), 1985(4):27-33.</p>
+<h4 id="多元线性求解"><a href="#多元线性求解" class="headerlink" title="多元线性求解"></a>多元线性求解</h4><p>上面的代码相当不人性，需要加载一个求解器gurobi（可以申请学术版）</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> gurobipy <span class="keyword">import</span> *</span><br><span class="line">m = Model(<span class="string">&quot;LP model&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 定义变量</span></span><br><span class="line">x1 = m.addVar(lb=<span class="number">0</span>, ub=<span class="number">150</span>, vtype=GRB.INTEGER, name=<span class="string">&#x27;x1&#x27;</span>)</span><br><span class="line">x2 = m.addVar(lb=<span class="number">0</span>, ub=<span class="number">150</span>, vtype=GRB.INTEGER, name=<span class="string">&#x27;x2&#x27;</span>)</span><br><span class="line">x3 = m.addVar(lb=<span class="number">0</span>, ub=<span class="number">150</span>, vtype=GRB.INTEGER, name=<span class="string">&#x27;x3&#x27;</span>)</span><br><span class="line">x4 = m.addVar(lb=<span class="number">0</span>, ub=<span class="number">150</span>, vtype=GRB.INTEGER, name=<span class="string">&#x27;x4&#x27;</span>)</span><br><span class="line">x5 = m.addVar(lb=<span class="number">0</span>, ub=<span class="number">150</span>, vtype=GRB.INTEGER, name=<span class="string">&#x27;x5&#x27;</span>)</span><br><span class="line">x6 = m.addVar(lb=<span class="number">0</span>, ub=<span class="number">150</span>, vtype=GRB.INTEGER, name=<span class="string">&#x27;x6&#x27;</span>)</span><br><span class="line">x7 = m.addVar(lb=<span class="number">0</span>, ub=<span class="number">150</span>, vtype=GRB.INTEGER, name=<span class="string">&#x27;x7&#x27;</span>)</span><br><span class="line">x8 = m.addVar(lb=<span class="number">0</span>, ub=<span class="number">150</span>, vtype=GRB.INTEGER, name=<span class="string">&#x27;x8&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加约束</span></span><br><span class="line">m.addConstr(<span class="number">2</span>*x1 + x2 + x3 + x4 &gt;= <span class="number">100</span>)</span><br><span class="line">m.addConstr(<span class="number">2</span>*x2 + x3 + <span class="number">3</span>*x5 + <span class="number">2</span>*x6 + x7 &gt;=<span class="number">150</span>)</span><br><span class="line">m.addConstr(x1 + x3 + <span class="number">3</span>*x4 + <span class="number">2</span>*x6 + <span class="number">3</span>*x7 + <span class="number">5</span>*x8 &gt;=<span class="number">100</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加目标函数</span></span><br><span class="line">m.setObjective(<span class="number">5</span>*x1 + <span class="number">6</span>*x2 + <span class="number">23</span>*x3 + <span class="number">5</span>*x4 + <span class="number">24</span>*x5 + <span class="number">6</span>*x6 +<span class="number">23</span>*x7 + <span class="number">5</span>*x8, GRB.MINIMIZE)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 求解</span></span><br><span class="line">m.optimize()</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;最优值：&#x27;</span>, m.objVal)</span><br><span class="line"><span class="keyword">for</span> v <span class="keyword">in</span> m.getVars():</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;参数&#x27;</span>, v.varName, <span class="string">&#x27;=&#x27;</span>, v.x)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="证明，可以忽略"><a href="#证明，可以忽略" class="headerlink" title="证明，可以忽略"></a>证明，可以忽略</h2><p>在凸优化中，可行域的每个顶点都可以表示为约束条件的一个极端解，也就是可行限制条件的某些等号处取等。因此，为了证明选取极大无关组作为初始基变量可以保证初始基变量所对应的顶点是可行域的一个顶点，需要证明初始基变量对应的顶点是可行限制条件的一个极端解。</p>
+<p>设可行域为：</p>
+<p>$$\mathcal{P} = { x \in \mathbb{R}^n | Ax \leq b, x \geq 0 } $$</p>
+<p>其中，A是一个m x n的矩阵，b是一个m维列向量。假设选取极大无关组作为初始基变量，对应的基向量为$B = [A_{I_1}, A_{I_2}, …, A_{I_m}]$，其中$I_1, I_2, …, I_m$是极大无关组的下标集合。</p>
+<p>由于$B$是一个$m \times m$的方阵，且它的行列式$det(B)$不等于0，因为极大无关组的元素是线性无关的。因此，$B$是可逆的，即存在一个$m \times m$的矩阵$B^{-1}$，使得$BB^{-1}=I$，其中$I$是$m\times m$的单位矩阵。</p>
+<p>假设$x_B=B^{-1}b$，则$x_B$是基变量的取值，且满足约束条件$A_Bx_B=b$。因为$B$对应的列是单位矩阵，所以有$A_Bx_B=B^{-1}b$，即$x_B=B^{-1}b$。</p>
+<p>又因为$B$是极大无关组，所以$A_ix_B=b_i$，其中$i \in I$，而对于不在极大无关组中的列$j \notin I$，有$A_jx_B\leq b_j$，因为$x\geq 0$。</p>
+<p>因此，$x_B$满足所有的约束条件，也就是$x_B \in \mathcal{P}$。又因为$B$中的列是线性无关的，所以$x_B$是唯一满足上述约束条件的向量，即$x_B$是基可行解。</p>
+<p>接下来需要证明$x_B$是可行限制条件的一个极端解。假设存在一个向量$x’$，使得$x’ \in \mathcal{P}$，且$x’ \neq x_B$。由于$x’ \neq x_B$，所以它们对应的基向量不同，即存在一个$k \notin I$，使得$A_kx’=b_k$，且$A_ix’ \leq b_i$，其中$i \in I$。</p>
+<p>然而，由于$B$是极大无关组，所以对于所有的$i \in I$，有$A_ix_B=b_i$，$A_ix’ \leq b_i$。因此，$A_ix_B &lt; A_ix’$，进而有：</p>
+<p>$$ A_Bx_B+A_kx_B \leq b, A_Bx’+A_kx’ \leq b $$</p>
+<p>将$x_B=B^{-1}b$和$x’=B^{-1}b+tx_k$代入上述不等式中，其中$t \in [0,1]$，得到：</p>
+<p>$$ B^{-1}b+tB^{-1}A_kx_k\leq b, B^{-1}b+ t(B^{-1}A_kx_k) + t(B^{-1}A_Ix_I) \leq b $$</p>
+<p>其中，$x_I$是$x_B$中除$x_k$以外的元素构成的向量。由于$x’$满足约束条件，即$A_ix’ \leq b_i$，因此有$B^{-1}A_Ix_I \leq 0$。</p>
+<p>因此，上述不等式可以进一步简化为：</p>
+<p>$$ B^{-1}b+t(B^{-1}A_kx_k) \leq b $$</p>
+<p>由于$B^{-1}A_kx_k=b_k$，因此上述不等式可以写成：</p>
+<p>$$ B^{-1}b+t(b_k) \leq b $$</p>
+<p>将$t=0$代入上述不等式中得到：</p>
+<p>$$ B^{-1}b \leq b $$</p>
+<p>但是，这与$x’ \in \mathcal{P}$相矛盾，因为$x’$是一个可行解，满足$Ax’ \leq b$，即$B^{-1}A_ix’ \leq b_i$，其中$i \in I$。因此，假设不成立，即$x_B$是可行限制条件的一个极端解。</p>
+<p>综上所述，选取极大无关组作为初始基变量可以保证初始基变量所对应的顶点是可行域的一个顶点，并且对应的基向量是线性无关的，也就是一个基向量集合的一个极端向量，对应的基变量是一个基可行解。因此，可以保证这个基可行解对应的顶点是可行域的一个顶点，也就是可行解的一个极端解。</p>
+]]></content>
+  </entry>
 </search>
