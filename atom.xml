@@ -6,7 +6,7 @@
   <link href="http://genewlan.github.io/atom.xml" rel="self"/>
   
   <link href="http://genewlan.github.io/"/>
-  <updated>2023-05-31T15:58:04.167Z</updated>
+  <updated>2023-06-11T07:53:22.025Z</updated>
   <id>http://genewlan.github.io/</id>
   
   <author>
@@ -17,11 +17,57 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Interpolation and Fitting</title>
+    <link href="http://genewlan.github.io/2023/06/11/mathmodeling2/"/>
+    <id>http://genewlan.github.io/2023/06/11/mathmodeling2/</id>
+    <published>2023-06-11T07:04:03.000Z</published>
+    <updated>2023-06-11T07:53:22.025Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h1&gt;插值法&lt;/h1&gt;
+&lt;p&gt;建模时，常常需要根据已知的函数点进行数据、模型的处理和分析，而有时候现有的数据是极少的，不足以支撑分析的进行，这时就需要使用一些数学的方法，“&lt;strong&gt;模拟产生”一些新的但又比较靠谱的值&lt;/strong&gt;来满足需求，</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>AHP and TOPSIS</title>
+    <link href="http://genewlan.github.io/2023/06/11/mathmodeling1/"/>
+    <id>http://genewlan.github.io/2023/06/11/mathmodeling1/</id>
+    <published>2023-06-11T07:03:47.000Z</published>
+    <updated>2023-06-11T07:37:37.732Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h1&gt;层次分析法&lt;/h1&gt;
+&lt;p&gt;The analytic hierarchy process,</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
     <title>Linear_programming</title>
     <link href="http://genewlan.github.io/2023/05/31/Linear-programming/"/>
     <id>http://genewlan.github.io/2023/05/31/Linear-programming/</id>
     <published>2023-05-31T15:53:30.000Z</published>
-    <updated>2023-05-31T15:58:04.167Z</updated>
+    <updated>2023-06-11T08:16:13.098Z</updated>
     
     
       
@@ -30,7 +76,7 @@
         
     <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;说在前面——线性规划的解本质上就是找到单纯形的顶点，并且定位顶点在哪里，那么其解的组成部分就包括两部分，前半部分代表顶点坐标，后半部分代表定位该坐标的数值信息，其实就是顶点坐标到超平面的截距。&lt;/strong&gt;&lt;/p&gt;
-&lt;h1</summary>
+&lt;h1&gt;线性</summary>
         
       
     
@@ -52,7 +98,8 @@
         
         
     <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h1 id=&quot;作者简介&quot;&gt;&lt;a href=&quot;#作者简介&quot; class=&quot;headerlink&quot; title=&quot;作者简介&quot;&gt;&lt;/a&gt;作者简介&lt;/h1&gt;&lt;p&gt;&lt;strong&gt;How to avoid machine learning pitfalls:</summary>
+&lt;h1&gt;作者简介&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;How to avoid machine learning pitfalls: a guide for academic researchersMichael</summary>
         
       
     
@@ -74,7 +121,7 @@
         
         
     <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;p&gt;&lt;img</summary>
+&lt;p&gt;&lt;img src=&quot;/2023/04/29/five-industrial-algorithm/%E5%BB%BA%E6%A8%A1Rplot.png&quot;</summary>
         
       
     
@@ -96,7 +143,8 @@
         
         
     <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h1 id=&quot;GUNs的发迹史——刨根问底儿&quot;&gt;&lt;a href=&quot;#GUNs的发迹史——刨根问底儿&quot; class=&quot;headerlink&quot;</summary>
+&lt;h1&gt;GUNs的发迹史——刨根问底儿&lt;/h1&gt;
+&lt;p&gt;上一篇中，我们使用量GNN网络进行了辛烷溶解度的预测。那么问题来了，假如我们只有这些化合物是远远不能支撑人们日益增长的美好生活需要所需要的物质基础的。而现实生活中往往也是如此，化学家们经过几百年的努</summary>
         
       
     
