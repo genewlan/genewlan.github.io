@@ -1,0 +1,690 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>bayes-net | GeneWlan</title><meta name="author" content="ZhangLei"><meta name="copyright" content="ZhangLei"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="[TOC] 引言 事实上，介绍贝叶斯定理、贝叶斯方法、贝叶斯推断的资料、书籍不少，比如《数理统计学简史》，以及《统计决策论及贝叶斯分析 James O.Berger著》等等，然介绍贝叶斯网络的中文资料则非常少，中文书籍总共也没几本，有的多是英文资料，但初学者一上来就扔给他一堆英文论文，因无基础和语言的障碍而读得异常吃力导致无法继续读下去则是非常可惜的（当然，有了一定的基础后，便可阅读更多的英文资料">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bayes-net">
+<meta property="og:url" content="http://genewlan.github.io/2023/09/30/bayes-net/index.html">
+<meta property="og:site_name" content="GeneWlan">
+<meta property="og:description" content="[TOC] 引言 事实上，介绍贝叶斯定理、贝叶斯方法、贝叶斯推断的资料、书籍不少，比如《数理统计学简史》，以及《统计决策论及贝叶斯分析 James O.Berger著》等等，然介绍贝叶斯网络的中文资料则非常少，中文书籍总共也没几本，有的多是英文资料，但初学者一上来就扔给他一堆英文论文，因无基础和语言的障碍而读得异常吃力导致无法继续读下去则是非常可惜的（当然，有了一定的基础后，便可阅读更多的英文资料">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2023-09-30T10:49:09.000Z">
+<meta property="article:modified_time" content="2023-09-30T10:51:09.845Z">
+<meta property="article:author" content="ZhangLei">
+<meta property="article:tag" content="bayes net">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://genewlan.github.io/2023/09/30/bayes-net/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'bayes-net',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-09-30 18:51:09'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><!-- hexo injector head_end start -->
+    <style>
+      #background-effect {
+        position: fixed !important;
+        top: 0px;
+        left: 0px;
+        z-index: -1;
+        width: 100%;
+        height: 100%
+      }
+    </style>
+  <!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="GeneWlan" type="application/atom+xml">
+<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/03/21/ZVUmQFknE2JosXT.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="GeneWlan"><span class="site-name">GeneWlan</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">bayes-net</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-09-30T10:49:09.000Z" title="发表于 2023-09-30 18:49:09">2023-09-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-30T10:51:09.845Z" title="更新于 2023-09-30 18:51:09">2023-09-30</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="bayes-net"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>[TOC]</p>
+<h1>引言</h1>
+<p>事实上，介绍贝叶斯定理、贝叶斯方法、贝叶斯推断的资料、书籍不少，比如《数理统计学简史》，以及《统计决策论及贝叶斯分析 James O.Berger著》等等，然介绍贝叶斯网络的中文资料则非常少，中文书籍总共也没几本，有的多是英文资料，但初学者一上来就扔给他一堆英文论文，因无基础和语言的障碍而读得异常吃力导致无法继续读下去则是非常可惜的（当然，有了一定的基础后，便可阅读更多的英文资料）。</p>
+<p>故本文结合课程讲义及相关参考资料写就，从贝叶斯方法讲起，重点阐述贝叶斯网络，依然可以定义为一篇读书笔记或学习笔记，有任何问题，欢迎随时不吝指出，thanks！</p>
+<h2 id="贝叶斯方法">贝叶斯方法</h2>
+<p>长久以来，人们对一件事情发生或不发生的概率<img src="https://img-blog.csdn.net/20141110214603237" alt="img">，只有固定的0和1，即要么发生，要么不发生，从来不会去考虑某件事情发生的概率有多大，不发生的概率又是多大。而且概率<img src="https://img-blog.csdn.net/20141110214603237" alt="img">虽然未知，但最起码是一个确定的值。比如如果问那时的人们一个问题：“有一个袋子，里面装着若干个白球和黑球，请问从袋子中取得白球的概率<img src="https://img-blog.csdn.net/20141110214603237" alt="img">是多少？”他们会想都不用想，会立马告诉你，取出白球的概率<img src="https://img-blog.csdn.net/20141110214603237" alt="img">就是1/2，要么取到白球，要么取不到白球，即θ只能有一个值，而且不论你取了多少次，取得白球的概率θ始终都是1/2，即不随观察结果X 的变化而变化。</p>
+<p>这种频率派的观点长期统治着人们的观念，直到后来一个名叫Thomas Bayes的人物出现。</p>
+<h3 id="贝叶斯方法的提出">贝叶斯方法的提出</h3>
+<p>托马斯·贝叶斯Thomas Bayes（1702-1763）在世时，并不为当时的人们所熟知，很少发表论文或出版著作，与当时学术界的人沟通交流也很少，用现在的话来说，贝叶斯就是活生生一民间学术“屌丝”，可这个“屌丝”最终发表了一篇名为“An essay towards solving a problem in the doctrine of chances”，翻译过来则是：机遇理论中一个问题的解。你可能觉得我要说：这篇论文的发表随机产生轰动效应，从而奠定贝叶斯在学术史上的地位。</p>
+<blockquote>
+<p>​      <img src="https://img-blog.csdn.net/20141110191248285" alt="img"></p>
+</blockquote>
+<p>事实上，上篇论文发表后，在当时并未产生多少影响，在20世纪后，这篇论文才逐渐被人们所重视。对此，与梵高何其类似，画的画生前一文不值，死后价值连城。</p>
+<p>回到上面的例子：“有一个袋子，里面装着若干个白球和黑球，请问从袋子中取得白球的概率θ是多少？”贝叶斯认为取得白球的概率<img src="https://img-blog.csdn.net/20141110214603237" alt="img">是个不确定的值，因为其中含有机遇的成分。比如，一个朋友创业，你明明知道创业的结果就两种，即要么成功要么失败，但你依然会忍不住去估计他创业成功的几率有多大？你如果对他为人比较了解，而且有方法、思路清晰、有毅力、且能团结周围的人，你会不由自主的估计他创业成功的几率可能在80%以上。这种不同于最开始的“非黑即白、非0即1”的思考方式，便是贝叶斯式的思考方式。</p>
+<p>继续深入讲解贝叶斯方法之前，先简单总结下频率派与贝叶斯派各自不同的思考方式：</p>
+<ul>
+<li>
+<p>频率派把需要推断的参数θ看做是固定的未知常数，即概率<img src="https://img-blog.csdn.net/20141110214603237" alt="img">虽然是未知的，但最起码是确定的一个值，同时，样本X 是随机的，所以频率派重点研究样本空间，大部分的概率计算都是针对样本X 的分布；</p>
+</li>
+<li>
+<p>而贝叶斯派的观点则截然相反，他们认为参数<img src="https://img-blog.csdn.net/20141110214603237" alt="img">是随机变量，而样本X 是固定的，由于样本是固定的，所以他们重点研究的是参数<img src="https://img-blog.csdn.net/20141110214603237" alt="img">的分布。</p>
+<p>相对来说，频率派的观点容易理解，所以下文重点阐述贝叶斯派的观点。</p>
+<p>贝叶斯派既然把<img src="https://img-blog.csdn.net/20141110214603237" alt="img">看做是一个随机变量，所以要计算<img src="https://img-blog.csdn.net/20141110214603237" alt="img">的分布，便得事先知道<img src="https://img-blog.csdn.net/20141110214603237" alt="img">的无条件分布，即在有样本之前（或观察到X之前），<img src="https://img-blog.csdn.net/20141110214603237" alt="img">有着怎样的分布呢？</p>
+<p>比如往台球桌上扔一个球，这个球落会落在何处呢？如果是不偏不倚的把球抛出去，那么此球落在台球桌上的任一位置都有着相同的机会，即球落在台球桌上某一位置的概率<img src="https://img-blog.csdn.net/20141110214603237" alt="img">服从均匀分布。这种在实验之前定下的属于基本前提性质的分布称为先验分布，或<img src="https://img-blog.csdn.net/20141110214603237" alt="img">的无条件分布。</p>
+<p>至此，贝叶斯及贝叶斯派提出了一个思考问题的固定模式：</p>
+</li>
+<li>
+<p><strong>先验分布<img src="https://img-blog.csdn.net/20141110214925523" alt="img"> + 样本信息<img src="https://img-blog.csdn.net/20141110211153578" alt="img"><img src="https://img-blog.csdn.net/20141110190250086" alt="img"> 后验分布<img src="https://img-blog.csdn.net/20141110215058639" alt="img"></strong></p>
+<p>上述思考模式意味着，新观察到的样本信息将修正人们以前对事物的认知。换言之，在得到新的样本信息之前，人们对<img src="https://img-blog.csdn.net/20141110210919359" alt="img">的认知是先验分布<img src="https://img-blog.csdn.net/20141110214925523" alt="img">，在得到新的样本信息<img src="https://img-blog.csdn.net/20141110211153578" alt="img">后，人们对<img src="https://img-blog.csdn.net/20141110210919359" alt="img">的认知为<img src="https://img-blog.csdn.net/20141110215058639" alt="img">。</p>
+</li>
+</ul>
+<p>​    其中，先验信息一般来源于经验跟历史资料。比如林丹跟某选手对决，解说一般会根据林丹历次比赛的成绩对此次比赛的胜负做个大致的判断。再比如，某工厂每天都要对产品进行质检，以评估产品的不合格率θ，经过一段时间后便会积累大量的历史资料，这些历史资料便是先验知识，有了这些先验知识，便在决定对一个产品是否需要每天质检时便有了依据，如果以往的历史资料显示，某产品的不合格率只有0.01%，便可视为信得过产品或免检产品，只每月抽检一两次，从而省去大量的人力物力。</p>
+<p>而后验分布<img src="https://img-blog.csdn.net/20141110215058639" alt="img">一般也认为是在给定样本<img src="https://img-blog.csdn.net/20141110211153578" alt="img">的情况下<img src="https://img-blog.csdn.net/20141110210919359" alt="img">的条件分布，而使<img src="https://img-blog.csdn.net/20141110215058639" alt="img">达到最大的值<img src="https://img-blog.csdn.net/20141110211547800" alt="img">称为最大后验估计，类似于经典统计学中的极大似然估计。</p>
+<p>综合起来看，则好比是人类刚开始时对大自然只有少得可怜的先验知识，但随着不断观察、实验获得更多的样本、结果，使得人们对自然界的规律摸得越来越透彻。所以，贝叶斯方法既符合人们日常生活的思考方式，也符合人们认识自然的规律，经过不断的发展，最终占据统计学领域的半壁江山，与经典统计学分庭抗礼。</p>
+<p>此外，贝叶斯除了提出上述思考模式之外，还特别提出了举世闻名的贝叶斯定理。</p>
+<h3 id="贝叶斯定理">贝叶斯定理</h3>
+<p>在引出贝叶斯定理之前，先学习几个定义：</p>
+<ul>
+<li><strong>条件概率</strong>（又称后验概率）就是事件A在另外一个事件B已经发生条件下的发生概率。条件概率表示为P(A|B)，读作“在B条件下A的概率”。</li>
+</ul>
+<p>比如，在同一个样本空间Ω中的事件或者子集A与B，如果随机从Ω中选出的一个元素属于B，那么这个随机选择的元素还属于A的概率就定义为在B的前提下A的条件概率，所以：P(A|B) = |A∩B|/|B|，接着分子、分母都除以|Ω|得到</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141114111032274" alt="img"></p>
+</blockquote>
+<ul>
+<li>
+<p><strong>联合概率</strong>表示两个事件共同发生的概率。A与B的联合概率表示为<img src="https://img-blog.csdnimg.cn/img_convert/ec2046ed2f18030656d81cb020239d88.png" alt="img">或者<img src="https://img-blog.csdnimg.cn/img_convert/b3c3955190962cedde6494c9ad959567.png" alt="img">。</p>
+</li>
+<li>
+<p><strong>边缘概率</strong>（又称先验概率）是某个事件发生的概率。边缘概率是这样得到的：在联合概率中，把最终结果中那些不需要的事件通过合并成它们的全概率，而消去它们（对离散随机变量用求和得全概率，对连续随机变量用积分得全概率），这称为边缘化（marginalization），比如A的边缘概率表示为P(A)，B的边缘概率表示为P(B)。</p>
+<p>接着，考虑一个问题：P(A|B)是在B发生的情况下A发生的可能性。</p>
+</li>
+</ul>
+<ol>
+<li>首先，事件B发生之前，我们对事件A的发生有一个基本的概率判断，称为A的先验概率，用P(A)表示；</li>
+<li>其次，事件B发生之后，我们对事件A的发生概率重新评估，称为A的后验概率，用P(A|B)表示；</li>
+<li>类似的，事件A发生之前，我们对事件B的发生有一个基本的概率判断，称为B的先验概率，用P(B)表示；</li>
+<li>同样，事件A发生之后，我们对事件B的发生概率重新评估，称为B的后验概率，用P(B|A)表示。</li>
+</ol>
+<p>贝叶斯定理便是基于下述贝叶斯公式：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141110213025473" alt="img"></p>
+</blockquote>
+<p>上述公式的推导其实非常简单，就是从条件概率推出。</p>
+<p>根据条件概率的定义，在事件B发生的条件下事件A发生的概率是</p>
+<blockquote>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/86cb719fe395093cf2fa9ea3c243347d.png" alt="img"></p>
+</blockquote>
+<p>同样地，在事件A发生的条件下事件B发生的概率</p>
+<blockquote>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/57730ecbc7bea763e0c9c90e95b0dbe6.png" alt="img"></p>
+</blockquote>
+<p>整理与合并上述两个方程式，便可以得到：</p>
+<blockquote>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/1c38dff5ee6ee3003a67501744ec81f8.png" alt="img"></p>
+</blockquote>
+<p>接着，上式两边同除以P(B)，若P(B)是非零的，我们便可以得到<strong>贝叶斯定理</strong>的公式表达式：</p>
+<blockquote>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/3240d4201d8a39969ea079bbf1e271bf.png" alt="img"></p>
+</blockquote>
+<p>所以，贝叶斯公式可以直接根据条件概率的定义直接推出。即因为P(A,B) = P(A)P(B|A) = P(B)P(A|B)，所以P(A|B) = P(A)P(B|A)  / P(B)。</p>
+<h3 id="应用：拼写检查">应用：拼写检查</h3>
+<p>经常在网上搜索东西的朋友知道，当你不小心输入一个不存在的单词时，搜索引擎会提示你是不是要输入某一个正确的单词，比如当你在Google中输入“<a target="_blank" rel="noopener" href="http://www.gu1234.com/search?hl=zh-CN&amp;site=webhp&amp;source=hp&amp;q=Julw&amp;btnK=Google+%E6%90%9C%E7%B4%A2&amp;gws_rd=ssl">Julw</a>”时，系统会猜测你的意图：是不是要搜索“July”，如下图所示：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141112225545796" alt="img"></p>
+</blockquote>
+<p>这叫做拼写检查。根据谷歌一员工写的<a target="_blank" rel="noopener" href="http://norvig.com/spell-correct.html">文章</a>显示，Google的拼写检查基于贝叶斯方法。下面我们就来看看，怎么利用贝叶斯方法，实现&quot;拼写检查&quot;的功能。</p>
+<p>用户输入一个单词时，可能拼写正确，也可能拼写错误。如果把拼写正确的情况记做c（代表correct），拼写错误的情况记做w（代表wrong），那么&quot;拼写检查&quot;要做的事情就是：在发生w的情况下，试图推断出c。换言之：已知w，然后在若干个备选方案中，找出可能性最大的那个c，也就是求<img src="https://img-blog.csdn.net/20141112230745208" alt="img">的最大值。<br>
+而根据贝叶斯定理，有：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141112230845578" alt="img"></p>
+</blockquote>
+<p>由于对于所有备选的c来说，对应的都是同一个w，所以它们的P(w)是相同的，因此我们只要最大化</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141112231004421" alt="img"></p>
+</blockquote>
+<p>即可。其中：</p>
+<ul>
+<li>
+<p>P©表示某个正确的词的出现&quot;概率&quot;，它可以用&quot;频率&quot;代替。如果我们有一个足够大的文本库，那么这个文本库中每个单词的出现频率，就相当于它的发生概率。某个词的出现频率越高，P©就越大。比如在你输入一个错误的词“Julw”时，系统更倾向于去猜测你可能想输入的词是“July”，而不是“Jult”，因为“July”更常见。</p>
+</li>
+<li>
+<p>P(w|c)表示在试图拼写c的情况下，出现拼写错误w的概率。为了简化问题，假定两个单词在字形上越接近，就有越可能拼错，P(w|c)就越大。举例来说，相差一个字母的拼法，就比相差两个字母的拼法，发生概率更高。你想拼写单词July，那么错误拼成Julw（相差一个字母）的可能性，就比拼成Jullw高（相差两个字母）。值得一提的是，一般把这种问题称为“编辑距离”，参见博客中的<a target="_blank" rel="noopener" href="http://blog.csdn.net/v_july_v/article/details/8701148#t4">这篇</a>文章。</p>
+<p>所以，我们比较所有拼写相近的词在文本库中的出现频率，再从中挑出出现频率最高的一个，即是用户最想输入的那个词。具体的计算过程及此方法的缺陷请参见<a target="_blank" rel="noopener" href="http://norvig.com/spell-correct.html">这里</a>。</p>
+</li>
+</ul>
+<h2 id="贝叶斯网络">贝叶斯网络</h2>
+<h3 id="贝叶斯网络的定义">贝叶斯网络的定义</h3>
+<p>贝叶斯网络(Bayesian network)，又称信念网络(Belief Network)，或有向无环图模型(directed acyclic graphical model)，是一种概率图模型，于1985年由Judea Pearl首先提出。它是一种模拟人类推理过程中因果关系的不确定性处理模型，其网络拓朴结构是一个有向无环图(DAG)。</p>
+<p>贝叶斯网络的有向无环图中的节点表示随机变量<img src="https://img-blog.csdn.net/20141110221023930" alt="img">，它们可以是可观察到的变量，或隐变量、未知参数等。认为有因果关系（或非条件独立）的变量或命题则用箭头来连接。若两个节点间以一个单箭头连接在一起，表示其中一个节点是“因(parents)”，另一个是“果(children)”，两节点就会产生一个条件概率值。</p>
+<p>总而言之，<strong>连接两个节点的箭头代表此两个随机变量是具有因果关系，或非条件独立</strong>。</p>
+<p>例如，假设节点E直接影响到节点H，即E→H，则用从E指向H的箭头建立结点E到结点H的有向弧(E,H)，权值(即连接强度)用条件概率P(H|E)来表示，如下图所示：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111180200463" alt="img"></p>
+</blockquote>
+<p>简言之，把某个研究系统中涉及的随机变量，根据是否条件独立绘制在一个有向图中，就形成了贝叶斯网络。其主要用来描述随机变量之间的条件依赖，用圈表示随机变量(random variables)，用箭头表示条件依赖(conditional dependencies)。</p>
+<p>令G = (I,E)表示一个有向无环图(DAG)，其中I代表图形中所有的节点的集合，而E代表有向连接线段的集合，且令X = (Xi)i ∈ I为其有向无环图中的某一节点i所代表的随机变量，若节点X的联合概率可以表示成：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141110222518593" alt="img"></p>
+</blockquote>
+<p>则称X为相对于一有向无环图G 的贝叶斯网络，其中，<img src="https://img-blog.csdn.net/20141110222555954" alt="img">表示节点i之“因”，或称pa(i)是i的parents（父母）。</p>
+<p>此外，对于任意的随机变量，其联合概率可由各自的局部条件概率分布相乘而得出：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141110224303808" alt="img"></p>
+</blockquote>
+<p>如下图所示，便是一个简单的贝叶斯网络：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141110221319352" alt="img"></p>
+</blockquote>
+<p>因为a导致b，a和b导致c，所以有</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141110222147578" alt="img"></p>
+</blockquote>
+<h3 id="贝叶斯网络的3种结构形式">贝叶斯网络的3种结构形式</h3>
+<p>给定如下图所示的一个贝叶斯网络：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141110234449486" alt="img"></p>
+</blockquote>
+<p>从图上可以比较直观的看出：</p>
+<ul>
+<li>\1. x1,x2,…x7的联合分布为</li>
+</ul>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141110233944921" alt="img"></p>
+</blockquote>
+<ul>
+<li>
+<p>\2. x1和x2独立（对应head-to-head）；</p>
+</li>
+<li>
+<p>\3. x6和x7在x4给定的条件下独立（对应tail-to-tail）。</p>
+<p>根据上图，第1点可能很容易理解，但第2、3点中所述的条件独立是啥意思呢？其实第2、3点是贝叶斯网络中3种结构形式中的其中二种。为了说清楚这个问题，需要引入D-Separation（D-分离）这个概念。</p>
+<p>D-Separation是一种用来判断变量是否条件独立的图形化方法。换言之，对于一个DAG(有向无环图)E，D-Separation方法可以快速的判断出两个节点之间是否是条件独立的。</p>
+</li>
+</ul>
+<p>2.2.1 形式1：head-to-head</p>
+<p>贝叶斯网络的第一种结构形式如下图所示：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141110235330121" alt="img"></p>
+</blockquote>
+<p>所以有：P(a,b,c) = P(a)*P(b)*P(c|a,b)成立，化简后可得：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141110235818784" alt="img"></p>
+</blockquote>
+<p>即在<strong>c未知的条件下，a、b被阻断(blocked)，是独立的</strong>，称之为head-to-head条件独立，对应本节中最开始那张图中的“x1、x2独立”。</p>
+<p>2.2.2 形式2：tail-to-tail</p>
+<p>贝叶斯网络的第二种结构形式如下图所示</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111000434953" alt="img"></p>
+</blockquote>
+<p>考虑c未知，跟c已知这两种情况：</p>
+<ol>
+<li>在c未知的时候，有：P(a,b,c)=P©*P(a|c)*P(b|c)，此时，没法得出P(a,b) = P(a)P(b)，即c未知时，a、b不独立。</li>
+<li>在c已知的时候，有：P(a,b|c)=P(a,b,c)/P©，然后将P(a,b,c)=P©*P(a|c)*P(b|c)带入式子中，得到：P(a,b|c)=P(a,b,c)/P© = P©*P(a|c)*P(b|c) / P© = P(a|c)*P(b|c)，即c已知时，a、b独立。</li>
+</ol>
+<p>所以，<strong>在c给定的条件下，a，b被阻断(blocked)，是独立的</strong>，称之为tail-to-tail条件独立，对应本节中最开始那张图中的“x6和x7在x4给定的条件下独立”。</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111000649872" alt="img"></p>
+</blockquote>
+<p>2.2.3 形式3：head-to-tail</p>
+<p>贝叶斯网络的第三种结构形式如下图所示：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111001937768" alt="img"></p>
+</blockquote>
+<p>还是分c未知跟c已知这两种情况：</p>
+<ol>
+<li>c未知时，有：P(a,b,c)=P(a)*P(c|a)*P(b|c)，但无法推出P(a,b) = P(a)P(b)，即c未知时，a、b不独立。</li>
+<li>c已知时，有：P(a,b|c)=P(a,b,c)/P©，且根据P(a,c) = P(a)*P(c|a) = P©*P(a|c)，可化简得到：</li>
+</ol>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111001901123" alt="img"></p>
+</blockquote>
+<p>所以，<strong>在c给定的条件下，a，b被阻断(blocked)，是独立的</strong>，称之为head-to-tail条件独立。</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111002057687" alt="img"></p>
+</blockquote>
+<p><strong>插一句</strong>：这个head-to-tail其实就是一个链式网络，如下图所示：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111002737625" alt="img"></p>
+</blockquote>
+<p>根据之前对head-to-tail的讲解，我们已经知道，在xi给定的条件下，xi+1的分布和x1,x2…xi-1条件独立。意味着啥呢？意味着：xi+1的分布状态只和xi有关，和其他变量条件独立。通俗点说，当前状态只跟上一状态有关，跟上上或上上之前的状态无关。这种顺次演变的随机过程，就叫做马尔科夫链（Markov chain）。且有：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111003037680" alt="img"></p>
+</blockquote>
+<p>接着，将上述结点推广到结点集，则是：对于任意的结点集A，B，C，考察所有通过A中任意结点到B中任意结点的路径，若要求A，B条件独立，则需要所有的路径都被阻断(blocked)，即满足下列两个前提之一：</p>
+<ol>
+<li>A和B的“head-to-tail型”和“tail-to-tail型”路径都通过C；</li>
+<li>A和B的“head-to-head型”路径不通过C以及C的子孙；</li>
+</ol>
+<p>最后，举例说明上述D-Separation的3种情况（即贝叶斯网络的3种结构形式），则是如下图所示：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111004832787" alt="img"></p>
+</blockquote>
+<p>上图中左边部分是head-to-tail，给定 T 时，A 和 X 独立；右边部分的右上角是tail-to-tail，给定S时，L和B独立；右边部分的右下角是head-to-head，未给定D时，L和B独立。</p>
+<h3 id="贝叶斯网络的实例">贝叶斯网络的实例</h3>
+<p>给定如下图所示的贝叶斯网络：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111213550845" alt="img"></p>
+</blockquote>
+<p>其中，各个单词、表达式表示的含义如下：</p>
+<ul>
+<li>
+<p>smoking表示吸烟，其概率用P(S)表示，lung Cancer表示的肺癌，一个人在吸烟的情况下得肺癌的概率用P(C|S)表示，X-ray表示需要照医学上的X光，肺癌可能会导致需要照X光，吸烟也有可能会导致需要照X光（所以smoking也是X-ray的一个因），所以，因吸烟且得肺癌而需要照X光的概率用P(X|C,S)表示。</p>
+</li>
+<li>
+<p>Bronchitis表示支气管炎，一个人在吸烟的情况下得支气管炎的概率用P(B|S)，dyspnoea表示呼吸困难，支气管炎可能会导致呼吸困难，肺癌也有可能会导致呼吸困难（所以lung Cancer也是dyspnoea的一个因），因吸烟且得了支气管炎导致呼吸困难的概率用P(D|C,B)表示。</p>
+<p>lung Cancer简记为C，Bronchitis简记为B，dyspnoea简记为D，且C = 0表示lung Cancer不发生的概率，C = 1表示lung Cancer发生的概率，B等于0（B不发生）或1（B发生）也类似于C，同样的，D=1表示D发生的概率，D=0表示D不发生的概率，便可得到dyspnoea的一张概率表，如上图的最右下角所示。</p>
+</li>
+</ul>
+<h3 id="因子图">因子图</h3>
+<p>回到2.3节中那个实例上，如下图所示：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111005733875" alt="img"></p>
+</blockquote>
+<p>对于上图，在一个人已经呼吸困难（dyspnoea）的情况下，其抽烟（smoking）的概率是多少呢？即：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111005823359" alt="img"></p>
+</blockquote>
+<p>咱们来一步步计算推导下：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111010027078" alt="img"></p>
+</blockquote>
+<p>解释下上述式子推导过程：</p>
+<ol>
+<li>第二行：对联合概率关于b,x,c求和（在d=1的条件下），从而消去b,x,c，得到s和d=1的联合概率。</li>
+<li>第三行：最开始，所有变量都在sigma(d=1,b,x,c)的后面（sigma表示对“求和”的称谓），但由于P(s)和“d=1,b,x,c”都没关系，所以，可以提到式子的最前面。而且P(b|s)和x、c没关系，所以，也可以把它提出来，放到sigma(b)的后面，从而式子的右边剩下sigma(x)和sigma©。</li>
+</ol>
+<p>此外，图中Variable elimination表示的是变量消除的意思。为了更好的解决此类问题，咱们得引入因子图的概念。</p>
+<p>2.4.1 因子图的定义</p>
+<p>wikipedia上是这样定义因子图的：将一个具有多变量的全局函数因子分解，得到几个局部函数的乘积，以此为基础得到的一个双向图叫做因子图（Factor Graph）。</p>
+<p>比如，假定对于函数<img src="https://img-blog.csdn.net/20141111010913859" alt="img">，有下述式子成立：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111010838872" alt="img"></p>
+</blockquote>
+<p>其中<img src="https://img-blog.csdn.net/20141111010859137" alt="img">，其对应的因子图<img src="https://img-blog.csdn.net/20141111010916375" alt="img">包括：</p>
+<ol>
+<li>变量节点<img src="https://img-blog.csdn.net/20141111011033218" alt="img"></li>
+<li>因子（函数）节点<img src="https://img-blog.csdn.net/20141111010947528" alt="img"></li>
+<li>边<img src="https://img-blog.csdn.net/20141111011138781" alt="img">，边通过下列因式分解结果得到：在因子（函数）节点<img src="https://img-blog.csdn.net/20141111011059319" alt="img">和变量节点<img src="https://img-blog.csdn.net/20141111011106386" alt="img">之间存在边的充要条件是<img src="https://img-blog.csdn.net/20141111011114904" alt="img">存在。</li>
+</ol>
+<p>正式的定义果然晦涩！我相信你没看懂。通俗来讲，所谓因子图就是对函数进行因子分解得到的一种概率图。一般内含两种节点：变量节点和函数节点。我们知道，一个全局函数通过因式分解能够分解为多个局部函数的乘积，这些局部函数和对应的变量关系就体现在因子图上。</p>
+<p>举个例子，现在有一个全局函数，其因式分解方程为：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141112103919079" alt="img"></p>
+</blockquote>
+<p>其中fA,fB,fC,fD,fE为各函数，表示变量之间的关系，可以是条件概率也可以是其他关系（如马尔可夫随机场Markov Random Fields中的势函数）。</p>
+<p>为了方便表示，可以写成：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141112104009484" alt="img"></p>
+</blockquote>
+<p>其对应的因子图为：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141112104542668" alt="img"></p>
+</blockquote>
+<p>且上述因子图等价于：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141112104625484" alt="img"></p>
+</blockquote>
+<p>所以，在因子图中，所有的顶点不是变量节点就是函数节点，边线表示它们之间的函数关系。</p>
+<p>但搞了半天，虽然知道了什么是因子图，但因子图到底是干嘛的呢？为何要引入因子图，其用途和意义何在？事实上，因子图跟贝叶斯网络和马尔科夫随机场（Markov Random Fields）一样，也是概率图的一种。</p>
+<p>既然提到了马尔科夫随机场，那顺便说下有向图、无向图，以及条件随机场等相关概念。</p>
+<ul>
+<li>我们已经知道，有向图模型，又称作贝叶斯网络（Directed Graphical Models, DGM, Bayesian Network）。</li>
+</ul>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141222112243656" alt="img"></p>
+</blockquote>
+<ul>
+<li>但在有些情况下，强制对某些结点之间的边增加方向是不合适的。使用没有方向的无向边，形成了无向图模型（Undirected Graphical Model,UGM）, 又被称为马尔科夫随机场或者马尔科夫网络（Markov Random Field,  MRF or Markov network）。</li>
+</ul>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141222112302034" alt="img"></p>
+</blockquote>
+<ul>
+<li>设X=(X1,X2…Xn)和Y=(Y1,Y2…Ym)都是联合随机变量，若随机变量Y构成一个无向图 G=(V,E)表示的马尔科夫随机场（MRF），则条件概率分布P(Y|X)称为条件随机场（Conditional Random Field, 简称CRF，后续新的博客中可能会阐述CRF）。如下图所示，便是一个线性链条件随机场的无向图模型：</li>
+</ul>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141222111852153" alt="img"></p>
+</blockquote>
+<p>回到本文的主旨上来。在概率图中，<strong>求某个变量的边缘分布</strong>是常见的问题。这问题有很多求解方法，其中之一就是把贝叶斯网络或马尔科夫随机场转换成因子图，然后用sum-product算法求解。换言之，基于因子图可以用sum-product 算法高效的求各个变量的边缘分布。</p>
+<p>先通过一些例子分别说明如何把贝叶斯网络（和马尔科夫随机场），以及把马尔科夫链、隐马尔科夫模型转换成因子图后的情形，然后在2.4.2节，咱们再来看如何利用因子图的sum-product算法求边缘概率分布。</p>
+<p>给定下图所示的贝叶斯网络或马尔科夫随机场：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111092211421" alt="img"><img src="https://img-blog.csdn.net/20141112101407483" alt="img"></p>
+</blockquote>
+<p>根据各个变量对应的关系，可得：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111092421343" alt="img"></p>
+</blockquote>
+<p>其对应的因子图为（以下两种因子图的表示方式皆可）：</p>
+<blockquote>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111092601459" alt="img"></p>
+</blockquote>
+</blockquote>
+<p>由上述例子总结出由贝叶斯网络构造因子图的方法：</p>
+<ul>
+<li>
+<p>贝叶斯网络中的一个因子对应因子图中的一个结点</p>
+</li>
+<li>
+<p>贝叶斯网络中的每一个变量在因子图上对应边或者半边</p>
+</li>
+<li>
+<p>结点g和边x相连当且仅当变量x出现在因子g中。</p>
+<p>再比如，对于下图所示的由马尔科夫链转换而成的因子图：</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111234424734" alt="img"></p>
+</blockquote>
+<p>有：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111234428132" alt="img"></p>
+</blockquote>
+<p>而对于如下图所示的由隐马尔科夫模型转换而成的因子图：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111234503609" alt="img"></p>
+</blockquote>
+<p>有</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111234515031" alt="img"></p>
+</blockquote>
+<p>2.4.2 Sum-product算法</p>
+<p>我们已经知道，对于下图所示的因子图：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111093045895" alt="img"></p>
+</blockquote>
+<p>有：</p>
+<blockquote>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111093054537" alt="img"></p>
+</blockquote>
+</blockquote>
+<p>下面，咱们来考虑一个问题：即如何由联合概率分布求边缘概率分布。</p>
+<p>首先回顾下联合概率和边缘概率的定义，如下：</p>
+<ul>
+<li>
+<p>联合概率表示两个事件共同发生的概率。A与B的联合概率表示为<img src="https://img-blog.csdnimg.cn/img_convert/ec2046ed2f18030656d81cb020239d88.png" alt="img">或者<img src="https://img-blog.csdnimg.cn/img_convert/b3c3955190962cedde6494c9ad959567.png" alt="img">。</p>
+</li>
+<li>
+<p>边缘概率（又称先验概率）是某个事件发生的概率。边缘概率是这样得到的：在联合概率中，把最终结果中不需要的那些事件合并成其事件的全概率而消失（对离散随机变量用求和得全概率，对连续随机变量用积分得全概率）。这称为边缘化（marginalization）。A的边缘概率表示为P(A)，B的边缘概率表示为P(B)。</p>
+<p>事实上，某个随机变量fk的边缘概率可由x1,x2,x3, …, xn的联合概率求到，具体公式为：</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111235305570" alt="img"></p>
+</blockquote>
+<p>啊哈，啥原理呢？原理很简单，还是它：对xk外的其它变量的概率求和，最终剩下xk的概率！</p>
+<p>此外，换言之，如果有</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111235735656" alt="img"></p>
+</blockquote>
+<p>那么</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141111235745640" alt="img"></p>
+</blockquote>
+<p>上述式子如何进一步化简计算呢？考虑到我们小学所学到的乘法分配率，可知a<em>b + a</em>c = a*(b + c)，前者2次乘法1次加法，后者1次乘法，1次加法。我们这里的计算是否能借鉴到分配率呢？别急，且听下文慢慢道来。</p>
+<p>假定现在我们需要计算如下式子的结果：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141112000434217" alt="img"></p>
+</blockquote>
+<p>同时，f 能被分解如下：</p>
+<blockquote>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141112000519707" alt="img"></p>
+</blockquote>
+</blockquote>
+<p>借鉴分配率，我们可以提取公因子：</p>
+<blockquote>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141112000839984" alt="img"></p>
+</blockquote>
+</blockquote>
+<p>因为变量的边缘概率等于所有与他相连的函数传递过来的消息的积，所以计算得到：</p>
+<blockquote>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141112000843006" alt="img"></p>
+</blockquote>
+</blockquote>
+<p>仔细观察上述计算过程，可以发现，其中用到了类似“消息传递”的观点，且总共两个步骤。</p>
+<p>第一步、对于f 的分解图，根据蓝色虚线框、红色虚线框围住的两个box外面的消息传递：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141112001129256" alt="img"></p>
+</blockquote>
+<p>计算可得：</p>
+<blockquote>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141112001150643" alt="img"></p>
+</blockquote>
+</blockquote>
+<p>第二步、根据蓝色虚线框、红色虚线框围住的两个box内部的消息传递：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141112001808913" alt="img"></p>
+</blockquote>
+<p>根据<img src="https://img-blog.csdn.net/20141112001819443" alt="img">，我们有：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141112001830316" alt="img"></p>
+</blockquote>
+<p>就这样，上述计算过程将一个概率分布写成两个因子的乘积，而这两个因子可以继续分解或者通过已知得到。这种利用消息传递的观念计算概率的方法便是sum-product算法。前面说过，基于因子图可以用sum-product算法可以高效的求各个变量的边缘分布。</p>
+<p>到底什么是sum-product算法呢？sum-product算法，也叫belief propagation，有两种消息：</p>
+<ul>
+<li>一种是变量(Variable)到函数(Function)的消息：<img src="https://img-blog.csdn.net/20141112163109597" alt="img">，如下图所示</li>
+</ul>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141112164507756" alt="img"></p>
+</blockquote>
+<p>此时，变量到函数的消息为<img src="https://img-blog.csdn.net/20141112164737703" alt="img">。</p>
+<ul>
+<li>另外一种是函数(Function)到变量(Variable)的消息：<img src="https://img-blog.csdn.net/20141112163122468" alt="img">。如下图所示：</li>
+</ul>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141112164805362" alt="img"></p>
+</blockquote>
+<p>此时，函数到变量的消息为：<img src="https://img-blog.csdn.net/20141112164838031" alt="img">。</p>
+<p>以下是sum-product算法的总体框架：</p>
+<ul>
+<li><em>1</em>、给定如下图所示的因子图：</li>
+</ul>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141112154537627" alt="img"></p>
+</blockquote>
+<ul>
+<li><em>2</em>、sum-product 算法的消息计算规则为：</li>
+</ul>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141112154545692" alt="img"></p>
+</blockquote>
+<ul>
+<li><em>3</em>、根据sum-product定理，如果因子图中的函数f 没有周期，则有：</li>
+</ul>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141112154606750" alt="img"></p>
+</blockquote>
+<p>值得一提的是：如果因子图是无环的，则一定可以准确的求出任意一个变量的边缘分布，如果是有环的，则无法用sum-product算法准确求出来边缘分布。</p>
+<p>比如，下图所示的贝叶斯网络：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141112183526203" alt="img"></p>
+</blockquote>
+<p>其转换成因子图后，为：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141112183557236" alt="img"></p>
+</blockquote>
+<p>可以发现，若贝叶斯网络中存在“环”（无向），则因此构造的因子图会得到环。而使用消息传递的思想，这个消息将无限传输下去，不利于概率计算。<br>
+解决方法有3个：</p>
+<ul>
+<li>
+<p>1、删除贝叶斯网络中的若干条边，使得它不含有无向环</p>
+<p>比如给定下图中左边部分所示的原贝叶斯网络，可以通过去掉C和E之间的边，使得它重新变成有向无环图，从而成为图中右边部分的近似树结构：</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141113002311057" alt="img"></p>
+</blockquote>
+<p>具体变换的过程为最大权生成树算法MSWT（详细建立过程请参阅此<a target="_blank" rel="noopener" href="http://pan.baidu.com/s/1o69Lp1K">PPT</a> 第60页），通过此算法，这课树的近似联合概率P’(x)和原贝叶斯网络的联合概率P(x)的相对熵（如果忘了什么叫相对熵，请参阅：<a target="_blank" rel="noopener" href="http://blog.csdn.net/v_july_v/article/details/40508465">最大熵模型中的数学推导</a>）最小。</p>
+<ul>
+<li>
+<p>2、重新构造没有环的贝叶斯网络</p>
+</li>
+<li>
+<p>3、选择loopy belief propagation算法（你可以简单理解为sum-product 算法的递归版本），此算法一般选择环中的某个消息，随机赋个初值，然后用sum-product算法，迭代下去，因为有环，一定会到达刚才赋初值的那个消息，然后更新那个消息，继续迭代，直到没有消息再改变为止。唯一的缺点是不确保收敛，当然，此算法在绝大多数情况下是收敛的。</p>
+<p>此外，除了这个sum-product算法，还有一个max-product 算法。但只要弄懂了sum-product，也就弄懂了max-product 算法。因为max-product 算法就在上面sum-product 算法的基础上把求和符号换成求最大值max的符号即可！</p>
+<p>最后，sum-product 和 max-product 算法也能应用到隐马尔科夫模型hidden Markov models上，后面有机会的话可以介绍。</p>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://genewlan.github.io">ZhangLei</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://genewlan.github.io/2023/09/30/bayes-net/">http://genewlan.github.io/2023/09/30/bayes-net/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://genewlan.github.io" target="_blank">GeneWlan</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/bayes-net/">bayes net</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/09/30/Neural-Network-Frame/" title="Neural-Network-Frame"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Neural-Network-Frame</div></div></a></div><div class="next-post pull-right"><a href="/2023/08/31/Practise/" title="LDA Modeling Practise"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">LDA Modeling Practise</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ZhangLei</div><div class="author-info__description">change or die!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/genewlan/" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:xiaolobglee@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%96%B9%E6%B3%95"><span class="toc-number">1.1.</span> <span class="toc-text">贝叶斯方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%9D%E5%8F%B6%E6%96%AF%E6%96%B9%E6%B3%95%E7%9A%84%E6%8F%90%E5%87%BA"><span class="toc-number">1.1.1.</span> <span class="toc-text">贝叶斯方法的提出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%AE%9A%E7%90%86"><span class="toc-number">1.1.2.</span> <span class="toc-text">贝叶斯定理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8%EF%BC%9A%E6%8B%BC%E5%86%99%E6%A3%80%E6%9F%A5"><span class="toc-number">1.1.3.</span> <span class="toc-text">应用：拼写检查</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%BD%91%E7%BB%9C"><span class="toc-number">1.2.</span> <span class="toc-text">贝叶斯网络</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%BD%91%E7%BB%9C%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">1.2.1.</span> <span class="toc-text">贝叶斯网络的定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%BD%91%E7%BB%9C%E7%9A%843%E7%A7%8D%E7%BB%93%E6%9E%84%E5%BD%A2%E5%BC%8F"><span class="toc-number">1.2.2.</span> <span class="toc-text">贝叶斯网络的3种结构形式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B4%9D%E5%8F%B6%E6%96%AF%E7%BD%91%E7%BB%9C%E7%9A%84%E5%AE%9E%E4%BE%8B"><span class="toc-number">1.2.3.</span> <span class="toc-text">贝叶斯网络的实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%A0%E5%AD%90%E5%9B%BE"><span class="toc-number">1.2.4.</span> <span class="toc-text">因子图</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/30/Neural-Network-Frame/" title="Neural-Network-Frame">Neural-Network-Frame</a><time datetime="2023-09-30T10:55:16.000Z" title="发表于 2023-09-30 18:55:16">2023-09-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/30/bayes-net/" title="bayes-net">bayes-net</a><time datetime="2023-09-30T10:49:09.000Z" title="发表于 2023-09-30 18:49:09">2023-09-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/31/Practise/" title="LDA Modeling Practise">LDA Modeling Practise</a><time datetime="2023-08-31T06:45:25.000Z" title="发表于 2023-08-31 14:45:25">2023-08-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/31/%E9%80%9A%E4%BF%97%E7%90%86%E8%A7%A3LDA%E4%B8%BB%E9%A2%98%E6%A8%A1/" title="通俗理解LDA主题模">通俗理解LDA主题模</a><time datetime="2023-08-31T06:09:26.000Z" title="发表于 2023-08-31 14:09:26">2023-08-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/07/31/outlier-detection/" title="outlier_detection">outlier_detection</a><time datetime="2023-07-31T14:40:34.000Z" title="发表于 2023-07-31 22:40:34">2023-07-31</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By ZhangLei</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'J0s1l0MeDfMbgw4y4awgy2jX-MdYXbMMI',
+      appKey: '3vZoaKxqWQYlKbXXdXuSxBsT',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div><!-- hexo injector body_end start --><div id="background-effect"></div><script src="https://cdn.jsdelivr.net/npm/three@0.121.1/build/three.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.birds.min.js"></script><script>VANTA.BIRDS({"el":"#background-effect","mouseControls":true,"touchControls":true,"gyroControls":false,"minHeight":200,"minWidth":200,"scale":1,"scaleMobile":1})</script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body></html>

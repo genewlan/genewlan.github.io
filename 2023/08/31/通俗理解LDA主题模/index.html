@@ -1,0 +1,944 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>通俗理解LDA主题模 | GeneWlan</title><meta name="author" content="ZhangLei"><meta name="copyright" content="ZhangLei"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="[TOC] 前言 [转自] https:&#x2F;&#x2F;blog.csdn.net&#x2F;v_july_v&#x2F;article&#x2F;details&#x2F;41209515#t14 这篇博客清楚的交代了LDA主题建模所需要的框架，后面更是以很通俗的语言进行了描述，让初学者对LDA主题建模有了更直观的了解。 不足之处是，关于概率部分依然是公式先行，让人云里雾里。尤其是非数学&#x2F;计算机专业的人摸不着头脑。本人有幸，学过概率和统计、数学分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通俗理解LDA主题模">
+<meta property="og:url" content="http://genewlan.github.io/2023/08/31/%E9%80%9A%E4%BF%97%E7%90%86%E8%A7%A3LDA%E4%B8%BB%E9%A2%98%E6%A8%A1/index.html">
+<meta property="og:site_name" content="GeneWlan">
+<meta property="og:description" content="[TOC] 前言 [转自] https:&#x2F;&#x2F;blog.csdn.net&#x2F;v_july_v&#x2F;article&#x2F;details&#x2F;41209515#t14 这篇博客清楚的交代了LDA主题建模所需要的框架，后面更是以很通俗的语言进行了描述，让初学者对LDA主题建模有了更直观的了解。 不足之处是，关于概率部分依然是公式先行，让人云里雾里。尤其是非数学&#x2F;计算机专业的人摸不着头脑。本人有幸，学过概率和统计、数学分">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2023-08-31T06:09:26.000Z">
+<meta property="article:modified_time" content="2023-08-31T07:35:16.343Z">
+<meta property="article:author" content="ZhangLei">
+<meta property="article:tag" content="-Topic Modeling -LDA -Dirichlet 分布">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://genewlan.github.io/2023/08/31/%E9%80%9A%E4%BF%97%E7%90%86%E8%A7%A3LDA%E4%B8%BB%E9%A2%98%E6%A8%A1/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '通俗理解LDA主题模',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-08-31 15:35:16'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><!-- hexo injector head_end start -->
+    <style>
+      #background-effect {
+        position: fixed !important;
+        top: 0px;
+        left: 0px;
+        z-index: -1;
+        width: 100%;
+        height: 100%
+      }
+    </style>
+  <!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="GeneWlan" type="application/atom+xml">
+<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/03/21/ZVUmQFknE2JosXT.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="GeneWlan"><span class="site-name">GeneWlan</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">通俗理解LDA主题模</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-08-31T06:09:26.000Z" title="发表于 2023-08-31 14:09:26">2023-08-31</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-08-31T07:35:16.343Z" title="更新于 2023-08-31 15:35:16">2023-08-31</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="通俗理解LDA主题模"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>[TOC]</p>
+<h1>前言</h1>
+<p><strong>[转自] <a target="_blank" rel="noopener" href="https://blog.csdn.net/v_july_v/article/details/41209515#t14">https://blog.csdn.net/v_july_v/article/details/41209515#t14</a></strong></p>
+<p>这篇博客清楚的交代了LDA主题建模所需要的框架，后面更是以很通俗的语言进行了描述，让初学者对LDA主题建模有了更直观的了解。</p>
+<p>不足之处是，关于概率部分依然是公式先行，让人云里雾里。尤其是非数学/计算机专业的人摸不着头脑。本人有幸，学过概率和统计、数学分析等课程不错，以后会出一个系列，通俗的讲解这部分。</p>
+<p>目前正在做基因组，发现基因组和文本有很多相似之处。本着最朴素的想法（模仿），将文本处理中新算法应用到基因组处理，于是开启了长征。从百度lattice parsing开发了新冠疫苗，一路找到了enbadding，TF-IDF，Bert、LDA分布，LDA主题模型，以及bertipic，确实很受启发。</p>
+<p>最后补充一句：自然语言处理的思想和算法确实领先于基因组处理算法。</p>
+<h1>通俗理解LDA主题模</h1>
+<p>LDA，可以分为下述5个步骤：</p>
+<ol>
+<li>一个函数：gamma函数</li>
+<li>四个分布：二项分布、多项分布、beta分布、Dirichlet分布</li>
+<li>一个概念和一个理念：共轭先验和贝叶斯框架</li>
+<li>两个模型：pLSA、LDA</li>
+<li>一个采样：Gibbs采样</li>
+</ol>
+<h2 id="gamma函数">gamma函数</h2>
+<h3 id="整体把握lda">整体把握LDA</h3>
+<p>关于LDA有两种含义，一种是线性判别分析（Linear Discriminant Analysis），一种是概率主题模型：隐含狄利克雷分布（Latent Dirichlet Allocation，简称LDA），本文讲后者。</p>
+<p>另外，我先简单说下LDA的整体思想，不然我怕你看了半天，铺了太长的前奏，却依然因没见到LDA的影子而显得“心浮气躁”，导致不想再继续看下去。所以，先给你吃一颗定心丸，明白整体框架后，咱们再一步步抽丝剥茧，展开来论述。</p>
+<p>按照wiki上的介绍，LDA由Blei, David M.、Ng, Andrew Y.、Jordan于2003年提出，是一种<a target="_blank" rel="noopener" href="http://zh.wikipedia.org/wiki/%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8B">主题模型</a>，它可以<strong>将文档集 中每篇文档的主题以概率分布的形式给出</strong>，从而通过分析一些文档抽取出它们的主题（分布）出来后，便可以根据主题（分布）进行主题聚类或文本分类。同时，它是一种典型的词袋模型，即一篇文档是由一组词构成，词与词之间没有先后顺序的关系。</p>
+<p>此外，一篇文档可以包含多个主题，文档中每一个词都由其中的一个主题生成。</p>
+<p>人类是怎么生成文档的呢？LDA的这三位作者在原始论文中给了一个简单的例子。比如假设事先给定了这几个主题：Arts、Budgets、Children、Education，然后通过学习训练，获取每个主题Topic对应的词语。如下图所示：</p>
+<p><img src="https://img-blog.csdn.net/20141117153816148" alt="img"></p>
+<p>然后以一定的概率选取上述某个主题，再以一定的概率选取那个主题下的某个单词，不断的重复这两步，最终生成如下图所示的一篇文章（其中不同颜色的词语分别对应上图中不同主题下的词）：</p>
+<p><img src="https://img-blog.csdn.net/20141117154035285" alt="img"></p>
+<p>而当我们看到一篇文章后，往往喜欢推测这篇文章是如何生成的，我们可能会认为作者先确定这篇文章的几个主题，然后围绕这几个主题遣词造句，表达成文。</p>
+<p>LDA就是要干这事：<strong>根据给定的一篇文档，反推其主题分布</strong>。</p>
+<p>通俗来说，可以假定认为<strong>人类是根据上述文档生成过程写成了各种各样的文章，现在某小撮人想让计算机利用LDA干一件事：你计算机给我推测分析网络上各篇文章分别都写了些啥主题，且各篇文章中各个主题出现的概率大小（主题分布）是啥</strong>。</p>
+<p>然，就是这么一个看似普通的LDA，一度吓退了不少想深入探究其内部原理的初学者。难在哪呢，难就难在LDA内部涉及到的数学知识点太多了。</p>
+<p>在LDA模型中，一篇文档生成的方式如下：</p>
+<ul>
+<li>
+<p>从狄利克雷分布<img src="https://img-blog.csdn.net/20141117160438989" alt="img">中取样生成文档 i 的主题分布<img src="https://img-blog.csdn.net/20141117160452327" alt="img"></p>
+</li>
+<li>
+<p>从主题的多项式分布<img src="https://img-blog.csdn.net/20141117160452327" alt="img">中取样生成文档i第 j 个词的主题<img src="https://img-blog.csdn.net/20141117160518098" alt="img"></p>
+</li>
+<li>
+<p>从狄利克雷分布<img src="https://img-blog.csdn.net/20141117160531515" alt="img">中取样生成主题<img src="https://img-blog.csdn.net/20141117160518098" alt="img">对应的词语分布<img src="https://img-blog.csdn.net/20141117160613962" alt="img"></p>
+</li>
+<li>
+<p>从词语的多项式分布<img src="https://img-blog.csdn.net/20141117160613962" alt="img">中采样最终生成词语<img src="https://img-blog.csdn.net/20141117160656067" alt="img"></p>
+<p>其中，类似Beta分布是二项式分布的共轭先验概率分布，而狄利克雷分布（Dirichlet分布）是多项式分布的共轭先验概率分布。</p>
+<p>此外，LDA的图模型结构如下图所示（类似<a target="_blank" rel="noopener" href="http://blog.csdn.net/v_july_v/article/details/40984699#t6">贝叶斯网络</a>结构）：</p>
+</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20141117152903751" alt="img"></p>
+<p>恩，不错，短短6句话整体概括了整个LDA的主体思想！但也就是上面短短6句话，却接连不断或重复出现了二项分布、多项式分布、beta分布、狄利克雷分布（Dirichlet分布）、共轭先验概率分布、取样，那么请问，这些都是啥呢？</p>
+<p>这里先简单解释下二项分布、多项分布、beta分布、Dirichlet 分布这4个分布。</p>
+<ul>
+<li>
+<p><strong>二项分布（Binomial distribution）</strong>。</p>
+<p>二项分布是从伯努利分布推进的。伯努利分布，又称两点分布或0-1分布，是一个离散型的随机分布，其中的随机变量只有两类取值，非正即负{+，-}。而二项分布即重复n次的伯努利试验，记为 <img src="https://img-blog.csdn.net/20141213220758218" alt="img">。简言之，只做一次实验，是伯努利分布，重复做了n次，是二项分布。二项分布的概率密度函数为：</p>
+</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20141117234739906" alt="img"></p>
+<p>对于k = 0, 1, 2, …, n，其中的<img src="https://img-blog.csdn.net/20141118110903312" alt="img">是二项式系数（这就是二项分布的名称的由来），又记为<img src="https://img-blog.csdn.net/20141213220516940" alt="img">。回想起高中所学的那丁点概率知识了么：想必你当年一定死记过这个二项式系数<img src="https://img-blog.csdn.net/20141213220516940" alt="img">就是<img src="https://img-blog.csdn.net/20141126120105034" alt="img">。</p>
+<ul>
+<li>
+<p><strong>多项分布，是二项分布扩展到多维的情况</strong>。</p>
+<p>多项分布是指单次试验中的随机变量的取值不再是0-1的，而是有多种离散值可能（1,2,3…,k）。比如投掷6个面的骰子实验，N次实验结果服从K=6的多项分布。其中</p>
+</li>
+</ul>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141117235427677" alt="img"></p>
+</blockquote>
+<p>多项分布的概率密度函数为：</p>
+<p><img src="https://img-blog.csdn.net/20141117235452512" alt="img"></p>
+<ul>
+<li>
+<p><strong>Beta分布，二项分布的共轭先验分布</strong>。</p>
+<p>给定参数<img src="https://img-blog.csdn.net/20141117235016719" alt="img">和<img src="https://img-blog.csdn.net/20141117235020968" alt="img">，取值范围为[0,1]的随机变量 x 的概率密度函数：</p>
+</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20141117235056953" alt="img"></p>
+<p>其中：</p>
+<p><img src="https://img-blog.csdn.net/20141117235115532" alt="img">，<img src="https://img-blog.csdn.net/20141117235123035" alt="img">。</p>
+<p>注：<img src="https://img-blog.csdn.net/20141117175537939" alt="img">便是所谓的gamma函数，下文会具体阐述。</p>
+<ul>
+<li>
+<p><strong>Dirichlet分布，是beta分布在高维度上的推广</strong>。</p>
+<p>Dirichlet分布的的密度函数形式跟beta分布的密度函数如出一辙：</p>
+</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20141117235506350" alt="img"></p>
+<p>其中</p>
+<p><img src="https://img-blog.csdn.net/20141117235524695" alt="img"></p>
+<p>至此，我们可以看到<strong>二项分布和多项分布</strong>很相似，<strong>Beta分布和Dirichlet 分布</strong>很相似，而至于**“<strong>Beta分布是二项式分布的共轭先验概率分布，而狄利克雷分布（Dirichlet分布）是多项式分布的共轭先验概率分布</strong>”**这点在下文中说明。</p>
+<p>OK，接下来，咱们就按照本文开头所说的思路：“一个函数：gamma函数，四个分布：二项分布、多项分布、beta分布、Dirichlet分布，外加一个概念和一个理念：共轭先验和贝叶斯框架，两个模型：pLSA、LDA（文档-主题，主题-词语），一个采样：Gibbs采样”一步步详细阐述，争取给读者一个尽量清晰完整的LDA。</p>
+<p>（当然，如果你不想深究背后的细节原理，只想整体把握LDA的主体思想，可直接跳到本文<a target="_blank" rel="noopener" href="http://blog.csdn.net/v_july_v/article/details/41209515#t13"><strong>第4 部分</strong></a>，看完第4部分后，若还是想深究背后的细节原理，可再回到此处开始看）</p>
+<h3 id="gamma函数">gamma函数</h3>
+<p>咱们先来考虑一个问题（此问题1包括下文的问题2-问题4皆取材自LDA数学八卦）：</p>
+<ol>
+<li><strong>问题1</strong> 随机变量<img src="https://img-blog.csdn.net/20141117171124858" alt="img"></li>
+<li>把这n 个随机变量排序后得到顺序统计量<img src="https://img-blog.csdn.net/20141117171142782" alt="img"></li>
+<li>然后请问<img src="https://img-blog.csdn.net/20141117171153983" alt="img">的分布是什么。</li>
+</ol>
+<p>为解决这个问题，可以尝试计算<img src="https://img-blog.csdn.net/20141117171153983" alt="img">落在区间[x,x+Δx]的概率。即求下述式子的值：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141117171416755" alt="img"></p>
+</blockquote>
+<p>首先，把 [0,1] 区间分成三段 [0,x)，[x,x+Δx]，(x+Δx,1]，然后考虑下简单的情形：即假设n 个数中只有1个落在了区间 [x,x+Δx]内，由于这个区间内的数X(k)是第k大的，所以[0,x)中应该有 k−1 个数，(x+Δx,1] 这个区间中应该有n−k 个数。如下图所示：</p>
+<p><img src="https://img-blog.csdn.net/20141117171917031" alt="img"></p>
+<p>从而问题转换为下述事件E：</p>
+<p><img src="https://img-blog.csdn.net/20141117172536573" alt="img"></p>
+<p>对于上述事件E，有：</p>
+<p><img src="https://img-blog.csdn.net/20141117172713937" alt="img"></p>
+<p>其中，o(Δx)表示Δx的高阶无穷小。显然，由于不同的排列组合，即n个数中有一个落在 [x,x+Δx]区间的有n种取法，余下n−1个数中有k−1个落在[0,x)的有<img src="https://img-blog.csdn.net/20141117172953349" alt="img">种组合，所以和事件E等价的事件一共有<img src="https://img-blog.csdn.net/20141117173003692" alt="img">个。</p>
+<p>如果有2个数落在区间[x,x+Δx]呢？如下图所示：</p>
+<p><img src="https://img-blog.csdn.net/20141117173556252" alt="img"></p>
+<p>类似于事件E，对于2个数落在区间[x,x+Δx]的事件E’：</p>
+<p><img src="https://img-blog.csdn.net/20141117174658754" alt="img"></p>
+<p>有：</p>
+<p><img src="https://img-blog.csdn.net/20141117174704125" alt="img"></p>
+<p>从上述的事件E、事件E‘中，可以看出，只要落在[x,x+Δx]内的数字超过一个，则对应的事件的概率就是 o(Δx)。于是乎有：</p>
+<p><img src="https://img-blog.csdn.net/20141117174416718" alt="img"></p>
+<p>从而得到<img src="https://img-blog.csdn.net/20141117171153983" alt="img">的概率密度函数<img src="https://img-blog.csdn.net/20141117175925730" alt="img">为：</p>
+<p><img src="https://img-blog.csdn.net/20141117174509835" alt="img"></p>
+<p>至此，本节开头提出的问题得到解决。然仔细观察<img src="https://img-blog.csdn.net/20141117171153983" alt="img">的概率密度函数，发现式子的最终结果有阶乘，联想到阶乘在实数上的推广<img src="https://img-blog.csdn.net/20141117175537939" alt="img">函数：</p>
+<p><img src="https://img-blog.csdn.net/20141117175605598" alt="img"></p>
+<p>两者结合是否会产生奇妙的效果呢？考虑到<img src="https://img-blog.csdn.net/20141117175537939" alt="img">具有如下性质：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141117175735048" alt="img"></p>
+</blockquote>
+<p>故将代入到<img src="https://img-blog.csdn.net/20141117171153983" alt="img">的概率密度函数<img src="https://img-blog.csdn.net/20141117175925730" alt="img">中，可得：</p>
+<p><img src="https://img-blog.csdn.net/20141117180109671" alt="img"></p>
+<p>然后取<img src="https://img-blog.csdn.net/20141213220932734" alt="img">，<img src="https://img-blog.csdn.net/20141213223805718" alt="img">，转换<img src="https://img-blog.csdn.net/20141117175925730" alt="img">得到：</p>
+<p><img src="https://img-blog.csdn.net/20141117180513843" alt="img"></p>
+<p>如果熟悉beta分布的朋友，可能会惊呼：哇，竟然推出了beta分布！</p>
+<h2 id="beta分布">beta分布</h2>
+<h3 id="beta分布">beta分布</h3>
+<p>在概率论中，beta是指一组定义在<img src="https://img-blog.csdn.net/20141117180859890" alt="img">区间的连续概率分布，有两个参数<img src="https://img-blog.csdn.net/20141117181123550" alt="img">和<img src="https://img-blog.csdn.net/20141117181134937" alt="img">，且<img src="https://img-blog.csdn.net/20141117180930419" alt="img">。</p>
+<p>beta分布的概率密度函数是：</p>
+<p><img src="https://img-blog.csdn.net/20141117181504150" alt="img"></p>
+<p>其中的<img src="https://img-blog.csdn.net/20141117181601605" alt="img">便是<img src="https://img-blog.csdn.net/20141117175537939" alt="img">函数：</p>
+<p><img src="https://img-blog.csdn.net/20141117175605598" alt="img"></p>
+<p>随机变量X服从参数为的beta分布通常写作：<img src="https://img-blog.csdn.net/20141117181719980" alt="img">。</p>
+<h3 id="beta-binomial-共轭">Beta-Binomial 共轭</h3>
+<p>回顾下1.1节开头所提出的问题：“问题1 随机变量<img src="https://img-blog.csdn.net/20141117171124858" alt="img">，把这n 个随机变量排序后得到顺序统计量<img src="https://img-blog.csdn.net/20141117171142782" alt="img">，然后请问<img src="https://img-blog.csdn.net/20141117171153983" alt="img">的分布是什么。” 如果，咱们要在这个问题的基础上增加一些观测数据，变成<strong>问题2</strong>：</p>
+<ul>
+<li>
+<p><img src="https://img-blog.csdn.net/20141117171124858" alt="img">，对应的顺序统计量是<img src="https://img-blog.csdn.net/20141117171142782" alt="img">，需要猜测<img src="https://img-blog.csdn.net/20141117182441741" alt="img">；</p>
+</li>
+<li>
+<p><img src="https://img-blog.csdn.net/20141117182537296" alt="img">， <img src="https://img-blog.csdn.net/20141117183329656" alt="img">中有<img src="https://img-blog.csdn.net/20141117183159618" alt="img">个比p小，<img src="https://img-blog.csdn.net/20141117183207590" alt="img">个比<img src="https://img-blog.csdn.net/20141117184123125" alt="img">大；</p>
+</li>
+<li>
+<p>那么，请问<img src="https://img-blog.csdn.net/20141117183246106" alt="img">的分布是什么。</p>
+<p>根据“Yi中有<img src="https://img-blog.csdn.net/20141117183159618" alt="img">个比<img src="https://img-blog.csdn.net/20141117184123125" alt="img">小，<img src="https://img-blog.csdn.net/20141117183207590" alt="img">个比<img src="https://img-blog.csdn.net/20141117184123125" alt="img">大”，换言之，Yi中有<img src="https://img-blog.csdn.net/20141117183159618" alt="img">个比<img src="https://img-blog.csdn.net/20141117171153983" alt="img">小，<img src="https://img-blog.csdn.net/20141117183207590" alt="img">个比<img src="https://img-blog.csdn.net/20141117171153983" alt="img">大，所以<img src="https://img-blog.csdn.net/20141117171153983" alt="img">是<img src="https://img-blog.csdn.net/20141117182908359" alt="img">中第<img src="https://img-blog.csdn.net/20141117183148792" alt="img">大的数。</p>
+<p>根据1.1节最终得到的结论“只要落在[x,x+Δx]内的数字超过一个，则对应的事件的概率就是 o(Δx)”，继而推出事件服从beta分布，从而可知<img src="https://img-blog.csdn.net/20141117182441741" alt="img">的概率密度函数为：</p>
+</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20141117183714937" alt="img"></p>
+<p>熟悉贝叶斯方法的朋友心里估计又犯“嘀咕”了，这不就是贝叶斯式的思考过程么？</p>
+<ol>
+<li>为了猜测<img src="https://img-blog.csdn.net/20141117182441741" alt="img">，在获得一定的观测数据前，我们对<img src="https://img-blog.csdn.net/20141117184123125" alt="img">的认知是：<img src="https://img-blog.csdn.net/20141118100645570" alt="img">，此称为<img src="https://img-blog.csdn.net/20141117184123125" alt="img">的先验分布；</li>
+<li>然后为了获得这个结果“ <img src="https://img-blog.csdn.net/20141117183329656" alt="img">中有<img src="https://img-blog.csdn.net/20141117183159618" alt="img">个比p小，<img src="https://img-blog.csdn.net/20141117183207590" alt="img">个比<img src="https://img-blog.csdn.net/20141117184123125" alt="img">大”，针对<img src="https://img-blog.csdn.net/20141117183329656" alt="img">是做了<img src="https://img-blog.csdn.net/20141117184532817" alt="img">次贝努利实验，所以<img src="https://img-blog.csdn.net/20141117183159618" alt="img">服从二项分布<img src="https://img-blog.csdn.net/20141117184624234" alt="img">；</li>
+<li>在给定了来自数据提供的<img src="https://img-blog.csdn.net/20141117184713218" alt="img">的知识后，<img src="https://img-blog.csdn.net/20141117184123125" alt="img">的后验分布变为<img src="https://img-blog.csdn.net/20141117184810158" alt="img">。</li>
+</ol>
+<p>回顾下贝叶斯派思考问题的固定模式：</p>
+<ul>
+<li>
+<p><strong>先验分布<img src="https://img-blog.csdn.net/20141110214925523" alt="img"> + 样本信息<img src="https://img-blog.csdn.net/20141110211153578" alt="img"> <img src="https://img-blog.csdn.net/20141110190250086" alt="img"> 后验分布<img src="https://img-blog.csdn.net/20141110215058639" alt="img"></strong></p>
+<p>上述思考模式意味着，新观察到的样本信息将修正人们以前对事物的认知。换言之，在得到新的样本信息之前，人们对<img src="https://img-blog.csdn.net/20141110210919359" alt="img">的认知是先验分布<img src="https://img-blog.csdn.net/20141110214925523" alt="img">，在得到新的样本信息<img src="https://img-blog.csdn.net/20141110211153578" alt="img">后，人们对<img src="https://img-blog.csdn.net/20141110210919359" alt="img">的认知为<img src="https://img-blog.csdn.net/20141110215058639" alt="img">。</p>
+<p>类比到现在这个问题上，我们也可以试着写下：</p>
+</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20141117185216670" alt="img"></p>
+<p>其中<img src="https://img-blog.csdn.net/20141117184713218" alt="img">对应的是二项分布<img src="https://img-blog.csdn.net/20141117185530298" alt="img">的计数。</p>
+<p>更一般的，对于非负实数<img src="https://img-blog.csdn.net/20141117181123550" alt="img">和<img src="https://img-blog.csdn.net/20141117181134937" alt="img">，我们有如下关系</p>
+<p><img src="https://img-blog.csdn.net/20141117185325671" alt="img"></p>
+<p>针对于这种<strong>观测到的数据符合二项分布</strong>，<strong>参数的先验分布和后验分布都是Beta分布</strong>的情况**，就是Beta-Binomial共轭**。换言之，<strong>Beta分布是二项式分布的共轭先验概率分布</strong>。</p>
+<p>二项分布和Beta分布是共轭分布意味着，如果我们为二项分布的参数p选取的先验分布是Beta分布，那么以p为参数的二项分布用贝叶斯估计得到的后验分布仍然服从Beta分布。</p>
+<p>此外，如何理解参数<img src="https://img-blog.csdn.net/20141117181123550" alt="img">和<img src="https://img-blog.csdn.net/20141117181134937" alt="img">所表达的意义呢？<img src="https://img-blog.csdn.net/20141117181123550" alt="img">、<img src="https://img-blog.csdn.net/20141117181134937" alt="img">可以认为形状参数，通俗但不严格的理解是，<img src="https://img-blog.csdn.net/20141117181123550" alt="img">和<img src="https://img-blog.csdn.net/20141117181134937" alt="img">共同控制Beta分布的函数“长的样子”：形状千奇百怪，高低胖瘦，如下图所示：</p>
+<p><img src="https://img-blog.csdn.net/20141118115514401" alt="img"></p>
+<h3 id="共轭先验分布">共轭先验分布</h3>
+<p>什么又是共轭呢？轭的意思是束缚、控制，共轭从字面上理解，则是共同约束，或互相约束。</p>
+<p><strong>在贝叶斯概率理论中，如果后验概率P(θ|x)和先验概率p(θ)满足同样的分布律，那么，先验分布和后验分布被叫做共轭分布，同时，先验分布叫做似然函数的共轭先验分布</strong>。</p>
+<p>比如，某观测数据服从概率分布**P(θ)**时，当观测到新的X数据时，我们一般会遇到如下问题：</p>
+<ul>
+<li>可否根据新观测数据<strong>X</strong>，更新参数θ？</li>
+<li>根据新观测数据可以在多大程度上改变参数θ，即</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20141117223124750" alt="img"></p>
+<ul>
+<li>
+<p>当重新估计θ的时候，给出新参数值θ的新概率分布，即<strong>P(θ|x)</strong>。</p>
+<p>事实上，根据根据贝叶斯公式可知：</p>
+</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20141117223514396" alt="img"></p>
+<p>其中，P(x|θ)表示以预估θ为参数的x概率分布，可以直接求得，P(θ)是已有原始的θ概率分布。<br>
+所以，如果我们选取P(x|θ)的共轭先验作为P(θ)的分布，那么P(x|θ)乘以P(θ)，然后归一化的结果P(θ|x)跟和P(θ)的形式一样。换句话说，先验分布是P(θ)，后验分布是P(θ|x)，<strong>先验分布跟后验分布同属于一个分布族，故称该分布族是θ的共轭先验分布（族）</strong>。</p>
+<p>举个例子。投掷一个非均匀硬币，可以使用参数为θ的伯努利模型，θ为硬币为正面的概率，那么结果x的分布形式为：</p>
+<p><img src="https://img-blog.csdn.net/20141117224140453" alt="img"></p>
+<p>其共轭先验为beta分布，具有两个参数<img src="https://img-blog.csdn.net/20141117181123550" alt="img">和<img src="https://img-blog.csdn.net/20141117181134937" alt="img">，称为超参数（hyperparameters）。且这两个参数决定了θ参数，其Beta分布形式为</p>
+<p><img src="https://img-blog.csdn.net/20141117230028113" alt="img"></p>
+<p>然后计算后验概率</p>
+<p><img src="https://img-blog.csdn.net/20141117230441640" alt="img"></p>
+<p>归一化这个等式后会得到另一个Beta分布，从而证明了Beta分布确实是伯努利分布的共轭先验分布。</p>
+<h3 id="从beta分布推广到dirichlet-分布">从beta分布推广到Dirichlet 分布</h3>
+<p>接下来，咱们来考察beta分布的一个性质。</p>
+<p>如果<img src="https://img-blog.csdn.net/20141117203613655" alt="img">，则有：</p>
+<p><img src="https://img-blog.csdn.net/20141117203629988" alt="img"></p>
+<p>注意到上式最后结果的右边积分</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141117204305979" alt="img"></p>
+</blockquote>
+<p>其类似于概率分布<img src="https://img-blog.csdn.net/20141117203736023" alt="img">，而对于这个分布有</p>
+<p><img src="https://img-blog.csdn.net/20141117203818843" alt="img"></p>
+<p>从而求得</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141117204305979" alt="img"></p>
+</blockquote>
+<p>的结果为</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141117204625363" alt="img"></p>
+</blockquote>
+<p>最后将此结果带入<img src="https://img-blog.csdn.net/20141117203959187" alt="img">的计算式，得到：</p>
+<p><img src="https://img-blog.csdn.net/20141117204010541" alt="img"></p>
+<p>最后的这个结果意味着对于Beta 分布的随机变量，其均值（期望）可以用<img src="https://img-blog.csdn.net/20141117205049284" alt="img">来估计。此外，狄利克雷Dirichlet 分布也有类似的结论，即如果<img src="https://img-blog.csdn.net/20141117211131796" alt="img">，同样可以证明有下述结论成立：</p>
+<p><img src="https://img-blog.csdn.net/20141117211142562" alt="img"></p>
+<p>那什么是Dirichlet 分布呢？简单的理解Dirichlet 分布就是一组连续多变量概率分布，是多变量普遍化的beta分布。为了纪念德国数学家约翰·彼得·古斯塔夫·勒热纳·狄利克雷（Peter Gustav Lejeune Dirichlet）而命名。狄利克雷分布常作为贝叶斯统计的先验概率。</p>
+<h2 id="dirichlet-分布">Dirichlet 分布</h2>
+<h3 id="dirichlet-分布">Dirichlet 分布</h3>
+<p>根据wikipedia上的介绍，维度K ≥ 2（x1,x2…xK-1维，共K个）的狄利克雷分布在参数α1, …, αK &gt; 0上、基于欧几里得空间RK-1里的勒贝格测度有个概率密度函数，定义为：</p>
+<p><img src="https://img-blog.csdn.net/20141117232638381" alt="img"></p>
+<p>其中，<img src="https://img-blog.csdn.net/20141117233333953" alt="img">相当于是多项beta函数</p>
+<p><img src="https://img-blog.csdn.net/20141117233352295" alt="img"></p>
+<p>且<img src="https://img-blog.csdn.net/20141117233400236" alt="img"></p>
+<p>此外，x1+x2+…+xK-1+xK=1，x1,x2…xK-1&gt;0，且在(K-1)维的单纯形上，其他区域的概率密度为0。</p>
+<p>当然，也可以如下定义Dirichlet 分布</p>
+<p><img src="https://img-blog.csdn.net/20141117233150484" alt="img"></p>
+<p>其中的<img src="https://img-blog.csdn.net/20141121104155483" alt="img">称为Dirichlet 分布的归一化系数：</p>
+<p><img src="https://img-blog.csdn.net/20141121104233812" alt="img"></p>
+<p>且根据Dirichlet分布的积分为1（概率的基本性质），可以得到：</p>
+<p><img src="https://img-blog.csdn.net/20141127072603172" alt="img"></p>
+<h3 id="dirichlet-multinomial-共轭">Dirichlet-Multinomial 共轭</h3>
+<p>下面，在2.2节问题2的基础上继续深入，引出<strong>问题3</strong>。</p>
+<ul>
+<li>
+<p><img src="https://img-blog.csdn.net/20141117171124858" alt="img">，</p>
+</li>
+<li>
+<p>排序后对应的顺序统计量<img src="https://img-blog.csdn.net/20141117234106703" alt="img">,</p>
+</li>
+<li>
+<p>问<img src="https://img-blog.csdn.net/20141117234117660" alt="img">的联合分布是什么？</p>
+<p>为了简化计算，取x3满足x1+x2+x3=1,但只有x1,x2是变量，如下图所示：</p>
+</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20141117234134290" alt="img"></p>
+<p>从而有：</p>
+<p><img src="https://img-blog.csdn.net/20141118003458723" alt="img"></p>
+<p>继而得到于是我们得到<img src="https://img-blog.csdn.net/20141117234117660" alt="img">的联合分布为：</p>
+<p><img src="https://img-blog.csdn.net/20141118003624156" alt="img"></p>
+<p>观察上述式子的最终结果，可以看出上面这个分布其实就是3维形式的 Dirichlet 分布</p>
+<p><img src="https://img-blog.csdn.net/20141118003740698" alt="img"></p>
+<p>令<img src="https://img-blog.csdn.net/20141118003757702" alt="img">，于是分布密度可以写为</p>
+<p><img src="https://img-blog.csdn.net/20141118003817062" alt="img"></p>
+<p>这个就是一般形式的3维 Dirichlet 分布，即便<img src="https://img-blog.csdn.net/20141118003830275" alt="img">延拓到非负实数集合，以上概率分布也是良定义的。</p>
+<p>将Dirichlet分布的概率密度函数取对数，绘制对称Dirichlet分布的图像如下图所示（截取自wikipedia上）：</p>
+<p><img src="https://img-blog.csdnimg.cn/img_convert/0beb4b53b969f87ff42219feb3dea94c.gif" alt="img"></p>
+<p>上图中，取K=3，也就是有两个独立参数x1,x2，分别对应图中的两个坐标轴，第三个参数始终满足x3=1-x1-x2且α1=α2=α3=α，图中反映的是参数α从α=(0.3, 0.3, 0.3)变化到(2.0, 2.0, 2.0)时的概率对数值的变化情况。</p>
+<p>为了论证Dirichlet分布是多项式分布的共轭先验概率分布，下面咱们继续在上述问题3的基础上再进一步，提出<strong>问题4</strong>。</p>
+<ol>
+<li><strong>问题4</strong> <img src="https://img-blog.csdn.net/20141118180531757" alt="img">，排序后对应的顺序统计量<img src="https://img-blog.csdn.net/20141118180542427" alt="img"></li>
+<li>令<img src="https://img-blog.csdn.net/20141118180558421" alt="img">,<img src="https://img-blog.csdn.net/20141118180611890" alt="img">,<img src="https://img-blog.csdn.net/20141118180622671" alt="img">（此处的p3非变量，只是为了表达方便），现在要猜测<img src="https://img-blog.csdn.net/20141118180717390" alt="img">；</li>
+<li><img src="https://img-blog.csdn.net/20141118180744295" alt="img">，Yi中落到<img src="https://img-blog.csdn.net/20141118180754809" alt="img">，<img src="https://img-blog.csdn.net/20141118180800191" alt="img">，<img src="https://img-blog.csdn.net/20141118180806244" alt="img"> 三个区间的个数分别为 m1,m2,m3，m=m1+m2+m3；</li>
+<li>问后验分布<img src="https://img-blog.csdn.net/20141118180831609" alt="img">的分布是什么。</li>
+</ol>
+<p>为了方便讨论，记<img src="https://img-blog.csdn.net/20141118214256906" alt="img">，及<img src="https://img-blog.csdn.net/20141118214259932" alt="img">，根据已知条件“<img src="https://img-blog.csdn.net/20141118180744295" alt="img">，Yi中落到<img src="https://img-blog.csdn.net/20141118180754809" alt="img">，<img src="https://img-blog.csdn.net/20141118180800191" alt="img">，<img src="https://img-blog.csdn.net/20141118180806244" alt="img"> 三个区间的个数分别为 m1,m2”，可得<img src="https://img-blog.csdn.net/20141118214717703" alt="img">、<img src="https://img-blog.csdn.net/20141118214721560" alt="img">分别是这m+n个数中第<img src="https://img-blog.csdn.net/20141118214854567" alt="img">大、第<img src="https://img-blog.csdn.net/20141118214859481" alt="img">大的数。于是，后验分布<img src="https://img-blog.csdn.net/20141118215138703" alt="img">应该为<img src="https://img-blog.csdn.net/20141118215146718" alt="img">，即一般化的形式表示为：<img src="https://img-blog.csdn.net/20141118215151082" alt="img">。</p>
+<p>同样的，按照贝叶斯推理的逻辑，可将上述过程整理如下：</p>
+<ol>
+<li>我们要猜测参数<img src="https://img-blog.csdn.net/20141118220412816" alt="img">，其先验分布为<img src="https://img-blog.csdn.net/20141118220433171" alt="img">；</li>
+<li>数据Yi落到三个区间<img src="https://img-blog.csdn.net/20141118180754809" alt="img">，<img src="https://img-blog.csdn.net/20141118180800191" alt="img">，<img src="https://img-blog.csdn.net/20141118180806244" alt="img"> 的个数分别为<img src="https://img-blog.csdn.net/20141118220524935" alt="img">，所以<img src="https://img-blog.csdn.net/20141118220449991" alt="img">服从多项分布<img src="https://img-blog.csdn.net/20141118220553625" alt="img"></li>
+<li>在给定了来自数据提供的知识<img src="https://img-blog.csdn.net/20141118220601657" alt="img">后，<img src="https://img-blog.csdn.net/20141118220609473" alt="img">的后验分布变为<img src="https://img-blog.csdn.net/20141118220620315" alt="img"></li>
+</ol>
+<p>上述贝叶斯分析过程的直观表述为：</p>
+<p><img src="https://img-blog.csdn.net/20141118220632031" alt="img"></p>
+<p>令<img src="https://img-blog.csdn.net/20141118221128562" alt="img">，可把<img src="https://img-blog.csdn.net/20141118221159725" alt="img">从整数集合延拓到实数集合，从而得到更一般的表达式如下：</p>
+<p><img src="https://img-blog.csdn.net/20141118220737504" alt="img"></p>
+<p>针对于这种<strong>观测到的数据符合多项分布，参数的先验分布和后验分布都是Dirichlet 分布</strong>的情况，<strong>就是Dirichlet-Multinomial 共轭</strong>。换言之，至此已经证明了Dirichlet分布的确就是多项式分布的共轭先验概率分布。</p>
+<p>意味着，如果我们为多项分布的参数p选取的先验分布是Dirichlet分布，那么以p为参数的多项分布用贝叶斯估计得到的后验分布仍然服从Dirichlet分布。</p>
+<p>进一步，一般形式的Dirichlet 分布定义如下：</p>
+<p><img src="https://img-blog.csdn.net/20141118224014683" alt="img"></p>
+<p>而对于给定的<img src="https://img-blog.csdn.net/20141118224321837" alt="img">和<img src="https://img-blog.csdn.net/20141118224327281" alt="img">，其多项分布为：</p>
+<p><img src="https://img-blog.csdn.net/20141118224347655" alt="img"></p>
+<p>结论是：Dirichlet分布<img src="https://img-blog.csdn.net/20141118224449899" alt="img">和多项分布<img src="https://img-blog.csdn.net/20141118224457093" alt="img">是共轭关系。</p>
+<h2 id="主题模型lda">主题模型LDA</h2>
+<p>​    在开始下面的旅程之前，先来总结下我们目前所得到的最主要的几个收获：</p>
+<ul>
+<li>
+<p>通过上文的第2.2节，我们知道</p>
+<p>beta分布</p>
+<p>是二项式分布的共轭先验概率分布：</p>
+<ul>
+<li>**“**对于非负实数<img src="https://img-blog.csdn.net/20141117181123550" alt="img">和<img src="https://img-blog.csdn.net/20141117181134937" alt="img">，我们有如下关系</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20141117185325671" alt="img"></p>
+<p>其中<img src="https://img-blog.csdn.net/20141117184713218" alt="img">对应的是二项分布<img src="https://img-blog.csdn.net/20141117185530298" alt="img">的计数。针对于这种观测到的数据符合二项分布，参数的先验分布和后验分布都是Beta分布的情况，就是Beta-Binomial 共轭。<strong>”</strong></p>
+<ul>
+<li>
+<p>通过上文的3.2节，我们知道狄利克雷分布</p>
+<p>（Dirichlet分布）</p>
+<p>是多项式分布的共轭先验概率分布：</p>
+<ul>
+<li><strong>“</strong> 把<img src="https://img-blog.csdn.net/20141118221159725" alt="img">从整数集合延拓到实数集合，从而得到更一般的表达式如下：</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20141118220737504" alt="img"></p>
+<p>针对于这种观测到的数据符合多项分布，参数的先验分布和后验分布都是Dirichlet 分布的情况，就是 Dirichlet-Multinomial 共轭。 <strong>”</strong></p>
+<ul>
+<li>
+<p>以及贝叶斯派思考问题的固定模式：</p>
+<ul>
+<li>
+<p><strong>先验分布<img src="https://img-blog.csdn.net/20141110214925523" alt="img"> + 样本信息<img src="https://img-blog.csdn.net/20141110211153578" alt="img"> <img src="https://img-blog.csdn.net/20141110190250086" alt="img"> 后验分布<img src="https://img-blog.csdn.net/20141110215058639" alt="img"></strong></p>
+<p>上述思考模式意味着，新观察到的样本信息将修正人们以前对事物的认知。换言之，在得到新的样本信息之前，人们对<img src="https://img-blog.csdn.net/20141110210919359" alt="img">的认知是先验分布<img src="https://img-blog.csdn.net/20141110214925523" alt="img">，在得到新的样本信息<img src="https://img-blog.csdn.net/20141110211153578" alt="img">后，人们对<img src="https://img-blog.csdn.net/20141110210919359" alt="img">的认知为<img src="https://img-blog.csdn.net/20141110215058639" alt="img">。</p>
+</li>
+</ul>
+</li>
+<li>
+<p>顺便提下频率派与贝叶斯派各自不同的思考方式：</p>
+<ul>
+<li>频率派把需要推断的参数θ看做是固定的未知常数，即概率<img src="https://img-blog.csdn.net/20141110214603237" alt="img">虽然是未知的，但最起码是确定的一个值，同时，样本X 是随机的，所以频率派重点研究样本空间，大部分的概率计算都是针对样本X 的分布；</li>
+<li>而<strong>贝叶斯派</strong>的观点则截然相反，他们认为待估计的参数<img src="https://img-blog.csdn.net/20141110214603237" alt="img">是随机变量，服从一定的分布，而样本X 是固定的，由于样本是固定的，所以他们重点研究的是参数<img src="https://img-blog.csdn.net/20141110214603237" alt="img">的分布。</li>
+</ul>
+<p>OK，在杀到终极boss——LDA模型之前，再循序渐进理解基础模型：Unigram model、mixture of unigrams model，以及跟LDA最为接近的pLSA模型。</p>
+<p>为了方便描述，首先定义一些变量：</p>
+</li>
+<li>
+<p><img src="https://img-blog.csdn.net/20141118232053295" alt="img">表示词，<img src="https://img-blog.csdn.net/20141118232219439" alt="img">表示所有单词的个数（固定值）</p>
+</li>
+<li>
+<p><img src="https://img-blog.csdn.net/20141118232105500" alt="img">表示主题，<img src="https://img-blog.csdn.net/20141118232243400" alt="img">是主题的个数（预先给定，固定值）</p>
+</li>
+<li>
+<p><img src="https://img-blog.csdn.net/20141118232121329" alt="img">表示语料库，其中的<img src="https://img-blog.csdn.net/20141118232236677" alt="img">是语料库中的文档数（固定值）</p>
+</li>
+<li>
+<p><img src="https://img-blog.csdn.net/20141118232113406" alt="img">表示文档，其中的<img src="https://img-blog.csdn.net/20141118232228453" alt="img">表示一个文档中的词数（随机变量）</p>
+</li>
+</ul>
+<h3 id="各个基础模型">各个基础模型</h3>
+<p>4.1.1 Unigram model</p>
+<p>对于文档<img src="https://img-blog.csdn.net/20141118232113406" alt="img">，用<img src="https://img-blog.csdn.net/20141118232926037" alt="img">表示词<img src="https://img-blog.csdn.net/20141118232935912" alt="img">的先验概率，生成文档<img src="https://img-blog.csdn.net/20141118233058873" alt="img">的概率为：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141118233228339" alt="img"></p>
+</blockquote>
+<p>其图模型为（图中被涂色的w表示可观测变量，N表示一篇文档中总共N个单词，M表示M篇文档）：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141118233121976" alt="img"></p>
+</blockquote>
+<p>或为：</p>
+<p><img src="https://img-blog.csdn.net/20141118234545921" alt="img"></p>
+<p>unigram model假设文本中的词服从Multinomial分布，而我们已经知道Multinomial分布的先验分布为Dirichlet分布。<br>
+上图中的<img src="https://img-blog.csdn.net/20141118234749489" alt="img">表示在文本中观察到的第n个词，n∈[1,N]表示该文本中一共有N个单词。加上方框表示重复，即一共有N个这样的随机变量<img src="https://img-blog.csdn.net/20141118234749489" alt="img">。其中，p和α是隐含未知变量：</p>
+<ul>
+<li>
+<p>p是词服从的Multinomial分布的参数</p>
+</li>
+<li>
+<p>α是Dirichlet分布（即Multinomial分布的先验分布）的参数。</p>
+<p>一般α由经验事先给定，p由观察到的文本中出现的词学习得到，表示文本中出现每个词的概率。</p>
+</li>
+</ul>
+<p>4.1.2 Mixture of unigrams model</p>
+<p>该模型的生成过程是：给某个文档先选择一个主题<img src="https://img-blog.csdn.net/20141118232105500" alt="img">，再根据该主题生成文档，该文档中的所有词都来自一个主题。假设主题有<img src="https://img-blog.csdn.net/20141118234021812" alt="img">，生成文档<img src="https://img-blog.csdn.net/20141118233058873" alt="img">的概率为：</p>
+<p><img src="https://img-blog.csdn.net/20141118234201515" alt="img"></p>
+<p>其图模型为（图中被涂色的w表示可观测变量，未被涂色的z表示未知的隐变量，N表示一篇文档中总共N个单词，M表示M篇文档）：</p>
+<p><img src="https://img-blog.csdn.net/20141118234219252" alt="img"></p>
+<h3 id="plsa模型">PLSA模型</h3>
+<p>啊哈，长征两万五，经过前面这么长的铺垫，终于快要接近LDA模型了！因为跟LDA模型最为接近的便是下面要阐述的这个pLSA模型，理解了pLSA模型后，到LDA模型也就一步之遥——给pLSA加上贝叶斯框架，便是LDA。</p>
+<p>4.2.1 pLSA模型下生成文档</p>
+<p>OK，在上面的Mixture of unigrams model中，我们假定一篇文档只有一个主题生成，可实际中，一篇文章往往有多个主题，只是这多个主题各自在文档中出现的概率大小不一样。比如介绍一个国家的文档中，往往会分别从教育、经济、交通等多个主题进行介绍。那么在pLSA中，<strong>文档是怎样被生成的呢</strong>？</p>
+<p>假设你要写M篇文档，由于一篇文档由各个不同的词组成，所以你需要确定每篇文档里每个位置上的词。</p>
+<p>再假定你一共有K个可选的主题，有V个可选的词，咱们来玩一个扔骰子的游戏。</p>
+<ul>
+<li>*<strong>1*</strong>. 假设你每写一篇文档会制作一颗K面的“文档-主题”骰子（扔此骰子能得到K个主题中的任意一个），和K个V面的“主题-词项” 骰子（每个骰子对应一个主题，K个骰子对应之前的K个主题，且骰子的每一面对应要选择的词项，V个面对应着V个可选的词）。
+<ul>
+<li>比如可令K=3，即制作1个含有3个主题的“文档-主题”骰子，这3个主题可以是：教育、经济、交通。然后令V = 3，制作3个有着3面的“主题-词项”骰子，其中，教育主题骰子的3个面上的词可以是：大学、老师、课程，经济主题骰子的3个面上的词可以是：市场、企业、金融，交通主题骰子的3个面上的词可以是：高铁、汽车、飞机。</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20141119110830531" alt="img"></p>
+<ul>
+<li>
+<p>*<strong>2*</strong>. 每写一个词，先扔该“文档-主题”骰子选择主题，得到主题的结果后，使用和主题结果对应的那颗“主题-词项”骰子，扔该骰子选择要写的词。</p>
+<ul>
+<li>先扔“文档-主题”的骰子，假设（以一定的概率）得到的主题是教育，所以下一步便是扔教育主题筛子，（以一定的概率）得到教育主题筛子对应的某个词：大学。
+<ul>
+<li>上面这个投骰子产生词的过程简化下便是：“先以一定的概率选取主题，再以一定的概率选取词”。事实上，一开始可供选择的主题有3个：教育、经济、交通，那为何偏偏选取教育这个主题呢？其实是随机选取的，只是这个随机遵循一定的概率分布。比如可能选取教育主题的概率是0.5，选取经济主题的概率是0.3，选取交通主题的概率是0.2，那么<strong>这3个主题的概率分布便是{教育：0.5，经济：0.3，交通：0.2}</strong>，我们把各个主题z在文档d中出现的概率分布称之为主题分布，且是一个多项分布。</li>
+<li>同样的，从主题分布中随机抽取出教育主题后，依然面对着3个词：大学、老师、课程，这3个词都可能被选中，但它们被选中的概率也是不一样的。比如大学这个词被选中的概率是0.5，老师这个词被选中的概率是0.3，课程被选中的概率是0.2，那么<strong>这3个词的概率分布便是{大学：0.5，老师：0.3，课程：0.2}</strong>，我们把各个词语w在主题z下出现的概率分布称之为词分布，这个词分布也是一个多项分布。</li>
+<li>所以，*<em>选主题和选词都是两个随机的过程，先从主题分布**{教育：0.5，经济：0.3，交通：0.2}*<em>中抽取出主题：教育，然后从该教育主题对应的词分布*</em>{大学：0.5，老师：0.3，课程：0.2}*<em>中抽取出词：大学</em></em>。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>*<strong>3*</strong>. 最后，你不停的重复扔“文档-主题”骰子和”主题-词项“骰子，重复N次（产生N个词），完成一篇文档，重复这产生一篇文档的方法M次，则完成M篇文档。</p>
+<p>上述过程抽象出来即是PLSA的文档生成模型。在这个过程中，我们并未关注词和词之间的出现顺序，所以pLSA是一种词袋方法。具体说来，该模型假设一组共现(co-occurrence)词项关联着一个隐含的主题类别<img src="https://img-blog.csdn.net/20141119004817915" alt="img">。同时定义：</p>
+</li>
+<li>
+<p><img src="https://img-blog.csdn.net/20141119004830562" alt="img">表示海量文档中某篇文档被选中的概率。</p>
+</li>
+<li></li>
+</ul>
+<p>表示词<img src="https://img-blog.csdn.net/20141119004858101" alt="img">在给定文档</p>
+<p>中出现的概率。</p>
+<ul>
+<li>
+<p>怎么计算得到呢？针对海量文档，对所有文档进行分词后，得到一个词汇列表，这样每篇文档就是一个词语的集合。对于每个词语，用它在文档中出现的次数除以文档中词语总的数目便是它在文档中出现的概率<img src="https://img-blog.csdn.net/20141124203846866" alt="img">。</p>
+</li>
+<li>
+<p><img src="https://img-blog.csdn.net/20141119004915308" alt="img">表示具体某个主题<img src="https://img-blog.csdn.net/20141119005048281" alt="img">在给定文档<img src="https://img-blog.csdn.net/20141119004838164" alt="img">下出现的概率。</p>
+</li>
+<li>
+<p><img src="https://img-blog.csdn.net/20141119004850551" alt="img">表示具体某个词<img src="https://img-blog.csdn.net/20141119004858101" alt="img">在给定主题<img src="https://img-blog.csdn.net/20141119004906734" alt="img">下出现的概率，与主题关系越密切的词，其条件概率<img src="https://img-blog.csdn.net/20141119004850551" alt="img">越大。</p>
+<p>利用上述的第1、3、4个概率，我们便可以按照如下的步骤得到“文档-词项”的生成模型：</p>
+</li>
+</ul>
+<ol>
+<li>按照概率<img src="https://img-blog.csdn.net/20141119004830562" alt="img">选择一篇文档<img src="https://img-blog.csdn.net/20141119004838164" alt="img"></li>
+<li>选定文档<img src="https://img-blog.csdn.net/20141119004838164" alt="img">后，从主题分布中按照概率<img src="https://img-blog.csdn.net/20141119004915308" alt="img">选择一个隐含的主题类别<img src="https://img-blog.csdn.net/20141119005048281" alt="img"></li>
+<li>选定<img src="https://img-blog.csdn.net/20141119005048281" alt="img">后，从词分布中按照概率<img src="https://img-blog.csdn.net/20141119004850551" alt="img">选择一个词<img src="https://img-blog.csdn.net/20141119004858101" alt="img"></li>
+</ol>
+<p>所以pLSA中生成文档的整个过程便是选定文档生成主题，确定主题生成词。</p>
+<p>4.2.1 根据文档反推其主题分布</p>
+<p>反过来，既然文档已经产生，那么如何根据已经产生好的文档反推其主题呢？这个利用看到的文档推断其隐藏的主题（分布）的过程（其实也就是产生文档的逆过程），便是主题建模的目的：自动地发现文档集中的主题（分布）。</p>
+<p>换言之，人类根据文档生成模型写成了各类文章，然后丢给了<strong>计算机，相当于计算机看到的是一篇篇已经写好的文章。现在计算机需要根据一篇篇文章中看到的一系列词归纳出当篇文章的主题，进而得出各个主题各自不同的出现概率：主题分布</strong>。即文档d和单词w是可被观察到的，但主题z却是隐藏的。</p>
+<p>如下图所示（图中被涂色的d、w表示可观测变量，未被涂色的z表示未知的隐变量，N表示一篇文档中总共N个单词，M表示M篇文档）：</p>
+<p><img src="https://img-blog.csdn.net/20141118234229125" alt="img"></p>
+<p>上图中，文档d和词w是我们得到的样本（样本随机，参数虽未知但固定，所以pLSA属于频率派思想。区别于下文要介绍的LDA中：样本固定，参数未知但不固定，是个随机变量，服从一定的分布，所以LDA属于贝叶斯派思想），可观测得到，所以对于任意一篇文档，其<img src="https://img-blog.csdn.net/20141124203846866" alt="img">是已知的。</p>
+<p>从而可以根据大量已知的文档-词项信息<img src="https://img-blog.csdn.net/20141124203846866" alt="img">，训练出文档-主题<img src="https://img-blog.csdn.net/20141119004915308" alt="img">和主题-词项<img src="https://img-blog.csdn.net/20141119004850551" alt="img">，如下公式所示：</p>
+<p><img src="https://img-blog.csdn.net/20141124221914437" alt="img"></p>
+<p>故得到文档中每个词的生成概率为：</p>
+<p><img src="https://img-blog.csdn.net/20141119005004510" alt="img"></p>
+<p>由于<img src="https://img-blog.csdn.net/20141119004830562" alt="img">可事先计算求出，<strong>而<img src="https://img-blog.csdn.net/20141119004850551" alt="img">和<img src="https://img-blog.csdn.net/20141119004915308" alt="img">未知，所以<img src="https://img-blog.csdn.net/20141119132914266" alt="img">就是我们要估计的参数（值）</strong>，通俗点说，就是要最大化这个θ。</p>
+<p>用什么方法进行估计呢，常用的参数估计方法有极大似然估计MLE、最大后验证估计MAP、贝叶斯估计等等。因为该待估计的参数中含有隐变量z，所以我们可以考虑EM算法。</p>
+<p>4.2.1.1 EM算法的简单介绍</p>
+<p>EM算法，全称为Expectation-maximization algorithm，为期望最大算法，其基本思想是：首先随机选取一个值去初始化待估计的值<img src="https://img-blog.csdn.net/20141119142305046" alt="img">，然后不断迭代寻找更优的<img src="https://img-blog.csdn.net/20141119142335046" alt="img">使得其似然函数likelihood <img src="https://img-blog.csdn.net/20141119142434921" alt="img">比原来的<img src="https://img-blog.csdn.net/20141119142450410" alt="img">要大。换言之，假定现在得到了<img src="https://img-blog.csdn.net/20141119142518131" alt="img">，想求<img src="https://img-blog.csdn.net/20141119142539343" alt="img">，使得</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141119142548109" alt="img"></p>
+</blockquote>
+<p>EM的关键便是要找到<img src="https://img-blog.csdn.net/20141119152956312" alt="img">的一个下界<img src="https://img-blog.csdn.net/20141119152550519" alt="img">（注：<img src="https://img-blog.csdn.net/20141119145102518" alt="img">，其中，X表示已经观察到的随机变量），然后不断最大化这个下界，通过不断求解下界<img src="https://img-blog.csdn.net/20141119152550519" alt="img">的极大化，从而逼近要求解的似然函数<img src="https://img-blog.csdn.net/20141119152956312" alt="img">。</p>
+<p>所以EM算法的一般步骤为：</p>
+<ul>
+<li>
+<p>\1. 随机选取或者根据先验知识初始化<img src="https://img-blog.csdn.net/20141119142305046" alt="img">；</p>
+</li>
+<li>
+<p>\2. 不断迭代下述两步</p>
+<ul>
+<li>①给出当前的参数估计<img src="https://img-blog.csdn.net/20141119142518131" alt="img">，计算似然函数<img src="https://img-blog.csdn.net/20141119152956312" alt="img">的下界<img src="https://img-blog.csdn.net/20141119152550519" alt="img"></li>
+<li>②重新估计参数θ，即求<img src="https://img-blog.csdn.net/20141119142539343" alt="img">，使得<img src="https://img-blog.csdn.net/20141119152555886" alt="img"></li>
+</ul>
+</li>
+<li>
+<p>\3. 上述第二步后，如果<img src="https://img-blog.csdn.net/20141119152956312" alt="img">收敛（即<img src="https://img-blog.csdn.net/20141119152550519" alt="img">收敛）则退出算法，否则继续回到第二步。</p>
+<p>上述过程好比在二维平面上，有两条不相交的曲线，一条曲线在上（简称上曲线<img src="https://img-blog.csdn.net/20141213212154044" alt="img">），一条曲线在下（简称下曲线<img src="https://img-blog.csdn.net/20141213212254984" alt="img">），下曲线为上曲线的下界。现在对上曲线未知，只已知下曲线，为了求解上曲线的最高点，我们试着不断增大下曲线，使得下曲线不断逼近上曲线，下曲线在某一个点达到局部最大值并与上曲线在这点的值相等，记录下这个值，然后继续增大下曲线，寻找下曲线上与上曲线上相等的值，迭代到<img src="https://img-blog.csdn.net/20141119152956312" alt="img">收敛（即<img src="https://img-blog.csdn.net/20141119152550519" alt="img">收敛）停止，从而利用当前下曲线上的局部最大值当作上曲线的全局最大值（换言之，EM算法不保证一定能找到全局最优值）。如下图所示：</p>
+</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20141129191346265" alt="img"></p>
+<p>以下是详细介绍。</p>
+<p>假定有训练集<img src="https://img-blog.csdn.net/20141120010841491" alt="img">，包含m个独立样本，希望从中找到该组数据的模型p(x,z)的参数。</p>
+<p>然后通过极大似然估计建立目标函数–对数似然函数：</p>
+<p><img src="https://img-blog.csdn.net/20141120010951176" alt="img"></p>
+<p>这里，z是隐随机变量，直接找到参数的估计是很困难的。我们的策略是建立<img src="https://img-blog.csdn.net/20141120012432984" alt="img">的下界，并且求该下界的最大值；重复这个过程，直到收敛到局部最大值。</p>
+<p>令Qi是z的某一个分布，Qi≥0，且结合Jensen不等式，有：</p>
+<p><img src="https://img-blog.csdn.net/20141120011131391" alt="img"></p>
+<p>为了寻找尽量紧的下界，我们可以让使上述等号成立，而若要让等号成立的条件则是：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141120011315802" alt="img"></p>
+</blockquote>
+<p>换言之，有以下式子成立：<img src="https://img-blog.csdn.net/20141120011341074" alt="img">，且由于有：<img src="https://img-blog.csdn.net/20141120011351609" alt="img"></p>
+<p>所以可得：</p>
+<p><img src="https://img-blog.csdn.net/20141120011352275" alt="img"></p>
+<p>最终得到EM算法的整体框架如下：</p>
+<p><img src="https://img-blog.csdn.net/20141120011357126" alt="img"></p>
+<p>OK，EM算法还会在本博客后面的博文中具体阐述。接下来，回到pLSA参数的估计问题上。</p>
+<p>4.2.1.2 EM算法估计pLSA的两未知参数</p>
+<p>首先尝试<strong>从矩阵的角度来描述待估计的两个未知变量****<img src="https://img-blog.csdn.net/20141119231257263" alt="img">*<em>和*</em><img src="https://img-blog.csdn.net/20141119231307918" alt="img"></strong>。</p>
+<ul>
+<li>假定用<img src="https://img-blog.csdn.net/20141119231329546" alt="img">表示词表<img src="https://img-blog.csdn.net/20141119231339695" alt="img">在主题<img src="https://img-blog.csdn.net/20141119231347433" alt="img">上的一个多项分布，则<img src="https://img-blog.csdn.net/20141119231410474" alt="img">可以表示成一个向量，每个元素**<img src="https://img-blog.csdn.net/20141119231428328" alt="img">*<em>表示词项*</em><img src="https://img-blog.csdn.net/20141119231439125" alt="img">*<em>出现在主题*</em><img src="https://img-blog.csdn.net/20141119231347433" alt="img">**<strong>中的概率</strong>，即</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20141119231639109" alt="img"></p>
+<ul>
+<li>用<img src="https://img-blog.csdn.net/20141119231715834" alt="img">表示所有主题<img src="https://img-blog.csdn.net/20141119231726286" alt="img">在文档<img src="https://img-blog.csdn.net/20141119231734648" alt="img">上的一个多项分布，则<img src="https://img-blog.csdn.net/20141119231743696" alt="img">可以表示成一个向量，每个元素**<img src="https://img-blog.csdn.net/20141119231757234" alt="img">表示主题<img src="https://img-blog.csdn.net/20141119231347433" alt="img">出现在文档<img src="https://img-blog.csdn.net/20141119231734648" alt="img">中的概率**，即</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20141119231850031" alt="img"></p>
+<p>这样，<strong>巧妙的把<img src="https://img-blog.csdn.net/20141119231257263" alt="img">*<em>和*</em><img src="https://img-blog.csdn.net/20141119231307918" alt="img">转换成了两个矩阵</strong>。换言之，最终我们要求解的参数是这两个矩阵：</p>
+<p><img src="https://img-blog.csdn.net/20141119231907109" alt="img"></p>
+<p><img src="https://img-blog.csdn.net/20141212233215365" alt="img"></p>
+<p>由于词和词之间是相互独立的，所以整篇文档N个词的分布为：</p>
+<p><img src="https://img-blog.csdn.net/20141212232331064" alt="img"></p>
+<p>再由于文档和文档之间也是相互独立的，所以整个语料库中词的分布为（整个语料库M篇文档，每篇文档N个词）：</p>
+<p><img src="https://img-blog.csdn.net/20141212233703984" alt="img"></p>
+<p>其中，<img src="https://img-blog.csdn.net/20141119232304125" alt="img">表示词项<img src="https://img-blog.csdn.net/20141119231439125" alt="img">在文档<img src="https://img-blog.csdn.net/20141119231734648" alt="img">中的词频，<img src="https://img-blog.csdn.net/20141119232311218" alt="img">表示文档di中词的总数，显然有<img src="https://img-blog.csdn.net/20141119232321951" alt="img">。<br>
+从而得到整个语料库的词分布的对数似然函数（下述公式中有个小错误，正确的应该是：N为M，M为N）：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141119232348890" alt="img"></p>
+</blockquote>
+<p>现在，我们需要最大化上述这个对数似然函数来求解参数<img src="https://img-blog.csdn.net/20141119231428328" alt="img">和<img src="https://img-blog.csdn.net/20141119231757234" alt="img">。对于这种含有隐变量的最大似然估计，可以使用EM算法。EM算法，分为两个步骤：先E-step，后M-step。</p>
+<ul>
+<li>
+<p><strong>E-step</strong>：假定参数已知，计算此时隐变量的后验概率。</p>
+<p>利用贝叶斯法则，可以得到：</p>
+</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20141119232636140" alt="img"></p>
+<ul>
+<li>
+<p><strong>M-step</strong>：带入隐变量的后验概率，最大化样本分布的对数似然函数，求解相应的参数。</p>
+<p>观察之前得到的对数似然函数<img src="https://img-blog.csdn.net/20141213121218348" alt="img">的结果，由于文档长度<img src="https://img-blog.csdn.net/20141119232733735" alt="img">可以单独计算，所以去掉它不影响最大化似然函数。此外，根据E-step的计算结果，把 <img src="https://img-blog.csdn.net/20141119232746871" alt="img">代入<img src="https://img-blog.csdn.net/20141213121218348" alt="img">，于是我们只要最大化下面这个函数 <img src="https://img-blog.csdn.net/20141119234540074" alt="img"> 即可（下述公式中有个小错误，正确的应该是：N为M，M为N）：</p>
+</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20141119232802453" alt="img"></p>
+<p>这是一个多元函数求极值问题，并且已知有如下约束条件（下述公式中有个小错误，正确的应该是：M为N）：</p>
+<p><img src="https://img-blog.csdn.net/20141119232831812" alt="img"></p>
+<p>熟悉凸优化的朋友应该知道，一般处理这种带有约束条件的极值问题，常用的方法便是拉格朗日乘数法，即通过引入拉格朗日乘子将约束条件和多元（目标）函数融合到一起，转化为无约束条件的极值问题。</p>
+<p>这里我们引入两个拉格朗日乘子<img src="https://img-blog.csdn.net/20141119234516082" alt="img">和<img src="https://img-blog.csdn.net/20141119234526705" alt="img">，从而写出拉格朗日函数（下述公式中有个小错误，正确的应该是：N为M，M为N）：</p>
+<p><img src="https://img-blog.csdn.net/20141119232849551" alt="img"></p>
+<p>因为我们要求解的参数是<img src="https://img-blog.csdn.net/20141119231428328" alt="img">和<img src="https://img-blog.csdn.net/20141119231757234" alt="img">，所以分别对<img src="https://img-blog.csdn.net/20141119231428328" alt="img">和<img src="https://img-blog.csdn.net/20141119231757234" alt="img">求偏导，然后令偏导结果等于0，得到（下述公式中有个小错误，正确的应该是：N为M，M为N）：</p>
+<p><img src="https://img-blog.csdn.net/20141119232904593" alt="img"></p>
+<p>消去拉格朗日乘子，最终可估计出参数<img src="https://img-blog.csdn.net/20141119231428328" alt="img">和<img src="https://img-blog.csdn.net/20141119231757234" alt="img">（下述公式中有个小错误，正确的应该是：N为M，M为N）：</p>
+<p><img src="https://img-blog.csdn.net/20141119232913560" alt="img"></p>
+<p>综上，在pLSA中：</p>
+<ol>
+<li><strong>由于<img src="https://img-blog.csdn.net/20141119004850551" alt="img">*<em>和*</em><img src="https://img-blog.csdn.net/20141119004915308" alt="img">*<em>未知，所以*</em>*<em>我们用*</em>*<em>EM算法去估计*</em><img src="https://img-blog.csdn.net/20141119132914266" alt="img">*<em>这个*</em>*<em>参数的值。*</em></strong></li>
+<li><em><em><em>*而后，用<img src="https://img-blog.csdn.net/20141119231428328" alt="img">表示词项<img src="https://img-blog.csdn.net/20141119231439125" alt="img">出现在主题<img src="https://img-blog.csdn.net/20141119231347433" alt="img">中的概率，即<img src="https://img-blog.csdnimg.cn/img_convert/c50227481eb1d4b4f6e8e0f29791f864.png" alt="img">，用<img src="https://img-blog.csdn.net/20141119231757234" alt="img">表示主题<img src="https://img-blog.csdn.net/20141119231347433" alt="img">出现在文档<img src="https://img-blog.csdn.net/20141119231734648" alt="img">中的概率，即<img src="https://img-blog.csdnimg.cn/img_convert/0f9b1fe6a11b3afce7f95ddb1c16fe2c.png" alt="img">，从而把<img src="https://img-blog.csdn.net/20141119231257263" alt="img">转换成了*</em>*</em>“主题-词项”矩阵Φ（主题生成词），把*</em><img src="https://img-blog.csdn.net/20141119231307918" alt="img">*<em>转换成了“文档-主题”矩阵Θ（文档生成主题）。*</em>**</li>
+<li><strong>最终求解出<img src="https://img-blog.csdn.net/20141119231428328" alt="img">、<img src="https://img-blog.csdn.net/20141119231757234" alt="img"></strong>。</li>
+</ol>
+<h3 id="lda模型">LDA模型</h3>
+<p>事实上，理解了pLSA模型，也就差不多快理解了LDA模型，因为LDA就是在pLSA的基础上加层贝叶斯框架，即LDA就是pLSA的贝叶斯版本（正因为LDA被贝叶斯化了，所以才需要考虑历史先验知识，才加的两个先验参数）。</p>
+<p>4.3.1 pLSA跟LDA的对比：生成文档与参数估计</p>
+<p>在pLSA模型中，我们按照如下的步骤得到“文档-词项”的生成模型：</p>
+<ol>
+<li>按照概率<img src="https://img-blog.csdn.net/20141119004830562" alt="img">选择一篇文档<img src="https://img-blog.csdn.net/20141119004838164" alt="img"></li>
+<li>选定文档<img src="https://img-blog.csdn.net/20141119004838164" alt="img">后，确定文章的主题分布</li>
+<li>从主题分布中按照概率<img src="https://img-blog.csdn.net/20141119004915308" alt="img">选择一个隐含的主题类别<img src="https://img-blog.csdn.net/20141119005048281" alt="img"></li>
+<li>选定<img src="https://img-blog.csdn.net/20141119005048281" alt="img">后，确定主题下的词分布</li>
+<li>从词分布中按照概率<img src="https://img-blog.csdn.net/20141119004850551" alt="img">选择一个词<img src="https://img-blog.csdn.net/20141119004858101" alt="img"> <strong>”</strong></li>
+</ol>
+<p>下面，咱们对比下本文开头所述的LDA模型中一篇文档生成的方式是怎样的：</p>
+<ol>
+<li>按照先验概率<img src="https://img-blog.csdn.net/20141119004830562" alt="img">选择一篇文档<img src="https://img-blog.csdn.net/20141119004838164" alt="img"></li>
+<li>从狄利克雷分布（即Dirichlet分布）<img src="https://img-blog.csdn.net/20141117160438989" alt="img">中取样生成文档 <img src="https://img-blog.csdn.net/20141119004838164" alt="img">的主题分布<img src="https://img-blog.csdn.net/20141117160452327" alt="img">，换言之，主题分布<img src="https://img-blog.csdn.net/20141117160452327" alt="img">由超参数为<img src="https://img-blog.csdn.net/20141117160438989" alt="img">的Dirichlet分布生成</li>
+<li>从主题的多项式分布<img src="https://img-blog.csdn.net/20141117160452327" alt="img">中取样生成文档<img src="https://img-blog.csdn.net/20141119004838164" alt="img">第 j 个词的主题<img src="https://img-blog.csdn.net/20141117160518098" alt="img"></li>
+<li>从狄利克雷分布（即Dirichlet分布）<img src="https://img-blog.csdn.net/20141117160531515" alt="img">中取样生成主题<img src="https://img-blog.csdn.net/20141117160518098" alt="img">对应的词语分布<img src="https://img-blog.csdn.net/20141117160613962" alt="img">，换言之，词语分布<img src="https://img-blog.csdn.net/20141117160613962" alt="img">由参数为<img src="https://img-blog.csdn.net/20141117160531515" alt="img">的Dirichlet分布生成</li>
+<li>从词语的多项式分布<img src="https://img-blog.csdn.net/20141117160613962" alt="img">中采样最终生成词语<img src="https://img-blog.csdn.net/20141117160656067" alt="img"> <strong>”</strong></li>
+</ol>
+<p>从上面两个过程可以看出，LDA在PLSA的基础上，为主题分布和词分布分别加了两个Dirichlet先验。</p>
+<p>继续拿之前讲解PLSA的例子进行具体说明。如前所述，在PLSA中，选主题和选词都是两个随机的过程，先从主题分布{教育：0.5，经济：0.3，交通：0.2}中抽取出主题：教育，然后从该主题对应的词分布{大学：0.5，老师：0.3，课程：0.2}中抽取出词：大学。</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141119110830531" alt="img"></p>
+</blockquote>
+<p>而在LDA中，选主题和选词依然都是两个随机的过程，依然可能是先从主题分布{教育：0.5，经济：0.3，交通：0.2}中抽取出主题：教育，然后再从该主题对应的词分布{大学：0.5，老师：0.3，课程：0.2}中抽取出词：大学。</p>
+<p>那PLSA跟LDA的区别在于什么地方呢？区别就在于：</p>
+<ul>
+<li>
+<p><strong><em>*PLSA中，主题分布和词分布是唯一*</em>*<em>确定的，*</em>**能明确的指出主题分布可能就是*</strong>*<strong>{教育：0.5，经济：0.3，交通：0.2}，词分布可能就是{大学：0.5，老师：0.3，课程：0.2}</strong>。</p>
+</li>
+<li>
+<p>但在<strong>LDA中，*<em>主题分布和词分布不再唯一确定不变，即*<em>无法确切给出。例如主题分布可能是{教育：0.5，经济：0.3，交通：0.2}，也可能是{教育：0.6，经济：0.2，交通：0.2}，到底是哪个我们不再确定（即不知道），因为它是随机的可变化的。但再怎么变化，也依然服从一定的分布，即主题分布跟词分布由Dirichlet</em></em>**先验随机确定</strong>。</p>
+<p>看到这，你可能凌乱了，你说面对多个主题或词，各个主题或词被抽中的概率不一样，所以抽取主题或词是随机抽取，还好理解。但现在你说主题分布和词分布本身也都是不确定的，这是怎么回事？没办法，谁叫Blei等人“强行”给PLSA安了个贝叶斯框架呢，正因为LDA是PLSA的贝叶斯版本，所以主题分布跟词分布本身由先验知识随机给定。</p>
+<p>进一步，你会发现：</p>
+</li>
+<li>
+<p><strong>pLSA中</strong>，主题分布和词分布确定后，以一定的概率（</p>
+<p>、</p>
+<p>）分别选取具体的主题和词项，生成好文档。而后根据生成好的文档反推其主题分布、词分布时，</p>
+<p>最终用EM算法（极大似然估计思想）求解出了两个未知但固定的参数的值：</p>
+<p><img src="https://img-blog.csdn.net/20141119231428328" alt="img"></p>
+<p>（由</p>
+<p>转换而来）和</p>
+<p><img src="https://img-blog.csdn.net/20141119231757234" alt="img"></p>
+<p>（由</p>
+<p>转换而来）。</p>
+<ul>
+<li>文档d产生主题z的概率，主题z产生单词w的概率都是两个固定的值。
+<ul>
+<li>举个文档d产生主题z的例子。给定一篇文档d，主题分布是一定的，比如{ P(zi|d), i = 1,2,3 }可能就是{0.4,0.5,0.1}，表示z1、z2、z3，这3个主题被文档d选中的概率都是个固定的值：P(z1|d) = 0.4、P(z2|d) = 0.5、P(z3|d) = 0.1，如下图所示（图截取自沈博PPT上）：</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20141206001916157" alt="img"></p>
+<ul>
+<li>
+<p>但在贝叶斯框架下的<strong>LDA中</strong>，我们<strong>不再</strong>认为</p>
+<p>主题分布（各个主题在文档中出现的概率分布）和词分布（各个词语在某个主题下出现的概率分布）是唯一确定的（</p>
+<p>而是随机变量</p>
+<p>）</p>
+<p>，而是有很多种可能。但一篇文档总得对应一个主题分布和一个词分布吧，怎么办呢？LDA为它们弄了两个Dirichlet先验参数，这个Dirichlet先验为某篇</p>
+<p>文档随机抽取出某个主题分布和词分布。</p>
+<ul>
+<li>文档d产生主题z（准确的说，其实是Dirichlet先验为文档d生成主题分布Θ，然后根据主题分布Θ产生主题z）的概率，主题z产生单词w的概率都不再是某两个确定的值，而是随机变量。
+<ul>
+<li>还是再次举下文档d具体产生主题z的例子。给定一篇文档d，现在有多个主题z1、z2、z3，它们的主题分布{ P(zi|d), i = 1,2,3 }可能是{0.4,0.5,0.1}，也可能是{0.2,0.2,0.6}，即这些主题被d选中的概率都不再认为是确定的值，可能是P(z1|d) = 0.4、P(z2|d) = 0.5、P(z3|d) = 0.1，也有可能是P(z1|d) = 0.2、P(z2|d) = 0.2、P(z3|d) = 0.6等等，而主题分布到底是哪个取值集合我们不确定（为什么？这就是贝叶斯派的核心思想，把未知参数当作是随机变量，不再认为是某一个确定的值），但其先验分布是dirichlet 分布，所以可以从无穷多个主题分布中按照dirichlet 先验随机抽取出某个主题分布出来。如下图所示（图截取自沈博PPT上）：</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://img-blog.csdn.net/20141127192035125" alt="img"></p>
+<p>换言之，LDA在pLSA的基础上给这两参数（<img src="https://img-blog.csdn.net/20141119231307918" alt="img">、<img src="https://img-blog.csdn.net/20141119231257263" alt="img">）加了两个先验分布的参数（贝叶斯化）：一个主题分布的先验分布Dirichlet分布<img src="https://img-blog.csdn.net/20141117160438989" alt="img">，和一个词语分布的先验分布Dirichlet分布<img src="https://img-blog.csdn.net/20141117160531515" alt="img">。</p>
+<p>综上，LDA真的只是pLSA的贝叶斯版本，文档生成后，两者都要根据文档去推断其主题分布和词语分布（即两者本质都是为了估计给定文档生成主题，给定主题生成词语的概率），只是用的参数推断方法不同，在pLSA中用极大似然估计的思想去推断两未知的固定参数，而LDA则把这两参数弄成随机变量，且加入dirichlet先验。</p>
+<p>所以，pLSA跟LDA的本质区别就在于它们去估计未知参数所采用的思想不同，前者用的是频率派思想，后者用的是贝叶斯派思想。<br>
+好比，我去一朋友家：</p>
+<ul>
+<li>
+<p>按照频率派的思想，我估计他在家的概率是1/2，不在家的概率也是1/2，是个定值。</p>
+</li>
+<li>
+<p>而按照贝叶斯派的思想，他在家不在家的概率不再认为是个定值1/2，而是随机变量。比如按照我们的经验（比如当天周末），猜测他在家的概率是0.6，但这个0.6不是说就是完全确定的，也有可能是0.7。如此，贝叶斯派没法确切给出参数的确定值（0.3,0.4，0.6,0.7，0.8,0.9都有可能），但至少明白在哪个范围或哪些取值（0.6,0.7，0.8,0.9）更有可能，哪个范围或哪些取值（0.3,0.4） 不太可能。进一步，贝叶斯估计中，参数的多个估计值服从一定的先验分布，而后根据实践获得的数据（例如周末不断跑他家），不断修正之前的参数估计，从先验分布慢慢过渡到后验分布。</p>
+<p>OK，相信已经解释清楚了。如果是在机器学习班上face-to-face，更好解释和沟通。</p>
+</li>
+</ul>
+<p>4.3.2 LDA生成文档过程的进一步理解</p>
+<p>上面说，LDA中，主题分布 —— 比如{ P(zi), i =1,2,3 }等于{0.4,0.5,0.1}或{0.2,0.2,0.6} —— 是由dirichlet先验给定的，不是根据文档产生的。所以，<strong>LDA生成文档的过程中，先从dirichlet先验中“随机”抽取出主题分布</strong>，然后从主题分布中“随机”抽取出主题，最后从确定后的主题对应的词分布中“随机”抽取出词。</p>
+<p>那么，dirichlet先验到底是如何“随机”抽取主题分布的呢？</p>
+<p>事实上，从dirichlet分布中随机抽取主题分布，这个过程不是完全随机的。为了说清楚这个问题，咱们得回顾下dirichlet分布。事实上，如果我们取3个事件的话，可以建立一个三维坐标系，类似xyz三维坐标系，这里，我们把3个坐标轴弄为p1、p2、p3，如下图所示：</p>
+<p><img src="https://img-blog.csdn.net/20141128165431218" alt="img"></p>
+<p>在这个三维坐标轴所划分的空间里，每一个坐标点(p1,p2,p3)就对应着一个主题分布，且某一个点(p1,p2,p3)的大小表示3个主题z1、z2、z3出现的概率大小（因为各个主题出现的概率和为1，所以p1+p2+p3 = 1，且p1、p2、p3这3个点最大取值为1）。比如(p1,p2,p3) = (0.4,0.5,0.1)便对应着主题分布{ P(zi), i =1,2,3 } = {0.4,0.5,0.1}。</p>
+<p>可以想象到，空间里有很多这样的点(p1,p2,p3)，意味着有很多的主题分布可供选择，那dirichlet分布如何选择主题分布呢？把上面的斜三角形放倒，映射到底面的平面上，便得到如下所示的一些彩图（3个彩图中，每一个点对应一个主题分布，高度代表某个主题分布被dirichlet分布选中的概率，且<strong>选不同的<img src="https://img-blog.csdn.net/20141117181123550" alt="img">，dirichlet 分布会偏向不同的主题分布</strong>）：</p>
+<p><img src="https://img-blog.csdn.net/20141118174935062" alt="img"></p>
+<p>我们来看上图中左边这个图，高度就是代表dirichlet分布选取某个坐标点(p1,p2,p3)（这个点就是一个主题分布）的概率大小。如下图所示，平面投影三角形上的三个顶点上的点：A=(0.9,0.05,0.05)、B=(0.05,0.9,0.05)、C=(0.05,0.05,0.9)各自对应的主题分布被dirichlet分布选中的概率值很大，而平面三角形内部的两个点：D、E对应的主题分布被dirichlet分布选中的概率值很小。</p>
+<p><img src="https://img-blog.csdn.net/20141128172421973" alt="img"><img src="https://img-blog.csdn.net/20141128172441161" alt="img"></p>
+<p>所以虽然说dirichlet分布是随机选取任意一个主题分布的，但依然存在着P(A) = P(B) = P© &gt;&gt; P(D) = P(E)，即dirichlet分布还是“偏爱”某些主题分布的。至于dirichlet分布的参数<img src="https://img-blog.csdn.net/20141117181123550" alt="img">是如何决定dirichlet分布的形状的，可以从dirichlet分布的定义和公式思考。</p>
+<p>此外，就算说“随机”选主题也是根据主题分布来“随机”选取，这里的随机不是完全随机的意思，而是根据各个主题出现的概率值大小来抽取。比如当dirichlet先验为文档d生成的主题分布{ P(zi), i =1,2,3 }是{0.4,0.5,0.1}时，那么主题z2在文档d中出现的概率便是0.5。所以，从主题分布中抽取主题，这个过程也不是完全随机的，而是按照各个主题出现的概率值大小进行抽取。</p>
+<p>4.3.3 pLSA跟LDA的概率图对比</p>
+<p>接下来，对比下LDA跟pLSA的概率模型图模型，左图是pLSA，右图是LDA（右图不太规范，z跟w都得是小写， 其中，阴影圆圈表示可观测的变量，非阴影圆圈表示隐变量，箭头表示两变量间的条件依赖性conditional dependency，方框表示重复抽样，方框右下角的数字代表重复抽样的次数）：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141118234229125" alt="img">     <img src="https://img-blog.csdn.net/20141120172828681" alt="img"></p>
+</blockquote>
+<p>对应到上面右图的LDA，只有W / w是观察到的变量，其他都是隐变量或者参数，其中，Φ表示词分布，Θ表示主题分布，<img src="https://img-blog.csdn.net/20141117160438989" alt="img"> 是主题分布Θ的先验分布（即Dirichlet 分布）的参数，<img src="https://img-blog.csdn.net/20141117160531515" alt="img">是词分布Φ的先验分布（即Dirichlet 分布）的参数，N表示文档的单词总数，M表示文档的总数。</p>
+<p>所以，对于一篇文档d中的每一个单词，LDA根据先验知识<img src="https://img-blog.csdn.net/20141117160438989" alt="img">确定某篇文档的主题分布θ，然后从该文档所对应的多项分布（主题分布）θ中抽取一个主题z，接着根据先验知识<img src="https://img-blog.csdn.net/20141117160531515" alt="img">确定当前主题的词语分布ϕ，然后从主题z所对应的多项分布（词分布）ϕ中抽取一个单词w。然后将这个过程重复N次，就产生了文档d。</p>
+<p>换言之：</p>
+<ol>
+<li>假定语料库中共有M篇文章，每篇文章下的Topic的<strong>主题分布</strong>是一个<strong>从参数为<img src="https://img-blog.csdn.net/20141117160438989" alt="img">的Dirichlet先验分布中采样得到</strong>的Multinomial分布，每个Topic下的<strong>词分布</strong>是一个<strong>从参数为<img src="https://img-blog.csdn.net/20141117160531515" alt="img">的Dirichlet先验分布中采样得到</strong>的Multinomial分布。</li>
+<li>对于某篇文章中的第n个词，首先从该文章中出现的每个主题的Multinomial分布**（主题分布）中选择或采样一个主题**，然后再在这个主题<strong>对应的</strong>词的Multinomial分布**（词分布）中选择或采样一个词**。不断重复这个随机生成过程，直到M篇文章全部生成完成。</li>
+</ol>
+<p>综上，M 篇文档会对应于 M 个独立的 Dirichlet-Multinomial 共轭结构，K 个 topic 会对应于 K 个独立的 Dirichlet-Multinomial 共轭结构。</p>
+<ul>
+<li>其中，<img src="https://img-blog.csdn.net/20141117160438989" alt="img">→θ→z 表示生成文档中的所有词对应的主题，显然 <img src="https://img-blog.csdn.net/20141117160438989" alt="img">→θ 对应的是Dirichlet 分布，θ→z 对应的是 Multinomial 分布，所以整体是一个 Dirichlet-Multinomial 共轭结构，如下图所示：</li>
+</ul>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141120174743000" alt="img"></p>
+</blockquote>
+<ul>
+<li>类似的，<img src="https://img-blog.csdn.net/20141117160531515" alt="img">→φ→w，容易看出， 此时β→φ对应的是 Dirichlet 分布， φ→w 对应的是 Multinomial 分布， 所以整体也是一个Dirichlet-Multinomial 共轭结构，如下图所示：</li>
+</ul>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141120174912796" alt="img"></p>
+</blockquote>
+<p>4.3.4 pLSA跟LDA参数估计方法的对比</p>
+<p>上面对比了pLSA跟LDA生成文档的不同过程，下面，咱们反过来，假定文档已经产生，反推其主题分布。那么，它们估计未知参数所采用的方法又有什么不同呢？</p>
+<ul>
+<li>在pLSA中，我们使用EM算法去估计“主题-词项”矩阵Φ（由<img src="https://img-blog.csdn.net/20141119231257263" alt="img">转换得到）和“文档-主题”矩阵Θ（由<img src="https://img-blog.csdn.net/20141119231307918" alt="img">转换得到）这两个参数，而且这两参数都是个固定的值，只是未知，使用的思想其实就是极大似然估计MLE。</li>
+<li><strong>而在LDA中，估计*<em>Φ、**Θ这两**</em>*未知参数可以用变分(Variational inference)-EM算法，也可以用<strong><strong>gibbs采样，前者的思想是</strong></strong>最大后验估计MAP</strong>（MAP与MLE类似，都把未知参数当作固定的值）**，后者的思想是****贝叶斯估计。**贝叶斯估计是对MAP的扩展，但它与MAP有着本质的不同，即贝叶斯估计把待估计的参数看作是服从某种先验分布的随机变量。
+<ul>
+<li>关于贝叶斯估计再举个例子。假设中国的大学只有两种：理工科和文科，这两种学校数量的比例是1:1，其中，理工科男女比例7:1，文科男女比例1:7。某天你被外星人随机扔到一个校园，问你该学校可能的男女比例是多少？然后，你实际到该校园里逛了一圈，看到的5个人全是男的，这时候再次问你这个校园的男女比例是多少？</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>因为刚开始时，有先验知识，所以该学校的男女比例要么是7:1，要么是1:7，即P(比例为7:1) = 1/2，P(比例为1:7) = 1/2。</li>
+<li>然后看到5个男生后重新估计男女比例，其实就是求P(比例7:1|5个男生）= ？，P(比例1:7|5个男生) = ？</li>
+<li>用贝叶斯公式<img src="https://img-blog.csdn.net/20141110213025473" alt="img">，可得：P(比例7:1|5个男生) = P(比例7:1)*P(5个男生|比例7:1) / P(5个男生)，P(5个男生)是5个男生的先验概率，与学校无关，所以是个常数；类似的，P(比例1:7|5个男生) = P((比例1:7)*P(5个男生|比例1:7)/P(5个男生)。</li>
+<li>最后将上述两个等式比一下，可得：P(比例7:1|5个男生)/P(比例1:7|5个男生) = {P((比例7:1)*P(5个男生|比例7:1)} / { P(比例1:7)*P(5个男生|比例1:7)}。</li>
+</ol>
+<p>由于LDA把要估计的主题分布和词分布看作是其先验分布是Dirichlet分布的随机变量，所以，在LDA这个估计主题分布、词分布的过程中，它们的先验分布（即Dirichlet分布）事先由人为给定，那么LDA就是要去求它们的后验分布（LDA中可用gibbs采样去求解它们的后验分布，得到期望<img src="https://img-blog.csdn.net/20141122141624588" alt="img">、<img src="https://img-blog.csdn.net/20141122141643109" alt="img">）！</p>
+<p>此外，不厌其烦的再插一句，在LDA中，主题分布和词分布本身都是多项分布，而由上文3.2节可知“Dirichlet分布是多项式分布的共轭先验概率分布”，因此选择Dirichlet 分布作为它们的共轭先验分布。意味着为多项分布的参数p选取的先验分布是Dirichlet分布，那么以p为参数的多项分布用贝叶斯估计得到的后验分布仍然是Dirichlet分布。</p>
+<p>4.3.5 LDA参数估计：Gibbs采样</p>
+<p>理清了LDA中的物理过程，下面咱们来看下如何学习估计。</p>
+<p>类似于pLSA，LDA的原始论文中是用的变分-EM算法估计未知参数，后来发现另一种估计LDA未知参数的方法更好，这种方法就是：Gibbs Sampling，有时叫Gibbs采样或Gibbs抽样，都一个意思。Gibbs抽样是马尔可夫链蒙特卡尔理论（MCMC）中用来获取一系列近似等于指定多维概率分布（比如2个或者多个随机变量的联合概率分布）观察样本的算法。</p>
+<p>OK，给定一个文档集合，w是可以观察到的已知变量，<img src="https://img-blog.csdn.net/20141117160438989" alt="img">和<img src="https://img-blog.csdn.net/20141117160531515" alt="img">是根据经验给定的先验参数，其他的变量z，θ和φ都是未知的隐含变量，需要根据观察到的变量来学习估计的。根据LDA的图模型，可以写出所有变量的联合分布：</p>
+<p><img src="https://img-blog.csdn.net/20141121010801261" alt="img"></p>
+<p>注：上述公式中及下文中，<img src="https://img-blog.csdn.net/20141121011305243" alt="img">等价上文中定义的<img src="https://img-blog.csdn.net/20141117160518098" alt="img">，<img src="https://img-blog.csdn.net/20141121011310969" alt="img">等价于上文中定义的<img src="https://img-blog.csdn.net/20141117160656067" alt="img">，<img src="https://img-blog.csdn.net/20141121011424772" alt="img">等价于上文中定义的<img src="https://img-blog.csdn.net/20141117160613962" alt="img">，等价于上文中定义的<img src="https://img-blog.csdn.net/20141117160452327" alt="img">。</p>
+<p>因为<img src="https://img-blog.csdn.net/20141117160438989" alt="img">产生主题分布θ，主题分布θ确定具体主题，且<img src="https://img-blog.csdn.net/20141117160531515" alt="img">产生词分布φ、词分布φ确定具体词，所以上述式子等价于下述式子所表达的<strong>联合概率分布<img src="https://img-blog.csdn.net/20141121101528765" alt="img"></strong>：</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141121100115734" alt="img"></p>
+</blockquote>
+<p>其中，<strong>第一项因子<img src="https://img-blog.csdn.net/20141121101735203" alt="img">表示的是根据确定的主题<img src="https://img-blog.csdn.net/20141121102832253" alt="img">和词分布的先验分布参数<img src="https://img-blog.csdn.net/20141117160531515" alt="img">采样词的过程，第二项因子<img src="https://img-blog.csdn.net/20141121101731716" alt="img">是根据主题分布的先验分布参数<img src="https://img-blog.csdn.net/20141117160438989" alt="img">采样主题的过程，这两项因子是****需要计算的两个未知参数</strong>。</p>
+<p>由于这两个过程是独立的，所以下面可以分别处理，各个击破。</p>
+<p>第一个因子<img src="https://img-blog.csdn.net/20141121101735203" alt="img">，可以根据确定的主题<img src="https://img-blog.csdn.net/20141121102832253" alt="img">和从先验分布<img src="https://img-blog.csdn.net/20141117160531515" alt="img">取样得到的词分布Φ产生：</p>
+<p><img src="https://img-blog.csdn.net/20141121100114141" alt="img"></p>
+<p>由于样本中的词服从参数为主题<img src="https://img-blog.csdn.net/20141121103415953" alt="img">的独立多项分布，这意味着可以把上面对词的乘积分解成分别对主题和对词的两层乘积：</p>
+<p><img src="https://img-blog.csdn.net/20141121100719993" alt="img"></p>
+<p>其中，<img src="https://img-blog.csdn.net/20141121100128328" alt="img">是词 t 在主题 k 中出现的次数。</p>
+<p>回到第一个因子上来。目标分布<img src="https://img-blog.csdn.net/20141121103631468" alt="img">需要对词分布Φ积分，且结合我们之前在3.1节定义的Dirichlet 分布的归一化系数<img src="https://img-blog.csdn.net/20141121104155483" alt="img">的公式</p>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141121111405799" alt="img"></p>
+</blockquote>
+<p>可得：</p>
+<p><img src="https://img-blog.csdn.net/20141121100131691" alt="img"></p>
+<p>这个结果可以看作K个Dirichlet-Multinomial模型的乘积。<br>
+现在开始求第二个因子<img src="https://img-blog.csdn.net/20141121101731716" alt="img">。类似于<img src="https://img-blog.csdn.net/20141121100137666" alt="img">的步骤，先写出条件分布，然后分解成两部分的乘积：</p>
+<p><img src="https://img-blog.csdn.net/20141121100152921" alt="img"></p>
+<p>其中，<img src="https://img-blog.csdn.net/20141119004838164" alt="img"> 表示的单词 i 所属的文档，<img src="https://img-blog.csdn.net/20141121100159437" alt="img">是主题 k 在文章 m 中出现的次数。</p>
+<p>对主题分布Θ积分可得：</p>
+<p><img src="https://img-blog.csdn.net/20141121100156011" alt="img"></p>
+<p>综合第一个因子和第二个因子的结果，<strong>得到<img src="https://img-blog.csdn.net/20141121101528765" alt="img">的联合分布结果为</strong>：</p>
+<p><img src="https://img-blog.csdn.net/20141121100200504" alt="img"></p>
+<p>接下来，<strong>有了联合分布<img src="https://img-blog.csdn.net/20141121101528765" alt="img">，咱们便可以通过联合分布来计算在给定可观测变量 w 下的隐变量 z 的条件分布（后验分布）<img src="https://img-blog.csdn.net/20141124000913687" alt="img">来进行贝叶斯分析</strong>。</p>
+<p>换言之，有了这个联合分布后，要求解第m篇文档中的第n个词（下标为<img src="https://img-blog.csdn.net/20141121114116267" alt="img">的词）的全部条件概率就好求了。</p>
+<p>先定义几个变量。<img src="https://img-blog.csdn.net/20141121114858171" alt="img">表示除去<img src="https://img-blog.csdn.net/20141121114902718" alt="img">的词，<img src="https://img-blog.csdn.net/20141121114217201" alt="img">，<img src="https://img-blog.csdn.net/20141121114238885" alt="img">。</p>
+<p>然后，排除当前词的主题分配，即根据其他词的主题分配和观察到的单词来计算当前词主题的概率公式为：</p>
+<p><img src="https://img-blog.csdn.net/20141121114250569" alt="img"></p>
+<p>勘误：考虑到<img src="https://img-blog.csdn.net/20160121160044384" alt="img">，所以上述公式的第二行的分子，非p(w,z) *p(z)，而是p(w|z)*p(z)。</p>
+<p>且有：</p>
+<p><img src="https://img-blog.csdn.net/20141121135231473" alt="img"></p>
+<p>最后一步，便是根据Markov链的状态<img src="https://img-blog.csdn.net/20141121103415953" alt="img">获取主题分布的参数Θ和词分布的参数Φ。</p>
+<p>换言之根据贝叶斯法则和Dirichlet先验，以及上文中得到的<img src="https://img-blog.csdn.net/20141121133110586" alt="img">和<img src="https://img-blog.csdn.net/20141121133116935" alt="img">各自被分解成两部分乘积的结果，可以计算得到<strong>每个文档上Topic的后验分布和每个Topic下的词的后验分布分别如下（<strong>据上文可知：其后验分布跟它们的先验分布一样，也都是Dirichlet 分布</strong>）</strong>：</p>
+<p><img src="https://img-blog.csdn.net/20141121122941710" alt="img"></p>
+<p>其中，<img src="https://img-blog.csdn.net/20141121123131296" alt="img">是构成文档m的主题数向量，<img src="https://img-blog.csdn.net/20141121123130052" alt="img">是构成主题k的词项数向量。</p>
+<p>此外，别忘了上文中2.4节所述的Dirichlet的一个性质，如下：</p>
+<p><strong>“</strong> 如果<img src="https://img-blog.csdn.net/20141117211131796" alt="img">，同样可以证明有下述结论成立：</p>
+<p><img src="https://img-blog.csdn.net/20141117211142562" alt="img"></p>
+<p>即：如果<img src="https://img-blog.csdn.net/20141121133928937" alt="img">，则<img src="https://img-blog.csdn.net/20141121133928070" alt="img">中的任一元素<img src="https://img-blog.csdn.net/20141121133937197" alt="img">的期望是：</p>
+<p><img src="https://img-blog.csdn.net/20141121134006609" alt="img"></p>
+<p>可以看出，超参数<img src="https://img-blog.csdn.net/20141121134008709" alt="img">的直观意义就是事件先验的伪计数(prior pseudo-count)。 <strong>”</strong><br>
+所以，<strong>最终求解的Dirichlet 分布期望为</strong>：</p>
+<blockquote>
+<blockquote>
+<p><img src="https://img-blog.csdn.net/20141121123225837" alt="img"></p>
+</blockquote>
+</blockquote>
+<p>然后将<img src="https://img-blog.csdn.net/20141121123447751" alt="img">和<img src="https://img-blog.csdn.net/20141121123507265" alt="img">的结果代入之前得到的<img src="https://img-blog.csdn.net/20141121135643522" alt="img">的结果中，可得：</p>
+<p><img src="https://img-blog.csdn.net/20141121135716671" alt="img"></p>
+<p>仔细观察上述结果，可以发现，式子的右半部分便是<img src="https://img-blog.csdn.net/20141121135724875" alt="img">，这个概率的值对应着<img src="https://img-blog.csdn.net/20141121135730453" alt="img">的路径概率。如此，K 个topic 对应着K条路径，Gibbs Sampling 便在这K 条路径中进行采样，如下图所示：</p>
+<p><img src="https://img-blog.csdn.net/20141121135741734" alt="img"></p>
+<p>何等奇妙，就这样，Gibbs Sampling通过求解出主题分布和词分布的后验分布，从而成功解决主题分布和词分布这两参数未知的问题。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://genewlan.github.io">ZhangLei</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://genewlan.github.io/2023/08/31/%E9%80%9A%E4%BF%97%E7%90%86%E8%A7%A3LDA%E4%B8%BB%E9%A2%98%E6%A8%A1/">http://genewlan.github.io/2023/08/31/%E9%80%9A%E4%BF%97%E7%90%86%E8%A7%A3LDA%E4%B8%BB%E9%A2%98%E6%A8%A1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://genewlan.github.io" target="_blank">GeneWlan</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Topic-Modeling-LDA-Dirichlet-%E5%88%86%E5%B8%83/">-Topic Modeling -LDA -Dirichlet 分布</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/08/31/Practise/" title="LDA Modeling Practise"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">LDA Modeling Practise</div></div></a></div><div class="next-post pull-right"><a href="/2023/07/31/outlier-detection/" title="outlier_detection"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">outlier_detection</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ZhangLei</div><div class="author-info__description">change or die!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/genewlan/" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:xiaolobglee@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">通俗理解LDA主题模</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#gamma%E5%87%BD%E6%95%B0"><span class="toc-number">2.1.</span> <span class="toc-text">gamma函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E6%8A%8A%E6%8F%A1lda"><span class="toc-number">2.1.1.</span> <span class="toc-text">整体把握LDA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#gamma%E5%87%BD%E6%95%B0"><span class="toc-number">2.1.2.</span> <span class="toc-text">gamma函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#beta%E5%88%86%E5%B8%83"><span class="toc-number">2.2.</span> <span class="toc-text">beta分布</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#beta%E5%88%86%E5%B8%83"><span class="toc-number">2.2.1.</span> <span class="toc-text">beta分布</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#beta-binomial-%E5%85%B1%E8%BD%AD"><span class="toc-number">2.2.2.</span> <span class="toc-text">Beta-Binomial 共轭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B1%E8%BD%AD%E5%85%88%E9%AA%8C%E5%88%86%E5%B8%83"><span class="toc-number">2.2.3.</span> <span class="toc-text">共轭先验分布</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8Ebeta%E5%88%86%E5%B8%83%E6%8E%A8%E5%B9%BF%E5%88%B0dirichlet-%E5%88%86%E5%B8%83"><span class="toc-number">2.2.4.</span> <span class="toc-text">从beta分布推广到Dirichlet 分布</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dirichlet-%E5%88%86%E5%B8%83"><span class="toc-number">2.3.</span> <span class="toc-text">Dirichlet 分布</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dirichlet-%E5%88%86%E5%B8%83"><span class="toc-number">2.3.1.</span> <span class="toc-text">Dirichlet 分布</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dirichlet-multinomial-%E5%85%B1%E8%BD%AD"><span class="toc-number">2.3.2.</span> <span class="toc-text">Dirichlet-Multinomial 共轭</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BB%E9%A2%98%E6%A8%A1%E5%9E%8Blda"><span class="toc-number">2.4.</span> <span class="toc-text">主题模型LDA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%84%E4%B8%AA%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.4.1.</span> <span class="toc-text">各个基础模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#plsa%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.4.2.</span> <span class="toc-text">PLSA模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#lda%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.4.3.</span> <span class="toc-text">LDA模型</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/30/Neural-Network-Frame/" title="Neural-Network-Frame">Neural-Network-Frame</a><time datetime="2023-09-30T10:55:16.000Z" title="发表于 2023-09-30 18:55:16">2023-09-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/30/bayes-net/" title="bayes-net">bayes-net</a><time datetime="2023-09-30T10:49:09.000Z" title="发表于 2023-09-30 18:49:09">2023-09-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/31/Practise/" title="LDA Modeling Practise">LDA Modeling Practise</a><time datetime="2023-08-31T06:45:25.000Z" title="发表于 2023-08-31 14:45:25">2023-08-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/31/%E9%80%9A%E4%BF%97%E7%90%86%E8%A7%A3LDA%E4%B8%BB%E9%A2%98%E6%A8%A1/" title="通俗理解LDA主题模">通俗理解LDA主题模</a><time datetime="2023-08-31T06:09:26.000Z" title="发表于 2023-08-31 14:09:26">2023-08-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/07/31/outlier-detection/" title="outlier_detection">outlier_detection</a><time datetime="2023-07-31T14:40:34.000Z" title="发表于 2023-07-31 22:40:34">2023-07-31</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By ZhangLei</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'J0s1l0MeDfMbgw4y4awgy2jX-MdYXbMMI',
+      appKey: '3vZoaKxqWQYlKbXXdXuSxBsT',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div><!-- hexo injector body_end start --><div id="background-effect"></div><script src="https://cdn.jsdelivr.net/npm/three@0.121.1/build/three.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.birds.min.js"></script><script>VANTA.BIRDS({"el":"#background-effect","mouseControls":true,"touchControls":true,"gyroControls":false,"minHeight":200,"minWidth":200,"scale":1,"scaleMobile":1})</script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body></html>

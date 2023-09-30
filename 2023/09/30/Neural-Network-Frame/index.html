@@ -1,0 +1,536 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>Neural-Network-Frame | GeneWlan</title><meta name="author" content="ZhangLei"><meta name="copyright" content="ZhangLei"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="[TOC] 引言 环顾我们的四周，原本被认为只有人类才能做到的事情，现在人工智能都能毫无差错地完成，甚至试图超越人类。在这个发展速度惊人的世界背后，深度学习技术发挥着重要作用，世界各地研究人员不吝褒奖之词，称其为革新性技术。 入门深度学习，应该尽量不依靠任何内容不明的黑盒，即各种库、工具等，尽量从最基础的知识出发，只用NumPy和Matplotlib等基础库，一步一步实现各种神经网络。闻之不若见之">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Neural-Network-Frame">
+<meta property="og:url" content="http://genewlan.github.io/2023/09/30/Neural-Network-Frame/index.html">
+<meta property="og:site_name" content="GeneWlan">
+<meta property="og:description" content="[TOC] 引言 环顾我们的四周，原本被认为只有人类才能做到的事情，现在人工智能都能毫无差错地完成，甚至试图超越人类。在这个发展速度惊人的世界背后，深度学习技术发挥着重要作用，世界各地研究人员不吝褒奖之词，称其为革新性技术。 入门深度学习，应该尽量不依靠任何内容不明的黑盒，即各种库、工具等，尽量从最基础的知识出发，只用NumPy和Matplotlib等基础库，一步一步实现各种神经网络。闻之不若见之">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2023-09-30T10:55:16.000Z">
+<meta property="article:modified_time" content="2023-09-30T11:01:17.925Z">
+<meta property="article:author" content="ZhangLei">
+<meta property="article:tag" content="frame">
+<meta property="article:tag" content="Neural-Network-Frame">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://genewlan.github.io/2023/09/30/Neural-Network-Frame/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Neural-Network-Frame',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-09-30 19:01:17'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><!-- hexo injector head_end start -->
+    <style>
+      #background-effect {
+        position: fixed !important;
+        top: 0px;
+        left: 0px;
+        z-index: -1;
+        width: 100%;
+        height: 100%
+      }
+    </style>
+  <!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="GeneWlan" type="application/atom+xml">
+<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/03/21/ZVUmQFknE2JosXT.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="GeneWlan"><span class="site-name">GeneWlan</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Neural-Network-Frame</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-09-30T10:55:16.000Z" title="发表于 2023-09-30 18:55:16">2023-09-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-09-30T11:01:17.925Z" title="更新于 2023-09-30 19:01:17">2023-09-30</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Neural-Network-Frame"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>[TOC]</p>
+<h1>引言</h1>
+<p>环顾我们的四周，原本被认为只有人类才能做到的事情，现在人工智能都能毫无差错地完成，甚至试图超越人类。在这个发展速度惊人的世界背后，深度学习技术发挥着重要作用，世界各地研究人员不吝褒奖之词，称其为革新性技术。<br>
+入门深度学习，<strong>应该尽量不依靠任何内容不明的黑盒</strong>，即各种库、工具等，尽量从最基础的知识出发，只用NumPy和Matplotlib等基础库，<strong>一步一步实现各种神经网络</strong>。闻之不若见之，见之不若知之，知之不若行之。我们开搞！<br>
+编程语言我们使用<strong>Python</strong>。除了简单、易读、易记、开源、免费、高性能等优点，它凭借着NumPy、SciPy等优秀的数值计算、统计分析库，在数据科学领域占有不可动摇的地位。很多深度学习的框架都提供了Python接口，比如Caffe、TensorFlow、Chainer、Theano等。所以Python是目前最适合入门机器学习和深度学习的编程语言。最好直接安装Anaconda，里面除了Python很多库都包了。 Python的入门可以去康康我的博客哦《<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45116099/article/details/125661025">Python简介，无代码</a>》。</p>
+<p>几乎必加的两行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br></pre></td></tr></table></figure>
+<h1>感知机</h1>
+<p>感知机是具有输入和输出的算法。<strong>给定一个输入，将输出一个既定的值</strong>。它将权重w和偏置b设定为参数。**单层感知机只能表示线性空间，而多层感知机可以表示非线性空间。**使用感知机可以表示与门、或门、与非门等逻辑电路。异或门无法通过单层感知机来表示，但使用2层感知机就可以！所以理论上，多层感知机可以表示计算机！（与非门能构成任何逻辑电路，而计算机的本质就是一堆逻辑电路）</p>
+<p><img src="https://img-blog.csdnimg.cn/bf65900614924f28ac166fb9ea1beefa.png" alt="在这里插入图片描述"><br>
+多层感知机很简单但也很重要，之后的神经网络跟它长得很像很像。</p>
+<p><img src="https://img-blog.csdnimg.cn/29111909139d4cb1a64800942774bcde.png#pic_center" alt="在这里插入图片描述"></p>
+<h1>神经网络</h1>
+<p>多层感知机能表示复杂的函数，但是对于合适的、能符合预期的输入与输出的权重的确定，现在还是由人工进行，在面临大量的权重和偏置参数时，人力是无法胜任的。<br>
+神经网络的出现就是为了解决这个坏消息。具体地讲，神经网络的一个重要性质是它可以<strong>自动地从数据中学习到合适的权重参数</strong>。</p>
+<p><img src="https://img-blog.csdnimg.cn/55ac4bc3608f48949cfa2c823837da9f.png#pic_center" alt="在这里插入图片描述"><br>
+上面是一个经典的神经网络，由3层神经元构成，因为实际上只有2层神经元有权重，因此称其为“2层网络”。神经网络的形状感知机。实际上，就神经元的连接方式而言，与感知机并没有任何差异。</p>
+<h2 id="激活函数">激活函数</h2>
+<p>h(x)函数会<strong>将输入信号的总和转换为输出信号</strong>，这种函数一般称为<strong>激活函数</strong>（activation function）。如“激活”一词所示，激活函数的作用在于决定如何来激活输入信号的总和。激活函数是连接感知机和神经网络的桥梁。(一般而言，“朴素感知机”是指单层网络，指的是激活函数使用了阶跃函数的模型。“多层感知机”是指神经网络，即使用 sigmoid函数等平滑的激活函数的多层网络。)</p>
+<p><img src="https://img-blog.csdnimg.cn/0436b3e8e19445b481ce8ef3ef096408.png#pic_center" alt="在这里插入图片描述"><br>
+激活函数以阈值为界，一旦输入超过阈值，就切换输出。这样的函数称为“<strong>阶跃函数</strong>”。因此，可以说感知机中使用了阶跃函数作为激活函数。也就是说，<strong>在激活函数的众多候选函数中，感知机使用了阶跃函数</strong>。实际上，如果将激活函数从阶跃函数换成其他函数，就可以进入神经网络的世界了。</p>
+<h3 id="sigmoid函数">Sigmoid函数</h3>
+<p>下面我们就来介绍一下神经网络使用的激活函数。神经网络中经常使用的一个激活函数就是<strong>sigmoid函数</strong>，函数就是给定某个输入后，会返回某个输出的转换器。比如，向sigmoid函数输入1.0或2.0后，就会有某个值被输出，类似h(1.0) = 0.731 …、h(2.0) = 0.880 …<br>
+<img src="https://img-blog.csdnimg.cn/3d0e53b1dc9e4985ba9ac0ec6063611f.png" alt="在这里插入图片描述"><br>
+sigmoid函数是一条平滑的曲线，输出随着输入发生连续性的变化。而阶跃函数以0为界，输出发生急剧性的变化。<strong>sigmoid函数的平滑性对神经网络的学习具有重要意义。感知机中神经元之间流动的是0或1的二元信号，而神经网络中流动的是连续的实数值信号</strong>。</p>
+<h3 id="relu函数">ReLU函数</h3>
+<p>还有一个激活函数明星就是ReLU函数，后面会大量用到！<br>
+<img src="https://img-blog.csdnimg.cn/570471407f424a7e94c25ab1fb1ddec8.png#pic_center" alt="在这里插入图片描述"><br>
+如果从宏观视角看图，可以发现激活函数具有相似的形状。实际上，两者的结构均是“<strong>输入小时，输出接近0（为0）；随着输入增大，输出向1靠近（变成1）</strong>”。也就是说，<strong>当输入信号为重要信息时，阶跃函数和sigmoid函数都会输出较大的值；当输入信号为不重要的信息时，两者都输出较小的值</strong>。还有一个共同点是，<strong>不管输入信号有多小，或者有多大，输出信号的值都在0到1之间</strong>。</p>
+<h3 id="小总结">小总结</h3>
+<p><img src="https://img-blog.csdnimg.cn/26da27a334b84c459b43f252c1506c36.png" alt="在这里插入图片描述"></p>
+<p><strong>神经网络的激活函数必须使用非线性函数</strong>！换句话说，激活函数不能使用线性函数。因为使用线性函数时，无法发挥多层网络带来的优势，不管如何加深层数，总是存在与之等效的“无隐藏层的神经网络”。<br>
+<strong>神经网络中的激活函数大多使用平滑变化的sigmoid函数或ReLU函数。</strong></p>
+<h2 id="输出层的设计">输出层的设计</h2>
+<p>神经网络可以用在分类问题和回归问题上，不过<strong>需要根据情况改变输出层的激活函数</strong>。一般而言，<strong>回归问题用恒等函数，分类问题用softmax函数</strong>！</p>
+<p><strong>恒等函数</strong>会将输入按原样输出，<strong>对于输入的信息，不加以任何改动地直接输出</strong>。</p>
+<h3 id="softmax函数">softmax函数</h3>
+<p><strong>softmax函数</strong>可以用下面的式表示：</p>
+<p><img src="https://img-blog.csdnimg.cn/d74b16167f454018b9e1e65eeb9d2772.png" alt="在这里插入图片描述"><br>
+softmax函数的输出是0*.<em>0到1</em>.*0之间的实数。并且，softmax函数的输出值的总和是1。输出总和为1是softmax函数的一个重要性质。正因为有了这个性质，<strong>我们才可以把softmax函数的输出解释为“概率”！通过使用softmax函数，我们可以用概率的（统计的）方法处理问题。</strong></p>
+<h3 id="小总结">小总结</h3>
+<p>一般而言，神经网络只把输出值最大的神经元所对应的类别作为识别结果。并且，即便使用softmax函数，输出值最大的神经元的位置也不会变。因此，<strong>神经网络在进行分类时，输出层的softmax函数可以省略</strong>。在实际的问题中，由于指数函数的运算需要一定的计算机运算量，因此输出层的softmax函数一般会被省略。但是，<strong>softmax函数对于神经网络的学习过程（反向传播）具有重大作用！</strong></p>
+<p>通过巧妙地使用NumPy<strong>多维数组</strong>，可以高效地实现神经网络。<br>
+分类问题中，<strong>输出层的神经元的数量设置为要分类的类别数。</strong><br>
+输入数据的集合称为批（batch）。<strong>通过以批为单位进行推理处理，能够实现高速的运算。</strong></p>
+<h1>神经网络的学习！</h1>
+<p>终于到了重头戏！前面我们知道了整个网络的前向传播过程，其实就是很直观地不断用数据乘权重再加偏置再经激活函数，一直流动到最后，如果输出层的激活函数选softmax，则能很直观地看到当前数据经过网络后属于不同分类的概率。在这个过程，所有权重、偏置都是固定的，这些参数才是这个深度神经网络的灵魂，合适的参数才能带来正常工作的神经网络。所以，网络需要学习！</p>
+<p>数据是机器学习的命根子，机器学习从数据中寻找答案、从数据中发现模式、根据数据讲故事。神经网络的特征就是可以<strong>从数据中学习</strong>。所谓“从数据中学习”，是指可以由数据自动决定权重参数的值。在实际的神经网络中，参数的数量成千上万，在层数更深的深度学习中，参数的数量甚至可以上亿，想要人工决定这些参数的值是不可能的。所以神经网络学习的本质，就是它<strong>自动调参（权重、偏置），让损失函数不断降低至满意。</strong></p>
+<p>机器学习的方法中，由机器从收集到的数据中找出规律性。与从零开始想出算法相比，这种方法可以更高效地解决问题，也能减轻人的负担。但是需要注意的是，将图像转换为向量时使用的特征量仍是由人设计的。对于不同的问题，必须使用合适的特征量（必须设计专门的特征量），才能得到好的结果。比如，为了区分狗的脸部，人们需要考虑与用于识别5的特征量不同的其他特征量。也就是说，即使使用特征量和机器学习的方法，也需要针对不同的问题人工考虑合适的特征量。<strong>而在神经网络中，连图像中包含的重要特征量也都是由机器来学习的。</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/cdb26f8931434e71b2a56f61fac5f769.png" alt="在这里插入图片描述"></p>
+<p>深度学习有时也称为<strong>端到端机器学习</strong>（end-to-end machine learning）。这里所说的端到端是指从一端到另一端的意思，也就是从原始数据（输入）中获得目标结果（输出）的意思。神经网络的优点是对所有的问题都可以用同样的流程来解决。比如，不管要求解的问题是识别5，还是识别狗，抑或是识别人脸，<strong>神经网络都是通过不断地学习所提供的数据，尝试发现待求解的问题的模式。也就是说，与待处理的问题无关，神经网络可以将数据直接作为原始数据，进行“端对端”的学习</strong>。</p>
+<h2 id="损失函数">损失函数</h2>
+<p>神经网络的学习<strong>通过某个指标表示现在的状态</strong>。然后，以这个指标为<strong>基准</strong>，寻找最优权重参数。神经网络的学习中所用的指标称为<strong>损失函数（loss function）</strong>。这个损失函数可以使用任意函数，但一般用<strong>均方误差</strong>和<strong>交叉熵误差</strong>等。</p>
+<p>在进行神经网络的学习时，<strong>不能将识别精度作为指标</strong>。因为如果以识别精度为指标，则参数的导数在绝大多数地方都会变为0。此时识别精度为32%。如果以识别精度为指标，即使稍微改变权重参数的值，识别精度也仍将保持在32%，不会出现变化。也就是说，仅仅微调参数，是无法改善识别精度的。即便识别精度有所改善，它的值也不会像32.0123 …%这样连续变化，而是变为33%、34%这样的不连续的、离散的值。而如果把<strong>损失函数作为指标</strong>，则当前损失函数的值可以表示为0.92543 …这样的值。并且，如果稍微改变一下参数的值，对应的损失函数也会像0.93432…这样发生连续性的变化。</p>
+<h3 id="均方误差">均方误差</h3>
+<p><img src="https://img-blog.csdnimg.cn/5d7e44588f014c37b04390d7e7ea903d.png#pic_center" alt="在这里插入图片描述"><br>
+就是所有数据前向传播的输出与对应标签值相减再平方再加起来，二分之一是为了让后面的求导省去系数。</p>
+<h3 id="交叉熵误差">交叉熵误差</h3>
+<p><img src="https://img-blog.csdnimg.cn/88bad17812694362a146298cce2fe907.png" alt="在这里插入图片描述"><br>
+log表示以e为底数的自然对数（log e）。yk是神经网络的输出，tk是正确解标签。并且，tk中只有正确解标签的索引为1，其他均为0（one-hot表示）。因此，式子实际上只计算对应正确解标签的输出的自然对数。比如，假设正确解标签的索引是“2”，与之对应的神经网络的输出是0.6，则交叉熵误差是−log 0.6 = 0.51；若“2”对应的输出是0.1，则交叉熵误差为−log 0.1 = 2.30。也就是说，交叉熵误差的值是由正确解标签所对应的输出结果决定的。从图中可以知道，若输出（一般经过softmax层，表示分类的概率）越接近1，表示正确类别上的概率越大，则交叉熵误差就越接近0，误差就越小，很不错。</p>
+<h2 id="mini-batch">mini-batch</h2>
+<p>机器学习使用训练数据进行学习。使用训练数据进行学习，严格来说，就是针对训练数据计算损失函数的值，找出使该值尽可能小的参数。MNIST数据集的训练数据有60000个，如果以全部数据为对象求损失函数的和，则计算过程需要花费较长的时间。再者，如果遇到大数据，数据量会有几百万、几千万之多，这种情况下以全部数据为对象计算损失函数是不现实的。因此，我们从全部数据中选出一部分，作为全部数据的“近似”。神经网络的学习也是从训练数据中选出一批数据（称为mini-batch,小批量），然后对每个mini-batch进行学习。比如，从60000个训练数据中随机选择100笔，再用这100笔数据进行学习。这种学习方式称为mini-batch学习。</p>
+<p><img src="https://img-blog.csdnimg.cn/7c8dfb27fcab4d9eabf5ae46236c007b.png#pic_center" alt="在这里插入图片描述"></p>
+<h2 id="梯度法">梯度法</h2>
+<p>机器学习的主要任务是在学习时寻找最优参数。同样地，神经网络也必须在学习时找到最优参数（权重和偏置）。这里所说的最优参数是指损失函数。取最小值时的参数。但是，一般而言，损失函数很复杂，参数空间庞大，我们不知道它在何处能取得最小值。而通过巧妙地使用梯度来寻找函数最小值（或者尽可能小的值）的方法就是梯度法。这里需要注意的是，**梯度表示的是各点处的函数值减小最多的方向。因此，无法保证梯度所指的方向就是函数的最小值或者真正应该前进的方向。**实际上，在复杂的函数中，梯度指示的方向基本上都不是函数值最小处。</p>
+<p>虽然梯度的方向并不一定指向最小值，<strong>但沿着它的方向能够最大限度地减小函数的值</strong>。因此，<strong>在寻找函数的最小值（或者尽可能小的值）的位置的任务中，要以梯度的信息为线索，决定前进的方向。</strong> 在梯度法中，<strong>函数的取值从当前位置沿着梯度方向前进一定距离，然后在新的地方重新求梯度，再沿着新梯度方向前进，如此反复，不断地沿梯度方向前进。</strong> 像这样，<strong>通过不断地沿梯度方向前进，逐渐减小函数值的过程就是梯度法（gradient method）</strong>。梯度法是解决机器学习中最优化问题的常用方法，特别是在神经网络的学习中经常被使用。</p>
+<p><img src="https://img-blog.csdnimg.cn/d06aca8268944464a6623ad435ed71ca.png" alt="在这里插入图片描述"><br>
+<em>η</em> 表示更新量，在神经网络的学习中，称为<strong>学习率</strong>（learning rate）。学习率决定在一次学习中，应该学习多少，以及在多大程度上更新参数。实验结果表明，**学习率过大的话，会发散成一个很大的值；反过来，学习率过小的话，基本上没怎么更新就结束了。**也就是说，设定合适的学习率是一个很重要的问题。</p>
+<p>上面式子表示更新一次的式子，这个步骤会反复执行。也就是说，每一步都按式子更新变量的值，通过反复执行此步骤，逐渐减小函数值。虽然这里只展示了有两个变量时的更新过程，但是即便增加变量的数量，也可以通过类似的式子（各个变量的偏导数）进行更新。</p>
+<p>像学习率、权重初始值等的参数称为超参数。这是一种和神经网络的参数（权重和偏置）性质不同的参数。相对于神经网络的权重参数是通过训练数据和学习算法自动获得的，<strong>学习率这样的超参数则是人工设定的</strong>。一般来说，超参数需要尝试多个值，以便找到一种可以使学习顺利进行的设定，这篇博客最后两章会讲到超参数的优化问题。</p>
+<p>在上图的gradient_descent()函数中，参数f是要进行最优化的函数，init_x是初始值，lr是学习率learning rate，step_num是梯度法的重复次数。numerical_gradient(f,x)会求函数的梯度，用该梯度乘以学习率得到的值进行更新操作，由step_num指定重复的次数。使用这个函数可以求函数的极小值，顺利的话，还可以求函数的最小值。</p>
+<p>在右图的numerical_gradient()函数里使用了<strong>数值微分</strong>的方法算梯度，比较简单，但计算会相对繁琐，<strong>等下介绍的反向传播</strong>能极快地完成梯度的运算。<br>
+更多梯度法的细节，这里不好展开，可以康康我的博客哦《<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45116099/article/details/122509740">无废话的机器学习笔记（三）(梯度下降)</a>》</p>
+<h2 id="神经网络学习全貌">神经网络学习全貌!</h2>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">前提</span><br></pre></td></tr></table></figure>
+<p>神经网络存在合适的权重和偏置，调整权重和偏置以便拟合训练数据的</p>
+<p>过程称为“学习”。神经网络的学习分成下面4个步骤。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">步骤1（mini-batch）</span><br></pre></td></tr></table></figure>
+<p>从训练数据中随机选出一部分数据，这部分数据称为mini-batch。我们</p>
+<p>的目标是减小mini-batch的损失函数的值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">步骤2（计算梯度）</span><br></pre></td></tr></table></figure>
+<p>为了减小mini-batch的损失函数的值，需要求出各个权重参数的梯度。</p>
+<p>梯度表示损失函数的值减小最多的方向。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">步骤3（更新参数）</span><br></pre></td></tr></table></figure>
+<p>将权重参数沿梯度方向进行微小更新。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">步骤4（算误差、精度）</span><br></pre></td></tr></table></figure>
+<p>每次循环都算一下误差，若到一次epoch，算一下精度。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">步骤5（重复）</span><br></pre></td></tr></table></figure>
+<p>重复步骤1、步骤2、步骤3、步骤4。</p>
+<p><img src="https://img-blog.csdnimg.cn/5433501b38c24319953682cfa454fb69.png" alt="在这里插入图片描述"></p>
+<p>epoch是一个单位。一个 epoch表示学习中所有训练数据均被使用过一次时的更新次数。比如，对于 10000笔训练数据，用大小为 100笔数据的mini-batch进行学习时，重复随机梯度下降法 100次，所有的训练数据就都被“看过”了A。此时，100次就是一个 epoch。</p>
+<p>代码的实现可以看这篇！《<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45116099/article/details/127704825?csdn_share_tail=%7B%22type%22:%22blog%22,%22rType%22:%22article%22,%22rId%22:%22127704825%22,%22source%22:%22weixin_45116099%22%7D">纯手撸一个神经网络</a>》</p>
+<h2 id="小总结">小总结</h2>
+<p><img src="https://img-blog.csdnimg.cn/45a45fc8ed974cde8676dd909b4fbd0d.png#pic_center#" alt="在这里插入图片描述"></p>
+<h1>误差反向传播法</h1>
+<p>上面，我们介绍了神经网络的学习，并通过数值微分计算了神经网络的权重参数的梯度（严格来说，是损失函数关于权重参数的梯度）。数值微分虽然简单，也容易实现，但缺点是计算上比较费时间。本章我们将学习一个能够<strong>高效计算权重参数的梯度的方法——误差反向传播法。</strong><br>
+首先介绍<strong>计算图</strong>，计算图将计算过程用图形表示出来。这里说的图形是数据结构图，通过多个节点和边表示（连接节点的直线称为“边”）。<br>
+<strong>问题1</strong>：太郎在超市买了2个100日元一个的苹果，消费税是10%，请计算支付金额。</p>
+<p><img src="https://img-blog.csdnimg.cn/a9940653d42e42c384959b11a9697a4e.png#pic_center#" alt="在这里插入图片描述"></p>
+<p>计算图将复杂的计算分割成简单的局部计算，和流水线作业一样，<strong>将局部计算的结果传递给下一个节点</strong>。在将复杂的计算分解成简单的计算这一点上与汽车的组装有相似之处。</p>
+<p><strong>计算图的优点</strong>：</p>
+<ol>
+<li>能局部计算</li>
+<li>能保存中间计算结果（方便反向传播）</li>
+<li>可直观表现反向传播法求导数</li>
+</ol>
+<h2 id="链式法则-chain-rule">链式法则（chain rule）！</h2>
+<p>介绍链式法则时，我们需要先从<strong>复合函数</strong>说起。复合函数是由多个函数构成的函数。比如，z = (x + y)2是由下式所示的两个式子构成的。</p>
+<p><img src="https://img-blog.csdnimg.cn/a7d6e9f6f55741a2b49d8e9e49d43e61.png#pic_center#" alt="在这里插入图片描述"></p>
+<p>如果某个函数由复合函数表示，则该复合函数的导数可以用构成复合函数的各个函数的导数的乘积表示。</p>
+<p><img src="https://img-blog.csdnimg.cn/1c9ac383f17440b9b6ce85242d7166f4.png#pic_center#" alt="在这里插入图片描述"></p>
+<p>反向传播的计算顺序是，<strong>先将节点的输入信号乘以节点的局部导数（偏导数），然后再传递给下一个节点</strong>。反向传播是基于链式法则的。</p>
+<p><img src="https://img-blog.csdnimg.cn/ea6424b765824f9ca5d06b7bc4a36ed0.png" alt="在这里插入图片描述"></p>
+<h2 id="反向传播">反向传播</h2>
+<p>上面介绍了<strong>计算图的反向传播是基于链式法则成立的</strong>。这里将以“加法+”和“乘法×”等运算为例，介绍反向传播的结构。</p>
+<h3 id="加法">加法</h3>
+<p>首先来考虑加法节点的反向传播。这里以z = x + y为对象，观察它的反向传播。z = x + y的导数可由下式计算出来。</p>
+<p><img src="https://img-blog.csdnimg.cn/8265783ed12f4d79b3c1a6fd4efa01c8.png#pic_center#" alt="在这里插入图片描述"></p>
+<p><strong>反向传播将从上游传过来的导数乘以1，然后传向下游。也就是说，因为加法节点的反向传播只乘以1，所以输入的值会原封不动地流向下一个节点。</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/a4519255991b4cdebe20b78c7164be8a.png" alt="在这里插入图片描述"><br>
+所以看见加法节点，<strong>无脑地将后面传来的值往下传就行</strong>！</p>
+<p>用Python实现加法层：<br>
+<img src="https://img-blog.csdnimg.cn/c35b82d299864f86919d350443c0da88.png#pic_center#" alt="在这里插入图片描述"></p>
+<h3 id="乘法">乘法</h3>
+<p>接下来，我们看一下乘法节点的反向传播。这里我们考虑z = xy。这个式子的导数用式表示:</p>
+<p><img src="https://img-blog.csdnimg.cn/b910b02868004c6caf629235f32dcc56.png#pic_center#" alt="在这里插入图片描述"><br>
+乘法的反向传播会<strong>将上游的值乘以正向传播时的输入信号的“翻转值”后传递给下游</strong>，如下图。</p>
+<p><img src="https://img-blog.csdnimg.cn/12a4771eadbe4ba9943824368033914d.png" alt="在这里插入图片描述"></p>
+<p>买苹果的例子也能轻松完成反向传播：</p>
+<p><img src="https://img-blog.csdnimg.cn/90b434af3a724632a0ade7e839c000d8.png#pic_center#" alt="在这里插入图片描述"></p>
+<p>用Python实现乘法层：<br>
+<img src="https://img-blog.csdnimg.cn/eff9a392c4314d24a42a76a5b5f9bc9e.png#pic_center#" alt="在这里插入图片描述"><br>
+MulLayer要初始化self.x和self.y是因为<strong>backward要用到这俩变量</strong>，所以需要在forward后保存下来（保存中间计算结果）。而AddLayer的backward直接无脑传就行，不用初始化什么变量。</p>
+<p><strong>用Python从零搭建买苹果和橘子的计算图：</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/4d73fc5f77054e82a6da6a6d176a1145.png#pic_center#" alt="在这里插入图片描述"><br>
+这个实现稍微有一点长，但是每一条命令都很简单。首先，生成必要的层，以合适的顺序调用正向传播的forward()方法。然后，用与正向传播相反的顺序调用反向传播的backward()方法，就可以求出想要的导数。</p>
+<h2 id="激活函数层的实现">激活函数层的实现</h2>
+<p>现在，我们将计算图的思路应用到神经网络中。这里，我们把构成神经网络的层实现为一个类。</p>
+<h3 id="relu层的实现">ReLU层的实现</h3>
+<p>如果正向传播时的输入x大于0，则反向传播会将上游的值原封不动地传给下游。反过来，如果正向传播时的x小于等于0，则反向传播中传给下游的信号将停在此处。</p>
+<p><img src="https://img-blog.csdnimg.cn/5a6d7a967bba498d965ac780b7c233b0.png" alt="在这里插入图片描述"><br>
+ReLU层的作用就像电路中的开关一样。正向传播时，有电流通过的话，就将开关设为 ON；没有电流通过的话，就将开关设为 OFF。反向传播时，开关为ON的话，电流会直接通过；开关为OFF的话，则不会有电流通过。</p>
+<h3 id="sigmoid层的实现">Sigmoid层的实现</h3>
+<p><img src="https://img-blog.csdnimg.cn/20bc0eb2a20e4168a27fbc3b31e4d6bb.png" alt="在这里插入图片描述"></p>
+<h3 id="affine层的实现">Affine层的实现</h3>
+<p><img src="https://img-blog.csdnimg.cn/9124185119ee4402b5b4717fcb851fff.png" alt="在这里插入图片描述"><br>
+<img src="https://img-blog.csdnimg.cn/77cf32102f5747519c4550e98babf845.png#pic_center#" alt="在这里插入图片描述"></p>
+<h3 id="softmax-with-loss层的实现">Softmax-with-Loss层的实现</h3>
+<p>softmax函数会<strong>将输入值正规化之后再输出</strong>。</p>
+<p><img src="https://img-blog.csdnimg.cn/734f33f0a46b467884c22b0290add88c.png" alt="在这里插入图片描述"></p>
+<p>考虑到这里也包含作为损失函数的交叉熵误差（cross entropy error），所以称为“<strong>Softmax-with-Loss</strong>层”。</p>
+<p><img src="https://img-blog.csdnimg.cn/66f1945dda964be88ef0f4c1fe9ba979.png#pic_center#" alt="在这里插入图片描述"><br>
+图中要注意的是反向传播的结果。Softmax层的反向传播得到了（y1 − t1, y2 − t2, y3 − t3）这样“漂亮”的结果。由于（y1, y2, y3）是Softmax层的输出，（t1, t2, t3）是监督数据，所以（y1 − t1, y2 − t2, y3 − t3）是Softmax层的输出和标签的差分。<strong>神经网络的反向传播会把这个差分表示的误差传递给前面的层，这是神经网络学习中的重要性质。神经网络学习的目的就是通过调整权重参数，使神经网络的输出（Softmax的输出）接近标签。因此，必须将神经网络的输出与标签的误差高效地传递给前面的层</strong>。刚刚的（y1 − t1, y2 − t2, y3 − t3）正是Softmax层的输出与标签的差，直截了当地表示了当前神经网络的输出与标签的误差。</p>
+<p>这里考虑一个具体的例子，比如思考标签是（0,1,0），Softmax层的输出是 (0.3,0.2,0.5) 的情形。因为正确解标签处的概率是0.2（20%），这个时候的神经网络未能进行正确的识别。此时，Softmax层的反向传播传递的是 (0.3, −0.8,0.5) 这样一个大的误差。因为这个大的误差会向前面的层传播，<strong>所以Softmax层前面的层会从这个大的误差中学习到“大”的内容。</strong></p>
+<p>使用交叉熵误差作为 softmax函数的损失函数后，反向传播得到（y1 − t1, y2 − t2, y3 − t3）这样“漂亮”的结果。实际上，这样 <strong>“漂亮”的结果并不是偶然的</strong>，<strong>而是为了得到这样的结果，特意设计了交叉熵误差函数</strong>！回归问题中输出层使用“恒等函数”，损失函数使用“平方和误差”，也是出于同样的理由。也就是说，使用“平方和误差”作为“恒等函数”的损失函数，反向传播才能得到（y1 −t1, y2 − t2, y3 − t3）这样“漂亮”的结果。</p>
+<p><img src="https://img-blog.csdnimg.cn/63675b9cd8c245628ab07d142452d87b.png#pic_center#" alt="在这里插入图片描述"></p>
+<h2 id="小总结">小总结</h2>
+<p>通过像<strong>组装乐高积木一样组装上面实现的层</strong>，可以构建神经网络。</p>
+<p><img src="https://img-blog.csdnimg.cn/b4f3688de8fa4983a99e2ab6a49181c8.png#pic_center#" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/80644dee1b3e4b90b3b669441abd9ffd.png#pic_center#" alt="在这里插入图片描述"></p>
+<h1>学习中的技巧</h1>
+<h2 id="参数的更新-optimizer">参数的更新（optimizer）</h2>
+<p>神经网络的学习的目的是找到使损失函数的值尽可能小的参数。这是寻找最优参数的问题，解决这个问题的过程称为最优化（optimization）。在深度学习中，优化器（optimizer）有很多种选择，如SGD、Momentum、AdaGrad、Adam等，下面一一介绍。</p>
+<h3 id="sgd">SGD</h3>
+<p>为了找到最优参数，我们将参数的梯度（导数）作为了线索。使用参数的梯度，沿梯度方向更新参数，并重复这个步骤多次，从而逐渐靠近最优参数，这个过程称为随机梯度下降法（stochastic gradient descent），简称SGD。随机是因为我们加入了mini-batch，即每次我们只随机选择一定数量的数据参与学习。SGD相比正常的GD是一个简单、高效的方法，比起胡乱地搜索参数空间，不失为一种“聪明”的方法。</p>
+<p><img src="https://img-blog.csdnimg.cn/4de62303cf134579adc93c86777daa12.png" alt="在这里插入图片描述"><br>
+SGD呈“之”字形移动。这是一个相当低效的路径。也就是说，SGD的缺点是，<strong>如果函数的形状非均向（anisotropic），比如呈延伸状，搜索的路径就会非常低效</strong>。因此，我们需要比单纯朝梯度方向前进的SGD更聪明的方法。<strong>SGD低效的根本原因是，梯度的方向并没有指向最小值的方向。</strong></p>
+<h3 id="momentum">Momentum</h3>
+<p>Momentum是“动量”的意思，和物理有关。因为SGD只关注了梯度，但很多时候梯度下降的方向并不是最小值，很有可能是一片平地或一个小坑，当梯度为0，参数就会立刻停止更新，小球会立刻停止滚动。为了改善这种问题，给小球加上速度这一概念，当往下滑动时，即使遇到了平地或小坑，也能由积累的速度助其越过障碍，这种方法就是Momentum！</p>
+<p><img src="https://img-blog.csdnimg.cn/152be0eb12504f4383bc5b88a19686a3.png" alt="在这里插入图片描述"><br>
+我们可以看到，即使梯度为0，因为之前积累的v不为0，所以w会继续更新！</p>
+<p><img src="https://img-blog.csdnimg.cn/4b667a2f4d9e42f98a430a364a8d4f93.png#pic_center#" alt="在这里插入图片描述"></p>
+<h3 id="adagrad">AdaGrad</h3>
+<p>在神经网络的学习中，学习率（数学式中记为<em>η</em>）的值很重要。学习率过小，会导致学习花费过多时间；反过来，学习率过大，则会导致学习发散而不能正确进行。在关于学习率的有效技巧中，有一种被称为学习率衰减（learning ratedecay）的方法，即随着学习的进行，使学习率逐渐减小。实际上，一开始“多”学，然后逐渐“少”学的方法，在神经网络的学习中经常被使用。</p>
+<p>AdaGrad会<strong>为参数的每个元素适当地调整学习率</strong>，与此同时进行学习。</p>
+<p><img src="https://img-blog.csdnimg.cn/b5543ae31fca45719657966cb3ec2028.png" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/bdc5cc895950482caa833e37dd05c181.png#pic_center#" alt="在这里插入图片描述"></p>
+<h3 id="adam">Adam</h3>
+<p>Momentum参照小球在碗中滚动的物理规则进行移动，AdaGrad为参数的每个元素适当地调整更新步伐。<strong>合体！*<em>变成Adam！Adam是2015年提出的新方法。它的理论有些复杂，直观地讲，就是*<em>融合了Momentum和AdaGrad的方法</em></em>。通过组合前面两个方法的优点，有望实现参数空间的高效搜索。此外，进行</strong>超参数的“偏置校正”**也是Adam的特征。</p>
+<p><img src="https://img-blog.csdnimg.cn/70ab48be523547238c09e09943708761.png#pic_center#" alt="在这里插入图片描述"><br>
+Adam会设置 3个超参数。一个是学习率（论文中以α出现），另外两个是一次momentum系数β1和二次momentum系数β2。根据论文，标准的设定值是β1为 0.9，β2 为 0.999。设置了这些值后，大多数情况下都能顺利运行。</p>
+<h3 id="小总结">小总结</h3>
+<p>上面我们介绍了SGD、Momentum、AdaGrad、Adam这4种方法，那么用哪种方法好呢？非常遗憾，（目前）并不存在能在所有问题中都表现良好的方法。这4种方法各有各的特点，都有各自擅长解决的问题和不擅长解决的问题。很多研究中至今仍在使用SGD。Momentum和AdaGrad也是值得一试的方法。一般而言，与SGD相比，其他3种方法可以学习得更快，有时最终的识别精度也更高。最近，很多研究人员和技术人员都喜欢用Adam。</p>
+<h2 id="权重的初始值">权重的初始值</h2>
+<p>在神经网络的学习中，权重的初始值特别重要。实际上，设定什么样的权重初始值，经常关系到神经网络的学习能否成功。</p>
+<p><strong>为什么不能将权重初始值设为0呢？严格地说，为什么不能将权重初始值设成一样的值呢？</strong> 这是因为在误差反向传播法中，所有的权重值都会进行相同的更新。比如，在2层神经网络中，假设第1层和第2层的权重为0。这样一来，正向传播时，因为输入层的权重为0，所以第2层的神经元全部会被传递相同的值。第2层的神经元中全部输入相同的值，这意味着反向传播时第2层的权重全部都会进行相同的更新。<strong>因此，权重被更新为相同的值，并拥有了对称的值（重复的值）。这使得神经网络拥有许多不同的权重的意义丧失了。为了防止“权重均一化”（严格地讲，是为了瓦解权重的对称结构），必须随机生成初始值。</strong></p>
+<p>因为激活函数sigmoid函数是S型函数，随着输出不断地靠近0（或者靠近1），它的导数的值逐渐接近0。因此，偏向0和1的数据分布会造成反向传播中梯度的值不断变小，最后消失。这个问题称为<strong>梯度消失</strong>（gradient vanishing）。层次加深的深度学习中，梯度消失的问题可能会更加严重。</p>
+<h3 id="xavier初始值">Xavier初始值</h3>
+<p>为了使各层的激活值呈现出具有相同广度的分布，推荐使用Xavier初始值。<br>
+<img src="https://img-blog.csdnimg.cn/20022954fbb14b3c863e1b8a496c5c9c.png#pic_center#" alt="在这里插入图片描述"><br>
+使用Xavier初始值后，前一层的节点数越多，要设定为目标节点的初始值的权重尺度就越小。</p>
+<h3 id="he初始值">He初始值</h3>
+<p><strong>Xavier初始值是以激活函数是线性函数为前提而推导出来的</strong>。因为sigmoid函数和tanh函数左右对称，且中央附近可以视作线性函数，所以适合使用Xavier初始值。但当激活函数使用ReLU时，一般推荐使用<strong>ReLU专用的初始值</strong>，也就是Kaiming He等人推荐的初始值，也称为“<strong>He初始值</strong>”。</p>
+<p><img src="https://img-blog.csdnimg.cn/144b6e5209344d808531371d833be766.png#pic_center#" alt="在这里插入图片描述"></p>
+<h3 id="小总结">小总结</h3>
+<p><strong>当激活函数使用ReLU时，权重初始值使用He初始值，当激活函数为sigmoid或tanh等S型曲线函数时，初始值使用Xavier初始值。这是目前的最佳实践。</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/067f2c726cb348049ea4fcf3fefa0729.png#pic_center#" alt="在这里插入图片描述"><br>
+在神经网络的学习中，<strong>权重初始值非常重要</strong>。很多时候权重初始值的设定关系到神经网络的学习能否成功。权重初始值的重要性容易被忽视，而任何事情的开始（初始值）总是关键的。</p>
+<h2 id="batch-normalization">Batch Normalization</h2>
+<p>为了使各层拥有适当的广度，“强制性”地调整激活值的分布，Batch Normalization方法就是基于这个想法而产生的。简单来说，就是<strong>在ReLU前正规化一下数据。</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/ee96a6520a4044cdb76b242d4628f34a.png" alt="在这里插入图片描述"><br>
+Batch Norm，顾名思义，以进行学习时的mini-batch为单位，按mini-batch进行正规化。具体而言，就是进行使数据分布的均值为0、方差为1的正规化。</p>
+<p><img src="https://img-blog.csdnimg.cn/52e147c20be7455aa8fdce6fe10b9809.png#pic_center#" alt="在这里插入图片描述"></p>
+<p><strong>几乎所有的情况下都是使用Batch Norm时学习进行得更快</strong>。实际上，在不使用Batch Norm的情况下，如果不赋予一个尺度好的初始值，学习将完全无法进行。通过使用Batch Norm，可以推动学习的进行。并且，对权重初始值变得健壮（“对初始值健壮”表示不那么依赖初始值）。Batch Norm具备了如此优良的性质，一定能应用在更多场合中。</p>
+<h2 id="正规化">正规化</h2>
+<p>机器学习的问题中，过拟合是一个很常见的问题。过拟合指的是只能拟合训练数据，但不能很好地拟合不包含在训练数据中的其他数据的状态。机器学习的目标是<strong>提高泛化能力</strong>，即便是没有包含在训练数据里的未观测数据，也希望模型可以进行正确的识别。</p>
+<p>发生过拟合的原因：</p>
+<ol>
+<li>模型拥有大量参数、表现力强。</li>
+<li>训练数据少。</li>
+</ol>
+<h3 id="权重衰减-l1-l2正则化">权重衰减（L1、L2正则化）</h3>
+<p>权值衰减是一直以来经常被使用的一种抑制过拟合的方法。该方法通过在学习的过程中对大的权重进行惩罚，来抑制过拟合。很多过拟合原本就是因为权重参数取值过大才发生的。正则化就是在损失函数后面加上权重，抑制权重过大的情况。</p>
+<p>欢迎去康康我的博客《<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45116099/article/details/122524171">无废话的机器学习笔记（番外）(数据集，方差-偏差，过拟合，正则化，降维)</a>》哦。</p>
+<h3 id="dropout">Dropout</h3>
+<p>如果网络的模型变得很复杂，只用权值衰减就难以应对了。在这种情况下，我们经常会使用Dropout 方法。<br>
+<strong>Dropout是一种在学习的过程中随机删除神经元的方法。</strong> 训练时，随机选出隐藏层的神经元，然后将其删除。被删除的神经元不再进行信号的传递，如图所示。训练时，每传递一次数据，就会随机选择要删除的神经元。然后，测试时，虽然会传递所有的神经元信号，但是对于各个神经元的输出，要乘上训练时的删除比例后再输出。</p>
+<p><img src="https://img-blog.csdnimg.cn/ad73324a07a04ba8bda39758b27d153e.png" alt="在这里插入图片描述"></p>
+<p>机器学习中经常使用<strong>集成学习</strong>。所谓集成学习，就是让多个模型单独进行学习，推理时再取多个模型的输出的平均值。用神经网络的语境来说，比如，准备 5个结构相同（或者类似）的网络，分别进行学习，测试时，以这 5个网络的输出的平均值作为答案。实验告诉我们，通过进行集成学习，神经网络的识别精度可以提高好几个百分点。这个集成学习与 Dropout有密切的关系。这是因为可以将 Dropout理解为，通过在学习过程中随机删除神经元，从而每一次都让不同的模型进行学习。并且，推理时，通过对神经元的输出乘以删除比例（比如，0.5等），可以取得模型的平均值。也就是说，可以理解成，Dropout将集成学习的效果（模拟地）通过一个网络实现了。</p>
+<h3 id="超参数的验证">超参数的验证</h3>
+<p>神经网络中，除了权重和偏置等参数，超参数（hyper-parameter）也经常出现。这里所说的超参数是指，比如各层的神经元数量、batch大小、参数更新时的学习率或权值衰减等。如果这些超参数没有设置合适的值，模型的性能就会很差。虽然超参数的取值非常重要，但是在决定超参数的过程中一般会伴随很多的试错。</p>
+<p>调整超参数时，必须使用超参数专用的确认数据。用于调整超参数的数据，一般称为验证数据（validation data）。我们使用这个验证数据来评估超参数的好坏。所以数据集一般事先分成<strong>训练数据、验证数据、测试数据</strong>三部分（6:2:2）。</p>
+<p><img src="https://img-blog.csdnimg.cn/93c37e2339734061ba1375d2262cc162.png#pic_center#" alt="在这里插入图片描述"></p>
+<p>进行超参数的最优化时，逐渐缩小超参数的“好值”的存在范围非常重要。所谓逐渐缩小范围，是指一开始先大致设定一个范围，从这个范围中随机选出一个超参数（采样），用这个采样到的值进行识别精度的评估；然后，多次重复该操作，观察识别精度的结果，根据这个结果缩小超参数的“好值”的范围。通过重复这一操作，就可以逐渐确定超参数的合适范围。在进行神经网络的超参数的最优化时，与网格搜索等有规律的搜索相比，随机采样的搜索方式效果更好。这是因为在多个超参数中，各个超参数对最终的识别精度的影响程度不同。</p>
+<p>在超参数的最优化中，要注意的是深度学习需要很长时间（比如，几天或几周）。因此，在超参数的搜索中，需要尽早放弃那些不符合逻辑的超参数。于是，在超参数的最优化中，减少学习的epoch，缩短一次评估所需的时间是一个不错的办法。</p>
+<h2 id="小总结">小总结</h2>
+<p><img src="https://img-blog.csdnimg.cn/3b1e7efb894d48918bff47000d99a821.png#pic_center#" alt="在这里插入图片描述"></p>
+<h1>卷积神经网络 CNN</h1>
+<p>CNN被用于图像识别、语音识别等各种场合，在图像识别的比赛中，基于深度学习的方法几乎都以CNN为基础。</p>
+<p>CNN和之前介绍的神经网络一样，<strong>可以像乐高积木一样通过组装层来构建</strong>。不过，CNN中新出现了<strong>卷积层</strong>（Convolution层）和<strong>池化层</strong>（Pooling层）。之前介绍的神经网络中，<strong>相邻层的所有神经元之间都有连接，这称为全连接</strong>（fully-connected）。另外，我们用Affine层实现了全连接层。如果使用这个Affine层，一个5层的全连接的神经网络就可以通过图所示的网络结构来实现。</p>
+<p><img src="https://img-blog.csdnimg.cn/8d479c50fef04dca9ae59b8b73d36b62.png" alt="在这里插入图片描述"></p>
+<p>那么，CNN会是什么样的结构呢？下图是<strong>CNN的一个例子</strong>。</p>
+<p><img src="https://img-blog.csdnimg.cn/162aba72b9af4ce8a39c2bda5b03ee3d.png" alt="在这里插入图片描述"></p>
+<h2 id="卷积层">卷积层</h2>
+<p>在全连接层中，相邻层的神经元全部连接在一起，输出的数量可以任意决定。<strong>全连接层存在什么问题呢？那就是数据的形状被“忽视”了。</strong> 比如，输入数据是图像时，图像通常是高、长、通道方向上的3维形状。但是，向全连接层输入时，需要将3维数据拉平为1维数据。实际上，前面提到的使用了MNIST数据集的例子中，输入图像就是1通道、高28像素、长28像素的（1, 28,28）形状，但却被排成1列，以784个数据的形式输入到最开始的Affine层。</p>
+<p>图像是3维形状，这个形状中应该含有重要的空间信息。比如，空间上邻近的像素为相似的值、RBG的各个通道之间分别有密切的关联性、相距较远的像素之间没有什么关联等，3维形状中可能隐藏有值得提取的本质模式。但是，因为全连接层会忽视形状，将全部的输入数据作为相同的神经元（同一维度的神经元）处理，所以无法利用与形状相关的信息。</p>
+<p>而<strong>卷积层可以保持形状不变</strong>。当输入数据是图像时，卷积层会以3维数据的形式接收输入数据，并同样以3维数据的形式输出至下一层。<strong>因此，在CNN中，可以（有可能）正确理解图像等具有形状的数据。</strong></p>
+<h3 id="卷积运算">卷积运算</h3>
+<p>卷积运算对输入数据应用滤波器。在下面例子中，输入数据是有高长方向的形状的数据，滤波器也一样，有高长方向上的维度。假设用（height, width）表示数据和滤波器的形状，则在本例中，输入大小是(4, 4)，滤波器大小是(3, 3)，输出大小是(2, 2)。另外，有的文献中也会用“核”这个词来表示这里所说的“滤波器”。卷积运算以一定间隔滑动滤波器的窗口并应用。这里所说的窗口是指图中灰色的3 × 3的部分。如图所示，将各个位置上滤波器的元素和输入的对应元素相乘，然后再求和（有时将这个计算称为乘积累加运算）。然后，将这个结果保存到输出的对应位置。将这个过程在所有位置都进行一遍，就可以得到卷积运算的输出。</p>
+<p><img src="https://img-blog.csdnimg.cn/2aa209c5e3de47688ded5747c30d8556.png" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/186fd072612b4908b9b90a009de5a88b.png#pic_center#" alt="在这里插入图片描述"></p>
+<h3 id="填充-padding">填充（padding）</h3>
+<p>在进行卷积层的处理之前，有时要向输入数据的周围填入固定的数据（比如0等），这称为填充（padding），是卷积运算中经常会用到的处理。比如，在图中，对大小为(4, 4)的输入数据应用了幅度为1的填充。“幅度为1的填充”是指用幅度为1像素的0填充周围。</p>
+<p><img src="https://img-blog.csdnimg.cn/378444c856584ea482ad39b83d88adfb.png#pic_center#" alt="在这里插入图片描述"><br>
+通过填充，大小为(4, 4)的输入数据变成了(6, 6)的形状。然后，应用大小为(3, 3)的滤波器，生成了大小为(4, 4)的输出数据。这个例子中将填充设成了1，不过填充的值也可以设置成2、3等任意的整数。使用填充主要是为了调整输出的大小。如果每次进行卷积运算都会缩小空间，那么在某个时刻输出大小就有可能变为 1，导致无法再应用卷积运算。为了避免出现这样的情况，就要使用填充。</p>
+<h3 id="步幅-stride">步幅（stride）</h3>
+<p>应用滤波器的位置间隔称为步幅（stride）。之前的例子中步幅都是1，如果将步幅设为2，则如图所示，应用滤波器的窗口的间隔变为2个元素。</p>
+<p><img src="https://img-blog.csdnimg.cn/d8d426e1c2784b3a8f6298b534824787.png#pic_center#" alt="在这里插入图片描述"></p>
+<p>综上，<strong>增大步幅后，输出大小会变小。而增大填充后，输出大小会变大。</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/be103ea55bbe49a9a7cd49492238753a.png#pic_center#" alt="在这里插入图片描述"></p>
+<h3 id="3维数据卷积运算">3维数据卷积运算</h3>
+<p><img src="https://img-blog.csdnimg.cn/e6d1245bd0e14d3d81c71ebaad6c09c7.png#pic_center#" alt="在这里插入图片描述"><br>
+需要注意的是，在3维数据的卷积运算中，输入数据和滤波器的通道数要设为相同的值。在这个例子中，输入数据和滤波器的通道数一致，均为3。滤波器大小可以设定为任意值（不过，每个通道的滤波器大小要全部相同）。这个例子中滤波器大小为(3, 3)，但也可以设定为(2, 2)、(1, 1)、(5, 5)等任意值。再强调一下，<strong>通道数只能设定为和输入数据的通道数相同的值</strong>。</p>
+<h2 id="池化层">池化层</h2>
+<p>池化是缩小高、长方向上的空间的运算。比如，如图7-14所示，进行将2 × 2的区域集约成1个元素的处理，缩小空间大小。</p>
+<p><img src="https://img-blog.csdnimg.cn/009009119f634a0caeff22f760948eac.png#pic_center#" alt="在这里插入图片描述"></p>
+<p>就是求最大值，非常简单，叫做<strong>Max池化</strong>。也有<strong>Average池化</strong>。Max池化是从目标区域中取出最大值，Average池化则是计算目标区域的平均值。</p>
+<p><strong>池化层的特征</strong>：</p>
+<ol>
+<li>没有要学习的参数</li>
+<li>通道数不发生变化</li>
+<li>对微小的位置变化具有鲁棒性（健壮）</li>
+</ol>
+<h2 id="im2col">im2col</h2>
+<p>如果老老实实地实现卷积运算，估计要重复好几层的for语句。这样的实现有点麻烦，而且，NumPy中存在使用for语句后处理变慢的缺点（NumPy中，访问元素时最好不要用for语句）。这里，我们不使用for语句，而是使用im2col这个便利的函数进行简单的实现。</p>
+<p>**im2col是一个函数，将输入数据展开以适合滤波器（权重）。**如图所示，对3维的输入数据应用im2col后，数据转换为2维矩阵（正确地讲，是把包含批数量的4维数据转换成了2维数据）。im2col会把输入数据展开以适合滤波器（权重）。具体地说，如图所示，对于输入数据，将应用滤波器的区域（3维方块）横向展开为1列。im2col会在所有应用滤波器的地方进行这个展开处理。</p>
+<p><img src="https://img-blog.csdnimg.cn/9eff8de9105e4b508dfeff91838acdbb.png#pic_center#" alt="在这里插入图片描述"><br>
+使用im2col展开输入数据后，之后就只需将卷积层的滤波器（权重）纵向展开为1列，并计算2个矩阵的乘积即可（参照图7-19）。这和全连接层的Affine层进行的处理基本相同。</p>
+<p>在滤波器的应用区域重叠的情况下，使用im2col展开后，展开后的元素个数会多于原方块的元素个数。因此，<strong>使用im2col的实现存在比普通的实现消耗更多内存的缺点</strong>。但是，汇总成一个大的矩阵进行计算，对计算机的计算颇有益处。比如，<strong>在矩阵计算的库（线性代数库）等中，矩阵计算的实现已被高度最优化，可以高速地进行大矩阵的乘法运算。因此，通过归结到矩阵计算上，可以有效地利用线性代数库。</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/ff61f251d5074326a6455d956530eade.png" alt="在这里插入图片描述"></p>
+<p>卷积层的初始化方法将滤波器（权重）、偏置、步幅、填充作为参数接收。滤波器是 (FN, C, FH, FW)的 4 维形状。另外，FN、C、FH、FW分别是 FilterNumber（滤波器数量）、Channel、Filter Height、Filter Width的缩写。这里用粗体字表示Convolution层的实现中的重要部分。在这些粗体字部分，用im2col展开输入数据，并用reshape将滤波器展开为2维数组。然后，计算展开后的矩阵的乘积。通过在reshape时指定为-1，reshape函数会自动计算-1维度上的元素个数，以使多维数组的元素个数前后一致。(10, 3, 5, 5)形状的数组的元素个数共有750个，指定reshape(10,-1)后，就会转换成(10, 75)形状的数组。transpose会更改多维数组的轴的顺序。</p>
+<p><strong>池化层也easy：</strong></p>
+<p><img src="https://img-blog.csdnimg.cn/a25c2c8c6c2144e69205a4473409498f.png" alt="在这里插入图片描述"></p>
+<h2 id="cnn的实现">CNN的实现</h2>
+<p><img src="https://img-blog.csdnimg.cn/9695b283646d49f38df2ffdb984057b3.png" alt="在这里插入图片描述"><br>
+搭积木！</p>
+<p>如果堆叠了多层卷积层，则<strong>随着层次加深，提取的信息也愈加复杂、抽象</strong>，这是深度学习中很有意思的一个地方。最开始的层对简单的边缘有响应，接下来的层对纹理有响应，再后面的层对更加复杂的物体部件有响应。也就是说，随着层次加深，<strong>神经元从简单的形状向“高级”信息变化</strong>。换句话说，就像我们理解东西的“含义”一样，响应的对象在逐渐变化。</p>
+<p>是不是想赶紧动起手来，看看这篇！《<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45116099/article/details/127708920">最简单用TensorFlow实现CNN</a>》</p>
+<h2 id="具有代表性的cnn">具有代表性的CNN</h2>
+<h3 id="lenet">LeNet</h3>
+<p>LeNet在1998年被提出，是进行手写数字识别的网络。如图所示，它有连续的卷积层和池化层（正确地讲，是只“抽选元素”的子采样层），最后经全连接层输出结果。</p>
+<p><img src="https://img-blog.csdnimg.cn/d2ac9cc1972246709543a7c8a756d973.png" alt="在这里插入图片描述"><br>
+和“现在的CNN”相比，LeNet有几个不同点。第一个不同点在于激活函数。LeNet中使用sigmoid函数，而现在的CNN中主要使用ReLU函数。此外，原始的LeNet中使用子采样（subsampling）缩小中间数据的大小，而现在的CNN中Max池化是主流。</p>
+<h3 id="alexnet">AlexNet</h3>
+<p>在LeNet问世20多年后，AlexNet被发布出来。AlexNet是引发深度学习热潮的导火线，不过它的网络结构和LeNet基本上没有什么不同。</p>
+<p><img src="https://img-blog.csdnimg.cn/9fd0c480de72448782d04f8b35ea34df.png#pic_center#" alt="在这里插入图片描述"><br>
+AlexNet叠有多个卷积层和池化层，最后经由全连接层输出结果。虽然结构上AlexNet和LeNet没有大的不同，但有以下几点差异：</p>
+<p>1、激活函数使用ReLU</p>
+<p>2、使用进行局部正规化的LRN（Local Response Normalization）层</p>
+<p>3、使用Dropout</p>
+<h3 id="vgg">VGG</h3>
+<p>VGG是由卷积层和池化层构成的基础的CNN。不过，如图所示，它的特点在于将有权重的层（卷积层或者全连接层）叠加至16层（或者19层），具备了深度（根据层的深度，有时也称为“VGG16”或“VGG19”）。VGG中需要注意的地方是，基于3×3的小型滤波器的卷积层的运算是连续进行的。如图所示，重复进行“卷积层重叠2次到4次，再通过池化层将大小减半”的处理，最后经由全连接层输出结果。</p>
+<p><img src="https://img-blog.csdnimg.cn/9271a68d881e46a2b553f0b4c746b576.png#pic_center#" alt="在这里插入图片描述"></p>
+<h3 id="googlenet">GoogLeNet</h3>
+<p>图中的矩形表示卷积层、池化层等。只看图的话，这似乎是一个看上去非常复杂的网络结构，但实际上它基本上和之前介绍的CNN结构相同。不过，GoogLeNet的特征是，网络不仅在纵向上有深度，在横向上也有宽度，这称为“Inception结构”。Inception结构使用了多个大小不同的滤波器（和池化），最后再合并它们的结果。GoogLeNet的特征就是将这个Inception结构用作一个构件（构成元素）。此外，在GoogLeNet中，很多地方都使用了大小为1 × 1的滤波器的卷积层。这个1 × 1的卷积运算通过在通道方向上减小大小，有助于减少参数和实现高速化处理。</p>
+<p><img src="https://img-blog.csdnimg.cn/bf71cac4d0484082ab2a8af0b0a6299c.png" alt="在这里插入图片描述"></p>
+<h3 id="resnet">ResNet</h3>
+<p>ResNet是微软团队开发的网络。它的特征在于具有比以前的网络更深的结构。我们已经知道加深层对于提升性能很重要。但是，在深度学习中，过度加深层的话，很多情况下学习将不能顺利进行，导致最终性能不佳。ResNet中，为了解决这类问题，导入了“快捷结构”（也称为“捷径”或“小路”）。导入这个快捷结构后，就可以随着层的加深而不断提高性能了（当然，层的加深也是有限度的）。</p>
+<p><img src="https://img-blog.csdnimg.cn/3e0188c5849843ae92e9a4ecec73f249.png" alt="在这里插入图片描述"></p>
+<h3 id="小总结">小总结</h3>
+<p>关于网络结构，其实上面的结构没有太大的不同。但是，围绕它们的环境和计算机技术有了很大的进步。具体地说，现在任何人都可以获得大量的数据。而且，擅长大规模并行计算的GPU得到普及，高速进行大量的运算已经成为可能。<strong>大数据和GPU</strong>已成为深度学习发展的巨大的原动力。大多数情况下，深度学习（加深了层次的网络）存在大量的参数。因此，学习需要大量的计算，并且需要使那些参数“满意”的大量数据。可以说是 GPU和大数据给这些课题带来了希望。</p>
+<p><img src="https://img-blog.csdnimg.cn/706d1d52f34643e3b718d37a67527ef3.png#pic_center#" alt="在这里插入图片描述"></p>
+<p><img src="https://img-blog.csdnimg.cn/bfdf68f9326b43a9a7fdfdd961338cd1.png#pic_center#" alt="在这里插入图片描述"></p>
+<h1>深度学习</h1>
+<h2 id="更深">更深</h2>
+<p>关于加深层的重要性，现状是理论研究还不够透彻。尽管目前相关理论还比较贫乏，但是有几点可以从过往的研究和实验中得以解释。从很多比赛的结果显示，最近前几名的方法多是基于深度学习的，并且有逐渐加深网络的层的趋势。也就是说，可以看到层越深，识别性能也越高。<br>
+加深层可以减少网络的参数数量。说得详细一点，就是与没有加深层的网络相比，加深了层的网络可以用更少的参数达到同等水平（或者更强）的表现力。这一点结合卷积运算中的滤波器大小来思考就好理解了。<br>
+<img src="https://img-blog.csdnimg.cn/b816086172464e178d77209851eb1ba8.png" alt="在这里插入图片描述"><br>
+一次5 × 5的卷积运算的区域可以由两次3 × 3的卷积运算抵充。并且，相对于前者的参数数量25（5 × 5），后者一共是18（2 × 3 × 3），通过叠加卷积层，参数数量减少了。而且，这个参数数量之差会随着层的加深而变大。</p>
+<p>加深层可以使<strong>学习更加高效</strong>。与没有加深层的网络相比，通过加深层，可以<strong>减少学习数据</strong>，从而高效地进行学习。通过加深网络，就可以分层次地分解需要学习的问题。因此，各层需要学习的问题就变成了更简单的问题。比如，最开始的层只要专注于学习边缘就好，这样一来，只需用较少的学习数据就可以高效地进行学习。这是为什么呢？因为和印有“狗”的照片相比，包含边缘的图像数量众多，并且边缘的模式比“狗”的模式结构更简单。<strong>通过加深层，可以分层次地传递信息，这一点也很重要。比如，因为提取了边缘的层的下一层能够使用边缘的信息，所以应该能够高效地学习更加高级的模式。也就是说，通过加深层，可以将各层要学习的问题分解成容易解决的简单问题，从而可以进行高效的学习。</strong></p>
+<h2 id="更快">更快</h2>
+<p>在一般的CNN中，大多数时间都被耗费在卷积层上。实际上，卷积层的处理时间加起来占GPU整体的95%，占CPU整体的89%！因此，如何高速、高效地进行卷积层中的运算是深度学习的一大课题。卷积层中进行的运算可以追溯至乘积累加运算。因此，深度学习的高速化的主要课题就变成了如何高速、高效地进行大量的乘积累加运算。</p>
+<h3 id="gpu计算">GPU计算</h3>
+<p>虽然到目前为止，我们都是使用CPU进行计算的，但现实是只用CPU来应对深度学习无法令人放心。实际上，环视一下周围，大多数深度学习的框架都支持GPU（Graphics Processing Unit），可以高速地处理大量的运算。另外，最近的框架也开始支持多个GPU或多台机器上的分布式学习。</p>
+<p><img src="https://img-blog.csdnimg.cn/2cdfed733bb844b587112864e259e4ec.png#pic_center#" alt="在这里插入图片描述"><br>
+GPU原本是作为图像专用的显卡使用的，但最近不仅用于图像处理，也用于通用的数值计算。由于GPU可以高速地进行并行数值计算，因此<strong>GPU</strong>计算的目标就是将这种压倒性的计算能力用于各种用途。</p>
+<p>深度学习中需要进行大量的乘积累加运算（或者大型矩阵的乘积运算）。这种大量的并行运算正是GPU所擅长的（反过来说，CPU比较擅长连续的、复杂的计算）。因此，与使用单个CPU相比，使用GPU进行深度学习的运算可以达到惊人的高速化。如果对于一个网络，使用CPU要花40天以上的时间，而使用GPU则可以将时间缩短至6天。</p>
+<p>GPU主要由NVIDIA和AMD两家公司提供。虽然两家的GPU都可以用于通用的数值计算，<strong>但与深度学习比较“亲近”的是NVIDIA的GPU</strong>。实际上，大多数深度学习框架只受益于NVIDIA的GPU。这是因为深度学习的框架中使用了NVIDIA提供的<strong>CUDA</strong>这个面向GPU计算的综合开发环境。</p>
+<h3 id="分布式学习">分布式学习</h3>
+<p>虽然通过GPU可以实现深度学习运算的高速化，但即便如此，当网络较深时，学习还是需要几天到几周的时间。并且，前面也说过，深度学习伴随着很多试错。为了创建良好的网络，需要反复进行各种尝试，这样一来就必然会产生尽可能地缩短一次学习所需的时间的要求。于是，将深度学习的学习过程扩展开来的想法（也就是分布式学习）就变得重要起来。</p>
+<p>现在的深度学习框架中，出现了好几个支持多GPU或者多机器的分布式学习的框架。其中，Google的TensorFlow、微软的CNTK（Computational Network Toolki）在开发过程中高度重视分布式学习。以大型数据中心的低延迟·高吞吐网络作为支撑，基于这些框架的分布式学习呈现出惊人的效果。</p>
+<p>随着GPU个数的增加，学习速度也在提高。实际上，与使用1个GPU时相比，使用100个GPU（设置在多台机器上，共100个）似乎可以实现56倍的高速化！这意味着之前花费7天的学习只要3个小时就能完成，充分说明了分布式学习惊人的效果。</p>
+<h3 id="运算精度的位数缩减">运算精度的位数缩减</h3>
+<p>在深度学习的高速化中，除了计算量之外，内存容量、总线带宽等也有可能成为瓶颈。关于内存容量，需要考虑将大量的权重参数或中间数据放在内存中。关于总线带宽，当流经GPU（或者CPU）总线的数据超过某个限制时，就会成为瓶颈。考虑到这些情况，我们希望尽可能减少流经网络的数据的位数。</p>
+<p>计算机中表示小数时，有32位的单精度浮点数和64位的双精度浮点数等格式。根据以往的实验结果，在深度学习中，即便是16位的半精度浮点数（half float），也可以顺利地进行学习。实际上，NVIDIA的下一代GPU框架Pascal也支持半精度浮点数的运算，由此可以认为今后半精度浮点数将被作为标准使用。</p>
+<p>为了实现深度学习的高速化，位数缩减是今后必须关注的一个课题，特别是在面向嵌入式应用程序中使用深度学习时，位数缩减非常重要。</p>
+<h3 id="小总结">小总结</h3>
+<p><img src="https://img-blog.csdnimg.cn/57c00b8afaf64c92b1ff3206ad7d7e63.png#pic_center#" alt="在这里插入图片描述"></p>
+<h1>结尾</h1>
+<p>上面的全部图片和内容来自于《深度学习入门-基于Python的理论和实现》这本好书，它真正地从零开始一步一步教导着我如何用Python搭建神经网络，所以这篇博客相当于读书笔记，我将其中比较关键的核心知识简练地提取出来，图也适当进行了整合，希望能让朋友们最快速地入门或回顾深度学习基础知识。如果觉得有帮助可以给个赞哦蟹蟹</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://genewlan.github.io">ZhangLei</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://genewlan.github.io/2023/09/30/Neural-Network-Frame/">http://genewlan.github.io/2023/09/30/Neural-Network-Frame/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://genewlan.github.io" target="_blank">GeneWlan</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/frame/">frame</a><a class="post-meta__tags" href="/tags/Neural-Network-Frame/">Neural-Network-Frame</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/09/30/bayes-net/" title="bayes-net"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">bayes-net</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ZhangLei</div><div class="author-info__description">change or die!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/genewlan/" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:xiaolobglee@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">引言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">感知机</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">神经网络</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="toc-number">3.1.</span> <span class="toc-text">激活函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#sigmoid%E5%87%BD%E6%95%B0"><span class="toc-number">3.1.1.</span> <span class="toc-text">Sigmoid函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#relu%E5%87%BD%E6%95%B0"><span class="toc-number">3.1.2.</span> <span class="toc-text">ReLU函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E6%80%BB%E7%BB%93"><span class="toc-number">3.1.3.</span> <span class="toc-text">小总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E5%B1%82%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="toc-number">3.2.</span> <span class="toc-text">输出层的设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#softmax%E5%87%BD%E6%95%B0"><span class="toc-number">3.2.1.</span> <span class="toc-text">softmax函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E6%80%BB%E7%BB%93"><span class="toc-number">3.2.2.</span> <span class="toc-text">小总结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">神经网络的学习！</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="toc-number">4.1.</span> <span class="toc-text">损失函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9D%87%E6%96%B9%E8%AF%AF%E5%B7%AE"><span class="toc-number">4.1.1.</span> <span class="toc-text">均方误差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%A4%E5%8F%89%E7%86%B5%E8%AF%AF%E5%B7%AE"><span class="toc-number">4.1.2.</span> <span class="toc-text">交叉熵误差</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mini-batch"><span class="toc-number">4.2.</span> <span class="toc-text">mini-batch</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A2%AF%E5%BA%A6%E6%B3%95"><span class="toc-number">4.3.</span> <span class="toc-text">梯度法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E5%85%A8%E8%B2%8C"><span class="toc-number">4.4.</span> <span class="toc-text">神经网络学习全貌!</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E6%80%BB%E7%BB%93"><span class="toc-number">4.5.</span> <span class="toc-text">小总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">误差反向传播法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99-chain-rule"><span class="toc-number">5.1.</span> <span class="toc-text">链式法则（chain rule）！</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="toc-number">5.2.</span> <span class="toc-text">反向传播</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8A%A0%E6%B3%95"><span class="toc-number">5.2.1.</span> <span class="toc-text">加法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%98%E6%B3%95"><span class="toc-number">5.2.2.</span> <span class="toc-text">乘法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0%E5%B1%82%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">5.3.</span> <span class="toc-text">激活函数层的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#relu%E5%B1%82%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">5.3.1.</span> <span class="toc-text">ReLU层的实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#sigmoid%E5%B1%82%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">5.3.2.</span> <span class="toc-text">Sigmoid层的实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#affine%E5%B1%82%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">5.3.3.</span> <span class="toc-text">Affine层的实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#softmax-with-loss%E5%B1%82%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">5.3.4.</span> <span class="toc-text">Softmax-with-Loss层的实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E6%80%BB%E7%BB%93"><span class="toc-number">5.4.</span> <span class="toc-text">小总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">学习中的技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E7%9A%84%E6%9B%B4%E6%96%B0-optimizer"><span class="toc-number">6.1.</span> <span class="toc-text">参数的更新（optimizer）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#sgd"><span class="toc-number">6.1.1.</span> <span class="toc-text">SGD</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#momentum"><span class="toc-number">6.1.2.</span> <span class="toc-text">Momentum</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#adagrad"><span class="toc-number">6.1.3.</span> <span class="toc-text">AdaGrad</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#adam"><span class="toc-number">6.1.4.</span> <span class="toc-text">Adam</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E6%80%BB%E7%BB%93"><span class="toc-number">6.1.5.</span> <span class="toc-text">小总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%83%E9%87%8D%E7%9A%84%E5%88%9D%E5%A7%8B%E5%80%BC"><span class="toc-number">6.2.</span> <span class="toc-text">权重的初始值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#xavier%E5%88%9D%E5%A7%8B%E5%80%BC"><span class="toc-number">6.2.1.</span> <span class="toc-text">Xavier初始值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#he%E5%88%9D%E5%A7%8B%E5%80%BC"><span class="toc-number">6.2.2.</span> <span class="toc-text">He初始值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E6%80%BB%E7%BB%93"><span class="toc-number">6.2.3.</span> <span class="toc-text">小总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#batch-normalization"><span class="toc-number">6.3.</span> <span class="toc-text">Batch Normalization</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%A3%E8%A7%84%E5%8C%96"><span class="toc-number">6.4.</span> <span class="toc-text">正规化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%83%E9%87%8D%E8%A1%B0%E5%87%8F-l1-l2%E6%AD%A3%E5%88%99%E5%8C%96"><span class="toc-number">6.4.1.</span> <span class="toc-text">权重衰减（L1、L2正则化）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#dropout"><span class="toc-number">6.4.2.</span> <span class="toc-text">Dropout</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B6%85%E5%8F%82%E6%95%B0%E7%9A%84%E9%AA%8C%E8%AF%81"><span class="toc-number">6.4.3.</span> <span class="toc-text">超参数的验证</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E6%80%BB%E7%BB%93"><span class="toc-number">6.5.</span> <span class="toc-text">小总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">7.</span> <span class="toc-text">卷积神经网络 CNN</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%B7%E7%A7%AF%E5%B1%82"><span class="toc-number">7.1.</span> <span class="toc-text">卷积层</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%B7%E7%A7%AF%E8%BF%90%E7%AE%97"><span class="toc-number">7.1.1.</span> <span class="toc-text">卷积运算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A1%AB%E5%85%85-padding"><span class="toc-number">7.1.2.</span> <span class="toc-text">填充（padding）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A5%E5%B9%85-stride"><span class="toc-number">7.1.3.</span> <span class="toc-text">步幅（stride）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3%E7%BB%B4%E6%95%B0%E6%8D%AE%E5%8D%B7%E7%A7%AF%E8%BF%90%E7%AE%97"><span class="toc-number">7.1.4.</span> <span class="toc-text">3维数据卷积运算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B1%A0%E5%8C%96%E5%B1%82"><span class="toc-number">7.2.</span> <span class="toc-text">池化层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#im2col"><span class="toc-number">7.3.</span> <span class="toc-text">im2col</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cnn%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-number">7.4.</span> <span class="toc-text">CNN的实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B7%E6%9C%89%E4%BB%A3%E8%A1%A8%E6%80%A7%E7%9A%84cnn"><span class="toc-number">7.5.</span> <span class="toc-text">具有代表性的CNN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#lenet"><span class="toc-number">7.5.1.</span> <span class="toc-text">LeNet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#alexnet"><span class="toc-number">7.5.2.</span> <span class="toc-text">AlexNet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#vgg"><span class="toc-number">7.5.3.</span> <span class="toc-text">VGG</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#googlenet"><span class="toc-number">7.5.4.</span> <span class="toc-text">GoogLeNet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#resnet"><span class="toc-number">7.5.5.</span> <span class="toc-text">ResNet</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E6%80%BB%E7%BB%93"><span class="toc-number">7.5.6.</span> <span class="toc-text">小总结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">8.</span> <span class="toc-text">深度学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E6%B7%B1"><span class="toc-number">8.1.</span> <span class="toc-text">更深</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E5%BF%AB"><span class="toc-number">8.2.</span> <span class="toc-text">更快</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#gpu%E8%AE%A1%E7%AE%97"><span class="toc-number">8.2.1.</span> <span class="toc-text">GPU计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E5%B8%83%E5%BC%8F%E5%AD%A6%E4%B9%A0"><span class="toc-number">8.2.2.</span> <span class="toc-text">分布式学习</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E7%B2%BE%E5%BA%A6%E7%9A%84%E4%BD%8D%E6%95%B0%E7%BC%A9%E5%87%8F"><span class="toc-number">8.2.3.</span> <span class="toc-text">运算精度的位数缩减</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E6%80%BB%E7%BB%93"><span class="toc-number">8.2.4.</span> <span class="toc-text">小总结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">9.</span> <span class="toc-text">结尾</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/30/Neural-Network-Frame/" title="Neural-Network-Frame">Neural-Network-Frame</a><time datetime="2023-09-30T10:55:16.000Z" title="发表于 2023-09-30 18:55:16">2023-09-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/30/bayes-net/" title="bayes-net">bayes-net</a><time datetime="2023-09-30T10:49:09.000Z" title="发表于 2023-09-30 18:49:09">2023-09-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/31/Practise/" title="LDA Modeling Practise">LDA Modeling Practise</a><time datetime="2023-08-31T06:45:25.000Z" title="发表于 2023-08-31 14:45:25">2023-08-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/31/%E9%80%9A%E4%BF%97%E7%90%86%E8%A7%A3LDA%E4%B8%BB%E9%A2%98%E6%A8%A1/" title="通俗理解LDA主题模">通俗理解LDA主题模</a><time datetime="2023-08-31T06:09:26.000Z" title="发表于 2023-08-31 14:09:26">2023-08-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/07/31/outlier-detection/" title="outlier_detection">outlier_detection</a><time datetime="2023-07-31T14:40:34.000Z" title="发表于 2023-07-31 22:40:34">2023-07-31</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By ZhangLei</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'J0s1l0MeDfMbgw4y4awgy2jX-MdYXbMMI',
+      appKey: '3vZoaKxqWQYlKbXXdXuSxBsT',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div><!-- hexo injector body_end start --><div id="background-effect"></div><script src="https://cdn.jsdelivr.net/npm/three@0.121.1/build/three.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.birds.min.js"></script><script>VANTA.BIRDS({"el":"#background-effect","mouseControls":true,"touchControls":true,"gyroControls":false,"minHeight":200,"minWidth":200,"scale":1,"scaleMobile":1})</script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body></html>

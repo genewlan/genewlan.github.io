@@ -1,0 +1,438 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>Nature of Matrix | GeneWlan</title><meta name="author" content="ZhangLei"><meta name="copyright" content="ZhangLei"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="[TOC] 写在前面 这个月真实服了，爬了一趟山，毁了两块手机屏幕，一次直接碎了；另一次是我嫌安装的不完美，手贱拆坏了，于是扔了。买了个新手机，莫名的摄像头还不好使了，害我至今无法登微信。前几天，他喵的也不知道什么情况电脑充电器直接冒烟了。这难道是暗示我可以实施下一步计划了吗？ 也不总是坏处，还好有以前打印了资料，可以静几天，摆脱手机带来的叮叮叮； 本月同时做了一些NLP相关的工作（建模中，下篇介">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nature of Matrix">
+<meta property="og:url" content="http://genewlan.github.io/2023/07/31/Matrix/index.html">
+<meta property="og:site_name" content="GeneWlan">
+<meta property="og:description" content="[TOC] 写在前面 这个月真实服了，爬了一趟山，毁了两块手机屏幕，一次直接碎了；另一次是我嫌安装的不完美，手贱拆坏了，于是扔了。买了个新手机，莫名的摄像头还不好使了，害我至今无法登微信。前几天，他喵的也不知道什么情况电脑充电器直接冒烟了。这难道是暗示我可以实施下一步计划了吗？ 也不总是坏处，还好有以前打印了资料，可以静几天，摆脱手机带来的叮叮叮； 本月同时做了一些NLP相关的工作（建模中，下篇介">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2023-07-31T13:40:13.000Z">
+<meta property="article:modified_time" content="2023-08-31T07:43:29.074Z">
+<meta property="article:author" content="ZhangLei">
+<meta property="article:tag" content="Math Matrix">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://genewlan.github.io/2023/07/31/Matrix/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Nature of Matrix',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-08-31 15:43:29'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><!-- hexo injector head_end start -->
+    <style>
+      #background-effect {
+        position: fixed !important;
+        top: 0px;
+        left: 0px;
+        z-index: -1;
+        width: 100%;
+        height: 100%
+      }
+    </style>
+  <!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="GeneWlan" type="application/atom+xml">
+<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/03/21/ZVUmQFknE2JosXT.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="GeneWlan"><span class="site-name">GeneWlan</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Nature of Matrix</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-07-31T13:40:13.000Z" title="发表于 2023-07-31 21:40:13">2023-07-31</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-08-31T07:43:29.074Z" title="更新于 2023-08-31 15:43:29">2023-08-31</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Nature of Matrix"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>[TOC]</p>
+<p><strong>写在前面</strong></p>
+<p>这个月真实服了，爬了一趟山，毁了两块手机屏幕，一次直接碎了；另一次是我嫌安装的不完美，手贱拆坏了，于是扔了。买了个新手机，莫名的摄像头还不好使了，害我至今无法登微信。前几天，他喵的也不知道什么情况电脑充电器直接冒烟了。这难道是暗示我可以实施下一步计划了吗？</p>
+<p>也不总是坏处，还好有以前打印了资料，可以静几天，摆脱手机带来的叮叮叮；</p>
+<p>本月同时做了一些NLP相关的工作（建模中，下篇介绍），以期可以收获点灵感，用于基因组研究。为了研究基因组也是拼了，下面是看的资料汇总：</p>
+<h1>线性代数有什么用？</h1>
+<p>瑞典的 L.戈丁说过，没有掌握线代的人简直就是文盲。</p>
+<p>学习一门学问，最重要的是把握主干内容，迅速建立对于这门学问的整体概念，不必一开始就考虑所有的细枝末节和特殊情况，自乱阵脚。</p>
+<p><strong>初学者的疑惑</strong></p>
+<p>矩阵究竟是什么东西？</p>
+<p>矩阵的乘法规则究竟为什么这样规定？</p>
+<p>行列式究竟是一个什么东西？</p>
+<p>为什么说 P-1AP 得到的矩阵与 A 矩阵“相似”？这里的“相似”是什么意思？</p>
+<p>特征值和特征向量的本质是什么？</p>
+<h1>线性代数的内容及发展简史</h1>
+<p>在研究关联着多个因素的量所引起的问题，则需要考察多元函数。如果所研究的关联性是线性的，那么称这个问题为线性问题。一次方程就是研究线性问题的方程，被称为线性方程，讨论线性方程及线性运算的代数就叫做线性代数。历史上线性代数的第一个问题是关于解线性方程组的问题，而线性方程组理论的发展又促成了作为工具的行列式理论和矩阵论的创立与发展</p>
+<h1>空间与坐标系</h1>
+<p>对线形空间和矩阵的几个核心概念的理解</p>
+<h2 id="线性">线性</h2>
+<p>在线性代数里面的主要的意思就是线性空间里的<strong>线性变换</strong>，强调了函数的变量之间的变换的意义。</p>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>=</mo><mi>k</mi><mi>x</mi><mo>+</mo><mi>b</mi></mrow><annotation encoding="application/x-tex">f(x)=kx+b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span>（k 和 b 是不变量），称为一元线性函数。为了线性函数的进一步推广，我们忍痛割“尾”，令 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>b</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">b=0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> ，这个函数在<strong>几何</strong>上就变成一条过原点的直线。（因为不过原点的直线不满足我们对线性函数的比例性的要求）。实际上，<strong>代数</strong>上最基本的意义只有两条：<strong>可加性和比例性</strong>。用数学的表达来说就是：<strong>对加法和数乘封闭</strong>。</p>
+<h2 id="空间-space">空间(space)</h2>
+<p>数学定义，大致都是“存在一个集合，在这个集合上定义某某概念，然后满足某些性质”，就被称为了空间。显然，对于大多数人来说，这个太抽象了。更别说运算其中的内容，根本没有感觉好不好。</p>
+<p><strong>经验告诉我们，对于抽象的东西需要先从现实中去类比，然后去提取信息</strong>。我们一般人最熟悉的是物理上的三维空间；从数学上说，它则是一个三维的欧几里德空间。为了要了解空间，先看看我们熟悉的这样一个空间有些什么最基本的特点：</p>
+<ol>
+<li>由很多（实际上是无穷多个）位置点组成</li>
+<li>这些点之间存在相对的关系</li>
+<li>可以定义长度、角度</li>
+<li>这个空间可以容纳运动</li>
+</ol>
+<p>凡是讨论数学问题，都得有一个集合。<strong>第 1、2 条是空间的基础</strong>，不算是空间特有的性质,只能算作集合，并不是说有了这些就算是空间。第 3 条其他的空间不需要具备，属于额外添加项，为了计算方便，人为添加。第 4 条是空间的本质，也就是说：<strong>容纳运动是空间的本质特征</strong>。</p>
+<p>有了这些知识，我们就可以把我们关于三维空间的认识扩展到其他的空间。事实上，不管是什么空间，都必须容纳和支持在其中发生的符合规则的运动（变换）。同时你会发现，在某种空间中往往会存在一种相对应的变换：拓扑空间中有拓扑变换，线性空间中有线性变换，仿射空间中有仿射变换，其实这些变换本质就是对应空间中允许的运动形式。<strong>“空间”是容纳运动的一个对象集合，而变换则规定了对应空间的运动</strong></p>
+<p>回到主题，<strong>简单的说，能装东西的就是空间；对于数学，装的东西是可运算的元素</strong>。从拓扑空间开始，一步步往上加定义，可以形成很多空间。线形空间其实还是比较初级的，如果在里面定义了范数，就成了赋范线性空间。赋范线性空间满足完备性，就成了巴那赫空间；赋范线性空间中定义角度，就有了内积空间，内积空间再满足完备性，就得到希尔伯特空间，如果空间里装载所有类型的函数，就叫泛函空间。总之，空间有很多种。</p>
+<h2 id="线性空间">线性空间</h2>
+<p>既然我们承认线性空间是个空间，那么有两个最基本的问题必须首先得到解决：</p>
+<ol>
+<li>线性空间中的元素有什么性质？</li>
+<li>空间中容纳了怎样的运动，我们该如何描述？</li>
+</ol>
+<p>我们先来试着回答第一个问题，线性空间中的任何一个对象，通过选取基和坐标的办法，都可以表达为向量的形式。</p>
+<p>在线性代数中，基也称为基底是描述、刻画向量空间的基本工具。换一个说法也就是建立坐标系。基的英文名字是 Basic。基可以是任意元素，比如{数学书、英语书、笔记本、碳素笔}就构成一组基；基也可以是有限维向量、无限维的函数、矩阵等 。</p>
+<p>L1. 最高次项不大于 n 次的多项式的全体构成一个线性空间，也就是说，这个线性空间中的每一个对象是一个多项式。如果我们以 x0, x1, …, xn为基，那么任何一个这样的多项式都可以表达为一组 n+1 维向量，其中的每一个分量 ai 其实就是多项式中 x(i-1)项的系数。<strong>值得说明的是，基的选取有多种办法，只要所选取的那一组基线性无关就可以</strong>。<br>
+L2. 闭区间[a, b]上的 n 阶连续可微函数的全体，构成一个线性空间。也就是说，这个线性空间的每一个对象是一个连续函数。对于其中任何一个连续函数，根据<strong>魏尔斯特拉斯定理，一定可以找到最高次项不大于 n 的多项式函数，使之与该连续函数的差为 0</strong>，也就是说，完全相等。这样就把问题归结为 L1 了。</p>
+<p>**只要你找到合适的基，用向量可以表示线性空间里任何一个对象。换句话说，给你一个空间，你就能建立一个坐标系，来描述这个空间中的对象！**向量表面上只是一列数，但是其实由于它的有序性，所以除了这些数本身携带的信息之外，还可以在每个数的对应位置上携带信息。下面我们尝试建立一个坐标系：</p>
+<p>基本想法就是创建一个空间，而空间的最基本特征是存在点，且不同的点有各自位置。根据经验就是利用数轴将点的位置标志出来，一维就用一条线，二维就用两条线，以此类推。</p>
+<p>聪明的你肯定就可以想到：上面的想法就是创造<strong>坐标系</strong>的过程。我们分析一下，坐标系中最重要的是什么吗？没错就是数轴，<strong>不在同一平面的数轴</strong>，使用数学语言翻译他就叫<strong>线性无关的基</strong>。</p>
+<p>举个例子，比如在平面内的任意向量，我们可以用两个不共线（线性无关）的向量描述。这就是我们在高中熟知的平面向量基本定理，这两个不共线的向量就构成描述这个空间的 2×2 矩阵。而对于高维空间的任意向量，自然要 n 个线性无关的向量构成，于是就构成一个 n×n 的矩阵，其中的n就是基的个数。（<strong>需要注意，基的单位是 1，长度不一定是 1</strong>），同时如果n个向量互不共线，我们就说他们组成的矩阵是**满秩（=非奇异）**的，反过来也成立。</p>
+<p>空间之间的变化其实就是换了一组基而已。所以泰勒展开其实是换了一组基，所以傅里叶级数是换了一组基，拉普拉斯变换是换了一组基，小波变换是换了一组基。<strong>基的选取一定是为了你研究问题的方便。</strong></p>
+<p><strong>结论：由一组线性无关的向量放在一起构成的矩阵描述了一个坐标系。</strong></p>
+<h1>矩阵与变换</h1>
+<p>世界是物质的，物质是运动的，接下来肯定要研究一下线性空间里面的运动是怎么实现的，也就是来回答第二个问题，这个问题的回答会涉及到线性代数的一个最根本的问题。</p>
+<p><strong>线性空间中的运动，被称为线性变换</strong>。也就是说，你从线性空间中的一个点运动到任意的另外一个点，都可以通过一个线性变化来完成。那么，线性变换如何表示呢？</p>
+<p>在线性空间中，当你选定一组基之后，不仅可以<strong>用一个向量来描述空间中的任何一个对象</strong>，而且可以<strong>用矩阵来描述该空间中的任何一个运动（变换）</strong>。<strong>也既：在线性空间中选定基之后，向量刻画对象，矩阵刻画对象的运动，用矩阵与向量的乘法施加运动</strong>。</p>
+<p><strong>矩阵的本质是运动的描述</strong>，这里的“运动”的概念不是微积分中的连续性的运动，而是瞬间发生的变化。“运动”这个词用在这里，还是容易产生歧义的，说得更确切些，应该是“<strong>跃迁</strong>”。而在数学中，这个词语叫<strong>变换</strong>。描述一个三维对象只需要三维向量，但所有的计算机图形学变换矩阵都是 4 x 4 的。</p>
+<p>比如，拓扑变换，就是在拓扑空间里从一个点到另一个点的跃迁。仿射变换，就是在仿射空间里从一个点到另一个点的跃迁。而仿射空间跟向量空间是亲兄弟。一个空间中的对象和运动竟然可以用相类同的方式表示。能说这是巧合吗？如果是巧合的话，那可真是幸运的巧合！</p>
+<p>一旦我们理解了“变换”这个概念，矩阵的定义就变：“<strong>矩阵是线性空间里的变换的描述</strong>。”</p>
+<p>它在教科书中常以这样形式出现：在一个线性空间 V 里的一个线性变换 T，当选定一组基之后，就可以表示为矩阵。在这里，我们要说清楚<strong>到底什么是线性变换</strong>，<strong>什么是基</strong>，<strong>什么叫选定一组基</strong></p>
+<p>线性变换：设有一种变换 T，使得对于线性空间 V 中间任何两个不相同的对象 x 和 y，以及任意实数 a 和 b，有：</p>
+<p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo stretchy="false">(</mo><mi>a</mi><mi>x</mi><mo>+</mo><mi>b</mi><mi>y</mi><mo stretchy="false">)</mo><mo>=</mo><mi>a</mi><mi>T</mi><mo stretchy="false">(</mo><mi>x</mi><mo stretchy="false">)</mo><mo>+</mo><mi>b</mi><mi>T</mi><mo stretchy="false">(</mo><mi>y</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">T(ax + by) = aT(x) + bT(y)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mopen">(</span><span class="mord mathdefault">a</span><span class="mord mathdefault">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">b</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">a</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mopen">(</span><span class="mord mathdefault">x</span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">b</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span>，那么就称 T 为线性变换，说的是从自己空间到自己空间的变换。</p>
+<p>基，基看成是线性空间里的坐标系就可以了。注意是坐标系，不是坐标值。这样一来，“选定一组基”就是说在线性空间里选定一个坐标系。</p>
+<p>最后我们把矩阵的定义完善如下：<strong>“矩阵是线性空间中的线性变换的一个描述。在一个线性空间中，只要我们选定一组基，那么对于任何一个线性变换，都能够用一个确定的矩阵来加以描述。</strong>”</p>
+<h1>矩阵与方程组</h1>
+<p>当解一个方程组的时候，我们知道，方程组的解只与系数有关，于是，将系数提取出来，放在一起，就构成了矩阵，而矩阵的行变换就相当于解方程时的加减消元过程（也叫高斯消元法）。下面我们从方程组解的几何意义来解释方程组 Ax=b 的意义，先把结论给出来</p>
+<ol>
+<li>方程组<strong>有解</strong>还可以理解成空间几何图形有公共交点或者交线（高维度时还可能出现“交面”等情况），<strong>无穷解</strong>代表有公共相交部分，但是最终形成的不是一个点，而是线或者面或者更高维的东西，而<strong>无解</strong>代表着没有公共相交的部分。</li>
+<li>方程组<strong>有解</strong>就说明 b 这个向量能用 A 的列向量线性表示，也可以说 b 这个向量在 <strong>A的列向量所构成的空间中</strong>！<strong>无穷解</strong>表示矩阵 A 中的列向量线性相关，所以导致表示方式不唯一，而<strong>无解</strong>则表示矩阵 A 中的列向量和 b 不在同一个空间里。</li>
+</ol>
+<p>解释如下：</p>
+<p><img src="/2023/07/31/Matrix/Snipaste_2023-06-07_17-34-04.png" alt></p>
+<h1>矩阵与基和坐标</h1>
+<p>从空间的角度更深入的理解一下矩阵</p>
+<p>线性空间 V 的基不是唯一的，只要 n 个 n 维向量线性无关，就可以用来描述这个空间。那么线性空间中的两组基之间有什么联系呢？同一个向量在不同基下有不同的坐标，他们之间有什么联系呢？</p>
+<p><img src="/2023/07/31/Matrix/Snipaste_2023-06-07_19-56-26.png" alt></p>
+<p>这里 M 是可逆的。可逆的意思是可以变过来也可以变回去，不可逆就是只能朝着一个方向变换。从条件的角度来说：可逆是充要条件，不可逆是充分条件。我们可以看出来：**右乘一个方阵就是将一组基换到另一组基！**于是我们得出这样的认识“<strong>对象的变换等价于坐标系的变换</strong>”或者“<strong>固定坐标系下一个对象的变换等价于固定对象所处的坐标系变换。</strong>”</p>
+<p><img src="/2023/07/31/Matrix/Snipaste_2023-06-07_20-00-17.png" alt></p>
+<p>达成同一个变换的结果，比如把点(1, 1)变到点(2, 3)去，你可以有两种做法。第一，坐标系不动，点动，把(1, 1)点挪到(2, 3)去。第二，点不动，变坐标系，让 x 轴的度量（单位向量）变成原来的 1/2，让 y 轴的度量（单位向量）变成原先的 1/3，这样点还是那个点，可是点的坐标就变成(2, 3)了。</p>
+<p>我们得出一个重要的结论：“<strong>对坐标系施加变换的方法，就是让表示那个坐标系的矩阵与表示那个变化的矩阵相乘</strong>。”</p>
+<p>对于 X 和 Y 中的单个向量，有 By=Ax</p>
+<p>我们很自然的对于这个等式的理解：有一个向量，它在坐标系 A 的度量下得到的度量结果向量为 x，那么它在坐标系 B（单位阵）的度量下，这个向量的度量结果是 y</p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>2</mn><mo separator="true">,</mo><mn>0</mn><mo separator="true">;</mo><mn>0</mn><mo separator="true">,</mo><mn>3</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">]</mo><mo>=</mo><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mn>0</mn><mo separator="true">;</mo><mn>0</mn><mo separator="true">,</mo><mn>1</mn><mo stretchy="false">]</mo><mo stretchy="false">[</mo><mn>2</mn><mo separator="true">,</mo><mn>3</mn><mo stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">[2,0;0,3][1,1]=[1,0;0,1][2,3]
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mpunct">;</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">3</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mpunct">;</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">]</span><span class="mopen">[</span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">3</span><span class="mclose">]</span></span></span></span></span></p>
+<p>如果把 A 放在一个向量 x 的前面，形成 Ax 的样式，我们可以认为这是对向量 x 的一个环境声明。同理对于 BY=AX 的理解就是向量组{x}和{y}。</p>
+<p>我们将得到惊人的结论：<strong>这哪里是什么左乘法计算，根本就是身份识别</strong>。</p>
+<p>到此，我们基本呢说清楚了矩阵最核心的概念，下面，我们针对一些比较特殊的现象，来更深入理解一下线性代数和矩阵！</p>
+<h1>特殊的矩阵</h1>
+<p>旋转矩阵乘幂的几何及物理解释：大家已经知道，一个矩阵乘以一个向量，一般将会对向量的几何图形进行旋转和伸缩变化。如果<strong>仅仅进行伸缩，就是特征值和特征向量的问题</strong>，如果<strong>仅仅是旋转，就是正交化的问题</strong>。</p>
+<h2 id="旋转矩阵">旋转矩阵</h2>
+<p><img src="/2023/07/31/Matrix/Snipaste_2023-06-08_10-19-16.png" alt></p>
+<p>总结一下，这就是二阶旋转矩阵（逆时针）</p>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo fence="true">[</mo><mtable rowspacing="0.15999999999999992em" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>cos</mi><mo>⁡</mo><mi>θ</mi></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mo>−</mo><mi>sin</mi><mo>⁡</mo><mi>θ</mi></mrow></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>sin</mi><mo>⁡</mo><mi>θ</mi></mrow></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mrow><mi>cos</mi><mo>⁡</mo><mi>θ</mi></mrow></mstyle></mtd></mtr></mtable><mo fence="true">]</mo></mrow><annotation encoding="application/x-tex">\begin{bmatrix}
+\cos\theta &amp; -\sin\theta \\
+\sin\theta &amp; \cos\theta \\
+\end{bmatrix}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.40003em;vertical-align:-0.95003em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">[</span></span><span class="mord"><span class="mtable"><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mop">cos</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span></span></span><span style="top:-2.4099999999999997em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mop">sin</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.9500000000000004em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">−</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mop">sin</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span></span></span><span style="top:-2.4099999999999997em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mop">cos</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">θ</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.9500000000000004em;"><span></span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">]</span></span></span></span></span></span></span></p>
+<p><strong>一个矩阵是旋转矩阵，当且仅当它是正交矩阵并且它的行列式是1</strong>。正交矩阵的行列式是 ±1；<strong>如果行列式是 −1，则它包含了一个反射而不是真旋转矩阵</strong>。对于旋转矩阵乘幂，我们可以知道，就是一直旋转，乘了几次就是旋转了几次。当好多个旋转矩阵（可以不同）连乘时，我们就能理解了，这是把一个向量沿着多个方向旋转的叠加！</p>
+<h2 id="对角矩阵">对角矩阵</h2>
+<p class="katex-block"><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo fence="true">[</mo><mtable rowspacing="0.15999999999999992em" columnspacing="1em"><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mi>a</mi></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>0</mn></mstyle></mtd></mtr><mtr><mtd><mstyle scriptlevel="0" displaystyle="false"><mn>0</mn></mstyle></mtd><mtd><mstyle scriptlevel="0" displaystyle="false"><mi>b</mi></mstyle></mtd></mtr></mtable><mo fence="true">]</mo></mrow><annotation encoding="application/x-tex">\begin{bmatrix}
+a &amp; 0 \\
+0 &amp; b \\
+\end{bmatrix}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:2.40003em;vertical-align:-0.95003em;"></span><span class="minner"><span class="mopen delimcenter" style="top:0em;"><span class="delimsizing size3">[</span></span><span class="mord"><span class="mtable"><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">a</span></span></span><span style="top:-2.4099999999999997em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.9500000000000004em;"><span></span></span></span></span></span><span class="arraycolsep" style="width:0.5em;"></span><span class="arraycolsep" style="width:0.5em;"></span><span class="col-align-c"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.45em;"><span style="top:-3.61em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">0</span></span></span><span style="top:-2.4099999999999997em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathdefault">b</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.9500000000000004em;"><span></span></span></span></span></span></span></span><span class="mclose delimcenter" style="top:0em;"><span class="delimsizing size3">]</span></span></span></span></span></span></span></p>
+<p>对于对角矩阵乘幂，就是一直放大（缩小），乘了几次就是放大（缩小）了几次。当好多个对角矩阵（可以不同）连乘时，我们就能理解了，这是把一个向量放大（缩小）叠加</p>
+<p>对于一般矩阵乘幂的几何及物理。乘积的效果就是多个伸缩和旋转的叠加！如在S=ABCDEF中，会把所有的矩阵线性变化的作用力传递并积累下去，最终得到一个和作用力S。工业上的例子就是机器人的手臂，机械臂上的每个关节就是一个矩阵,机械臂末端的位置或动作是所有关节运动的综合效果。</p>
+<p><strong>旋转矩阵把一个矩阵乘向量的作用变成对向量的旋转，对角矩阵乘向量的作用变成对向量的伸缩</strong></p>
+<h1>矩阵的等价与相似</h1>
+<p>什么是<strong>矩阵等价</strong>呢？</p>
+<p>从定义角度就是：存在可逆矩阵 P 和 Q 满足 PAQ= B 则我们说A 和 B 是等价的。我们知道，对于可逆变换的意义就是变换过去还可以变换回来，无论怎么变换，只要是可逆的，变换是<strong>不改变矩阵维度</strong>的。</p>
+<p>这里说一下<strong>可逆矩阵</strong>，它可以表示为一系列初等矩阵的乘积。拉伸、对称、剪切分别对应三种初等变换。也就是说，有了这三种变换，其他任意的矩阵变换都可以用这三种变换表示</p>
+<p>用人话总结就是：<strong>如果两个矩阵同维度，且可以通过变换使得两个矩阵相等，则他们是等价矩阵</strong>。就是说等价的要求直选哟维度相同</p>
+<p>从空间的角度来说，就是他们是同一种类型的子空间！你可以这样理解：<strong>如果两个矩阵等价，一个矩阵能表示一个线，另一个矩阵也表示线；一个矩阵能表示一个面，另一个矩阵也表示面</strong></p>
+<p>怎么理解 P 和 Q的作用呢？</p>
+<p>P 和 Q 可以看成是可逆变换， 变换的作用就是为了把元素之间相互干扰的矩阵化成能一眼看出维数的简单矩阵。维数代表什么？在控制中，维数反映系统的可观测和可控性的量度（就是看看这个空间多大，这个空间里面着装的变量够不够）。</p>
+<p>什么是矩阵相似呢？从定义角度就是：存在可逆矩阵 P  满足$ B=P^{-1}AP<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>则我们说</mtext><mi>A</mi><mtext>和</mtext><mi>B</mi><mtext>是相似的。在</mtext><mi>P</mi><mtext>坐标系下测量的</mtext><mi>x</mi><mtext>′，在直角坐标系测量为</mtext><mi>x</mi><mtext>，可以表示成</mtext></mrow><annotation encoding="application/x-tex">则我们说A 和 B 是相似的。 在P坐标系下测量的x′，在直角坐标系测量为x，可以表示成</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord cjk_fallback">则</span><span class="mord cjk_fallback">我</span><span class="mord cjk_fallback">们</span><span class="mord cjk_fallback">说</span><span class="mord mathdefault">A</span><span class="mord cjk_fallback">和</span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="mord cjk_fallback">是</span><span class="mord cjk_fallback">相</span><span class="mord cjk_fallback">似</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">在</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord cjk_fallback">坐</span><span class="mord cjk_fallback">标</span><span class="mord cjk_fallback">系</span><span class="mord cjk_fallback">下</span><span class="mord cjk_fallback">测</span><span class="mord cjk_fallback">量</span><span class="mord cjk_fallback">的</span><span class="mord mathdefault">x</span><span class="mord">′</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">在</span><span class="mord cjk_fallback">直</span><span class="mord cjk_fallback">角</span><span class="mord cjk_fallback">坐</span><span class="mord cjk_fallback">标</span><span class="mord cjk_fallback">系</span><span class="mord cjk_fallback">测</span><span class="mord cjk_fallback">量</span><span class="mord cjk_fallback">为</span><span class="mord mathdefault">x</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">可</span><span class="mord cjk_fallback">以</span><span class="mord cjk_fallback">表</span><span class="mord cjk_fallback">示</span><span class="mord cjk_fallback">成</span></span></span></span>Px′=x<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>；同理有</mtext></mrow><annotation encoding="application/x-tex">；同理有</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord cjk_fallback">；</span><span class="mord cjk_fallback">同</span><span class="mord cjk_fallback">理</span><span class="mord cjk_fallback">有</span></span></span></span>Py′=y<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>。代入就得到：</mtext></mrow><annotation encoding="application/x-tex">。代入就得到：</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">代</span><span class="mord cjk_fallback">入</span><span class="mord cjk_fallback">就</span><span class="mord cjk_fallback">得</span><span class="mord cjk_fallback">到</span><span class="mord cjk_fallback">：</span></span></span></span>Py′=APx′<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>，可以稍稍改成</mtext></mrow><annotation encoding="application/x-tex">，可以稍稍改成</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">可</span><span class="mord cjk_fallback">以</span><span class="mord cjk_fallback">稍</span><span class="mord cjk_fallback">稍</span><span class="mord cjk_fallback">改</span><span class="mord cjk_fallback">成</span></span></span></span>Py′=P(P^{−1}AP)x′<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mtext>，换句话说，在</mtext><mi>P</mi><mtext>坐标系下，从</mtext><mi>x</mi><mtext>′到</mtext><mi>y</mi><mtext>′的运动用矩阵</mtext></mrow><annotation encoding="application/x-tex">，换句话说，在P坐标系下，从x′到y′的运动用矩阵</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">换</span><span class="mord cjk_fallback">句</span><span class="mord cjk_fallback">话</span><span class="mord cjk_fallback">说</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">在</span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mord cjk_fallback">坐</span><span class="mord cjk_fallback">标</span><span class="mord cjk_fallback">系</span><span class="mord cjk_fallback">下</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">从</span><span class="mord mathdefault">x</span><span class="mord">′</span><span class="mord cjk_fallback">到</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord">′</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">运</span><span class="mord cjk_fallback">动</span><span class="mord cjk_fallback">用</span><span class="mord cjk_fallback">矩</span><span class="mord cjk_fallback">阵</span></span></span></span>B=P^{−1}AP$表示，B就是A的一个相似矩阵！所以说，相似矩阵只不过是在不同坐标系下的变换矩阵。</p>
+<p>矩阵对应的行列式值的几何意义就是体积，因此相似矩阵的行列式值都相同，不管怎样变化，体积都相同。总而言之，相似变换是为了简化计算！</p>
+<h1><em>矩阵的相似对角化</em></h1>
+<p>特征值英文名 eigen value，我们可以想一个问题：有没有变换只改变长度，不改变方向呢？如果存在矩阵对某一个向量或某些向量只发生伸缩变换，不对这些向量产生旋转的效果，那么这些向量就称为这个矩阵的特征向量。</p>
+<h2 id="特征值为什么特征">特征值为什么特征</h2>
+<p>当蒙娜丽莎的图像左右翻转时，中间垂直的红色向量方向保持不变。而水平方向上黄色的向量的方向完全反转，因此它们都是左右翻转变换的特征向量。<strong>红色向量长度不变，其特征值为 1</strong>。<strong>黄色向量长度也不变但方向变了，其特征值为-1</strong>。<strong>橙色向量在翻转后和原来的向量不在同一条直线上，不是特征向量</strong>。</p>
+<p><img src="/2023/07/31/Matrix/Snipaste_2023-06-08_21-04-25.png" alt></p>
+<p>所以一个变换的特征向量是这样一种向量：它经过这种特定的变换后保持方向不变，只是进行长度上的伸缩而已。举个例子：<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false">[</mo><mn>1</mn><mo separator="true">,</mo><mn>0</mn><mo separator="true">;</mo><mn>0</mn><mo separator="true">,</mo><mo>−</mo><mn>1</mn><mo stretchy="false">]</mo><mo>∗</mo><mo stretchy="false">[</mo><mi>a</mi><mo separator="true">;</mo><mi>b</mi><msup><mo stretchy="false">]</mo><mi>T</mi></msup><mo>=</mo><mo stretchy="false">[</mo><mi>a</mi><mo separator="true">,</mo><mtext>–</mtext><mi>b</mi><msup><mo stretchy="false">]</mo><mi>T</mi></msup></mrow><annotation encoding="application/x-tex">[1,0;0,-1]*[a;b]^T=[a,–b]^T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mpunct">;</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">−</span><span class="mord">1</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1.0913309999999998em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault">a</span><span class="mpunct">;</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">b</span><span class="mclose"><span class="mclose">]</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1.0913309999999998em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault">a</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">–</span><span class="mord mathdefault">b</span><span class="mclose"><span class="mclose">]</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8413309999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.13889em;">T</span></span></span></span></span></span></span></span></span></span></span></p>
+<p>上述特征向量中，a不变，b变成负数，因此该矩阵中的列向量均为特征向量，特征值均为1。</p>
+<p>上面的变换，我们在图像上很容易看出来，但是在计算上就很困难了，我们必须要经历矩阵的乘法，如果我们套用乘法公式去计算乘方，那可真是让人头疼。那有没有好算乘方的矩阵呢？有！那就是对角矩阵，它的乘方就是对角矩阵对角线上元素各自乘方即可。也就是说，<strong>如果一个矩阵可以转换为对角矩阵，那么一个大矩阵 A 对向量的作用就变成了一个数乘以特征向量了再求个和，复杂的矩阵运算就变成了数乘运算</strong>！</p>
+<p>方程本质是一种约束，微分方程就是在世界上各种各样的函数中，约束出一类函数。对于一阶微分方程就是一个类似求解特征向量的问题，只不过“特征向量”变成函数！</p>
+<h2 id="神奇的e">神奇的e</h2>
+<p>一杯开水放在室内，它温度的下降是指数形式的；听说过放射性元素的原子核发生衰变么？随着放射的不断进行，放射强度将按指数曲线下降；化学反应的进程也可以用指数函数描述……</p>
+<h2 id="如何选基">如何选基</h2>
+<p>下面就是能不能找到这样的“好”向量组（矩阵）作为基的问题了？矩阵能不能对角化，为什么不能对角化，不能对角化说明了矩阵出了什么问题？</p>
+<p>先抛出答案，如果矩阵作用了一个任意向量 x， Ax 和 x 之间总存在不是 0 或者π的夹角，那么就不能对角化。令 Ax=λx 相等，能算出 n 个线性无关的向量就说明可以找到，算不出来或者算出来数目不够，那么好，我们找不到这样的基。同时，**如果矩阵与一个对角阵相似，那么他们具有相同的特征多项式、特征值、秩、迹。**由于对角阵的这些量是容易求出来的，而这些值在工程中是非常重要而且有意义的。</p>
+<p>特征向量们作为一组基，把空间中的变换 A简单化了。那么和它对应的特征值怎么理解呢？</p>
+<p>特征值反映了特征向量在变换时的伸缩倍数。对一个变换而言。特征向量指明变换的方向，而特征值反映的是变换的剧烈程度！一个矩阵，只要我们找到合适的坐标，它的全部信息就可以用坐标系和特征值表示！也就是说 ：我们从不同角度看问题，其难易程度是不一样的！而矩阵对角化为我们提供了一个很好的看问题的角度。</p>
+<p>为什么矩阵的特征值有时会被称为谱呢？其实这和特征值的物理意义有关，一阶线性微分方程组对应的矩阵的特征值就是系统的固有频率。凡是叫谱的东西，都是可以分解的，比如光谱。我们可以将一个具有良好性能的矩阵分解成多个作用的叠加。</p>
+<p>在数学中有一个谱定律（Spectral theorem），也叫谱分解或者特征值分解。</p>
+<p>一个矩阵 A 可表示为如下线性组合<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><msub><mi>λ</mi><mn>1</mn></msub><msub><mi>P</mi><mn>1</mn></msub><mo>+</mo><msub><mi>λ</mi><mn>2</mn></msub><msub><mi>P</mi><mn>2</mn></msub><mo>+</mo><msub><mi>λ</mi><mn>3</mn></msub><msub><mi>P</mi><mn>3</mn></msub><mo>+</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi></mrow><annotation encoding="application/x-tex">A=\lambda_1 P_1 +\lambda_2 P_2+\lambda_3 P_3+......</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">λ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">λ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">λ</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.10556em;vertical-align:0em;"></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span></span></span></span></p>
+<p>其中，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>P</mi><mn>1</mn></msub><mtext>、</mtext><msub><mi>P</mi><mn>2</mn></msub><mtext>、</mtext><msub><mi>P</mi><mi>n</mi></msub></mrow><annotation encoding="application/x-tex">P_1、P_2、P_n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord cjk_fallback">、</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord cjk_fallback">、</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">n</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>  称为 A 的谱族，$ \lambda_1 、\lambda_2、\lambda_n$等表示特征值。</p>
+<p>这里做了两个假设：</p>
+<p>矩阵 A 是可以对角化的。</p>
+<p>所有特征值都是不同的。</p>
+<p><strong>特征值和谱族的乘积就代表了它对矩阵 A 的贡献率</strong>——说的通俗一点就是能量（power）或者权重(weight)。这样，能量多的、权重大的部分当然重要，问题的主要矛盾就凸显出来了！</p>
+<p>矩阵不能对角化的原因是因为有剪切变换，所以才有Jordan 块的事。旋转变换可以由连续两次反射变换来实现。旋转变换对应矩阵出现复特征值。</p>
+<h1><em>矩阵的复数域对角化</em></h1>
+<p>特征值的问题我们已经说得差不多了，让我们来谈一谈复特征值。复数运算天生就带有旋转的结构。貌似旋转矩阵和复数有着某种天生的联系！如果将复特征值写成指数形式，它的幅值代表伸长或者缩小的程度，相角代表 Ax 和 x 之间的夹角。</p>
+<p>旋转矩阵和复数运算在对向量的作用形式上具有相同的结构！</p>
+<p>对角化的过程，实质上就是找特征向量的过程，选取特征向量作为基来表征矩阵 A。如果一个矩阵在复数域不能对角化，我们还有办法把它化成比较优美的形式——Jordan 标准型。高等代数理论已经证明：一个方阵在复数域一定可以化成 Jordan 标准型。</p>
+<h1>内积与相关</h1>
+<p>正交性</p>
+<p>从数学的角度看到的是基，用它来描述函数空间中任何一个元具有唯一性和可逆性；可以联系映射的定义域和值域，从而研究解乃至求得解。从应用的角度看到的是一种基本工具或方法，可以使得例如函数变换、函数逼近、数据压缩、数学物理问题的求解等问题变得容易处理和易于理解</p>
+<p>有一种去除冗余性的方法，就是施密特正交化方法。</p>
+<p><img src="/2023/07/31/Matrix/Snipaste_2023-06-10_08-48-06.png" alt></p>
+<p>斯密特正交化的思想其实非常简单：两个向量不正交就是说明二者有重叠，我们把重叠去除就正交了。比如图中红色的那个向量，我们将它去除就可以得到正交的向量了。怎么去除？首先要知道红色的向量的大小和方向：大小用内积算，用β1的方向向量定。有了大小和方向，做一次减法就行了。</p>
+<p>独立是一个很重要的概念，科研中我们总是希望找到一个现象是受那几个独立变量影响，如果你找到了函数关系式，你就成功了</p>
+<p>在线性代数中我们还提到内积的概念，对于内积的理解，有更广泛的含义。</p>
+<p>形式上可以理解成对应的元素相乘再求和，对于函数就是对应微分时的两个函数乘积再求积分；对于平稳过程，<strong>内积可以衡量两个函数的线性相似程度</strong>（注意是线性！）。内积值越大表示两个函数线性相似程度越大,内积为零表示完全不线性相似；而矩阵的转置运算，其实就是为了算内积而出现的。两个函数内积为零则两个函数正交,在三维空间中它们的夹角为 90 度,在三维以上不是这样的。</p>
+<p>内积和向量的夹角和相关有着密切的联系。我们知道，如果两个向量是共线的，那么他们的夹角就是 0或者 180。此时向量夹角余弦值的绝对值是 1。反过来，通过计算向量之间的夹角余弦值，我们就能判断他们之间线性关系的强弱。</p>
+<p>内积还与相关系数有着密切联系。假设五个国家的国民生产总值分别是 1、2、3、5、8，又假设这五个国家的贫困比例分别是 11%、12%、13%、15%、18%。则我们现在有两个有序的包含 5 个元素的向量 x、y：x = (1, 2, 3, 5, 8) ，y = (0.11, 0.12, 0.13, 0.15, 0.18) 使用一般的方法来计算cosΘ= 0.9208  。<br>
+而上面的数据实际上是故意选择了一个不完美的线性关系：y = 0.01 x +0.10 。</p>
+<p>为了化简成形如y=ax+b的形式，我们可以这样做：将x值减去期望E(x);将y减去E(y),x = (−2.8, −1.8, −0.8, 1.2, 4.2)、 y = (−0.028, −0.018, −0.008, 0.012, 0.042),就可以得到y = 0.01 x。此时，cosΘ=1。也就是说：减去期望相当于将原点坐标平移到期望点。</p>
+<p>内积还可以计算其中的相似度，例如皮尔逊相关系数。：用在概率论中，我们可以计算随机变量的相关系数，来判断两个随机变量是否相关。用在数字信号处理中，我们也可以计算两组采样值的相关系数来提取信号或者去除白噪声。在气象学中，可以判断两个不同气象要素或同一气象要素在不同时间和空间的相互关联。在经济学科中，可以用相关判断广告投入与月均销售额之间的关系。在医学中，可以用相关判断体内物理化学参数和疾病之间的关系。。在遗传学中，可以判断群体中不同性状的育种值之间的关系。大名鼎鼎的最小二乘法也要利用相关来判断能否很好地拟合。用在互联网的文本搜索和文章分类中，我们可以通过计算相关系数（其实只要计算内积就可以）来快速解决。</p>
+<h1>内积与范数</h1>
+<p>回想微积分，它的核心是极限。这其实是一种全新的世界观，告诉我们两个东西无限接近的时候就是同一个东西。但是，我们常常忽略一个比它更基础的东西——距离！微积分σ-ξ语言中引入一种叫“距离”要多小有多小，才定义的极限。可见，距离的概念才是“根本的概念”</p>
+<p>同样的道理，我们也会定义向量之间的距离、矩阵之间的距离，也就是传说中的范数(norm)。只要满足三条：非负，齐次，三角不等式就都可以叫做 norm。</p>
+<h2 id="欧氏距离-euclidean-distance">欧氏距离(Euclidean Distance)</h2>
+<p>欧氏距离是最易于理解的一种距离计算方法，源自欧氏空间中两点间的距离公式，也就是向量的 2 范数。</p>
+<h2 id="曼哈顿距离-manhattan-distance">曼哈顿距离(Manhattan Distance)</h2>
+<p>想象你在曼哈顿要从一个十字路口开车到另外一个十字路口，驾驶距离是两点间的直线距离吗？显然不是，除非你能穿越大楼。实际驾驶距离就是这个“曼哈顿距离”。而这也是曼哈顿距离名称的来源， 曼哈顿距离也称为城市街区距离(City Block distance)。曼哈顿距离也就是向量的 1 范数。</p>
+<h2 id="切比雪夫距离-chebyshev-distance">切比雪夫距离 ( Chebyshev Distance )</h2>
+<p>国际象棋玩过么？国王走一步能够移动到相邻的 8 个方格中的任意一个。那<br>
+么国王从格子(x1,y1)走到格子(x2,y2)最少需要多少步？你会发现<br>
+最少步数总是$ max( |x_1-x_2|, |y_1-y_2|) $步。</p>
+<h2 id="闵可夫斯基距离-minkowski-distance">闵可夫斯基距离(Minkowski Distance)</h2>
+<p>闵氏距离不是一种距离，而是一组距离的定义。也称为向量的 p 范数,其中 p 是一个变参数。当 p=1 时，就是曼哈顿距离；当 p=2 时，就是欧氏距离；当 p→∞时，就是切比雪夫距离。根据变参数的不同，闵氏距离可以表示一类的距离。</p>
+<p>之前介绍了向量之间距离的定义方法，也称为范数，接受了这些概念之后再<br>
+理解矩阵范数就容易多了。下面我们就来介绍<strong>矩阵范数</strong>。</p>
+<h2 id="矩阵范数">矩阵范数</h2>
+<p>如果你认为矩阵里面装的是向量，或者说向量也应该是特殊的矩阵。那么，矩阵和向量应该满足相容性，并且通过<strong>向量范数的定义可以诱导出矩阵范数</strong>。此类范数称为<strong>诱导范数</strong>。如果认为<strong>矩阵里面装载的是纯的数</strong>，那么此时矩阵的“距离”就是 A 到 0 矩阵的“距离”，这类范数称为<br>
+<strong>非诱导范数</strong>。</p>
+<h3 id="诱导矩阵范数">诱导矩阵范数</h3>
+<p>1范数，列和范数</p>
+<p>∞范数，行和范数</p>
+<p>2范数，谱范数</p>
+<h3 id="非诱导矩阵范数">非诱导矩阵范数</h3>
+<p>M1范数</p>
+<p>M2范数</p>
+<p>重点说一下矩阵的 M2 范数，也称为弗罗贝尼乌斯范数（Frobenius norm）、F 范数或希尔伯特-施密特范数（ Hilbert–Schmidt norm），</p>
+<p>M∞范数</p>
+<h2 id="广义距离">广义距离</h2>
+<p>两个随机变量的在统计上是否相关或独立，或者它们的统计特性是否相似，为检验这些问题在统计学中引入了Kullback-Leibler 型距离和 Bhattacharyya 距离（或称为差离度，divergence）。这些距离不满足三角不等式，称为广义距离。<strong>在工程研究中你可以利用手头掌握的数学不等式，定义新的距离或广义距离，它或许有某种特别的性质。</strong></p>
+<h3 id="标准化欧氏距离-standardized-euclidean-distance">标准化欧氏距离 (Standardized Euclidean distance )</h3>
+<p>标准欧氏距离的思路：既然数据各维分量的分布不一样，好吧！那我先将各个分量都“标准化”到均值、方差相等吧。</p>
+<p>标准化后的值 = ( 标准化前的值 － 分量的均值 ) /分量的标准差</p>
+<h3 id="马氏距离-mahalanobis-distance">马氏距离(Mahalanobis Distance)</h3>
+<h3 id="汉明距离-hamming-distance">汉明距离(Hamming distance)</h3>
+<p>两个等长字符串 s1 与 s2 之间的汉明距离定义为将其中一个变为另外一个所<br>
+需要作的最小替换次数。例如字符串“1111”与“1001”之间的汉明距离为 2</p>
+<h3 id="杰卡德相似系数-jaccard-similarity-coefficient">杰卡德相似系数(Jaccard similarity coefficient)</h3>
+<h1><em>优美的二次型</em></h1>
+<p>矩阵是由元素和元素的位置这两方面组成的，主对角线元素代表自身和自身的关系，其他位置代表相互关系。在实际应用中，我们很多情形都是对称的相互关系，比如两个物体之间力的关系，作用力和反作用力相等。这样一个系统的力学关系矩阵就是对称的，比如振动矩阵，电路矩阵等。在数学上，这种关系用二次型来描述。</p>
+<p>每个二次型都可以经过线性替换变成若干个平方和的形式，对于矩阵来说，就是每个对称矩阵都合同于一个对角矩阵，后者称为一个标准形。<strong>二次型的几何意义是二次曲面</strong>，比如三维中的椭球和双曲抛物面等。</p>
+<p><strong>而进行正交变换的意义就是将其在不改变几何形状的基础上将坐标换到好位置，所谓的好位置就是让其几何中心在坐标原点，而且它还关于坐标轴对称</strong>，二次型矩阵具有对称性，所以二次型一定可以化成对角矩阵，可以利用二次型的线性变换化简二次曲面。</p>
+<p>对于二次型的正定问题，它有惯性定理决定。它还有一个很好的应用，就是用在微积分的多元函数求极值问题。我们知道，对于一个多元函数，我们可以用泰勒公式在驻点展开到二次项，在很小的邻域内就能反映函数的极值性质。。对于极值，其一阶偏导为零，同时将常数项移到等式左边，只剩下二阶项。如果这个二次多项式是正定的，则函数有极大值，如果是负定的就有极小值。因此，才有微积分里面用二阶导数的关系式来判断一元函数和多元函数的极值判别式！</p>
+<p>这里还涉及一个合同的概念，其实合同主要是为了二次型而存在的。对于二次型的矩阵表示来说，做一次非退化的线性替换相当于将二次型的矩阵变为一个与其合同的矩阵。</p>
+<h1>行列式</h1>
+<p>行列式的几何意义是什么呢？概括说来有两个解释：</p>
+<p>一个解释是行列式就是行列式中的行或列向量所构成的“平行多面体”的<strong>有向面积或有向体积</strong>；另<br>
+一个解释是矩阵 A 的行列式 detA 就是线性变换 A 下的<strong>图形面积或体积的伸缩因子</strong></p>
+<p>我们不妨换一个角度：对于一个对角阵，它的行列式的几何意义比较好理解：对于二维平面就是长×宽；从三维空间就是长×宽×高；对于一般矩阵，将 其 对角化，将坐标之间的耦合关系解除。我们知道相似变换就是把线性空间里面的对象换了一组基来表示而已。这时复杂的几何体就变成一个规则的“空间几何体”，有点类似长方体。然后取行列式的几何意义就清楚了，它真的是表示空间“几何体”的体积！</p>
+<p>另一个问题就是变换坐标的事情，我们知道，同一个空间体积可以用不同的基和坐标表示，我们可以分别算出这两组基表示下几何体的体积，其计算出来的值一般是不一样的。两个体积之间有什么关系呢？答案是两个体积之间相差的是一个坐标变换矩阵的行列式！无论是线性变换，还是非线性变换（比如微积分中的直角坐标和极坐标之间的变换），<strong>两个体积之比就是行列式值的关系</strong>（微积分中相差的是雅克比行列式）。</p>
+<p><img src="/2023/07/31/Matrix/Snipaste_2023-06-09_16-14-51.png" alt></p>
+<p>以上二维和三维行列式的例子中，行列式被解释为向量形成的图形的面积或体积。面积或体积的定义是恒正的，而行列式是有正有负的，因此需要引入有向面积和有向体积的概念。负的面积或体积在物理学中可能难以理解，但在数学中，它们和有向角的概念类似，都是对空间镜面对称特性的一种刻画。如果行列式表示的是线性变换对体积的影响，那么行列式的正负就表示了空间的定向</p>
+<p><img src="/2023/07/31/Matrix/Snipaste_2023-06-09_16-16-43.png" alt></p>
+<p>如上图中，左边的黄色骰子（可以看成有单位的有向体积的物体）在经过了线性变换后变成中间绿色的平行六边形，这时行列式为正，两者是同定向的，可以通过旋转和拉伸从一个变成另一个。而骰子和右边的红色平行六边形之间也是通过线性变换得到的，但是无论怎样旋转和拉伸，都无法使一个变成另一个，一定要通过镜面反射才行。这时两者之间的线性变换的行列式是负的。可以看出，线性变换可以分为两类，一类对应着正的行列式，保持空间的定向不变，另一类对应负的行列式，颠倒空间的定向。</p>
+<h1>积分变换</h1>
+<p>傅里叶分析不仅仅是一个数学工具，更是一种可以彻底颠覆一个人以前世界观的思维模式。原本看似简单的函数，为什么我们要复杂化将它展成傅里叶级数呢？这样分析问题真的有必要么？</p>
+<p>首先从最直观的信号分解角度，看看用正弦信号逼近的效果；然后给出线性代数中最重要的特征向量的概念，引出本节的核心：为什么要用正弦信号而不用其他信号分解；在理解这二者的基础上介绍数学中空间的概念，这也是线性代数的一个重要思想；理解了数学中空间的概念就很容易理解物理中时域频域的概念；然后我们从投影的角度再来理解一下傅里叶变换，这在数学上就更加抽象了；最后在数学上对傅里叶变换进行一个推广，引入其他形式的变换。</p>
+<h2 id="分解的角度">分解的角度</h2>
+<p>什么是分解呢？分解的意思就像我们用不同的涂料来调色，一个色调可以分解成不同基色调的组合。一束白光可以分解成不同颜色的光的叠加。</p>
+<p><img src="/2023/07/31/Matrix/Snipaste_2023-06-10_13-09-57.png" alt></p>
+<h2 id="特征信号角度">特征信号角度</h2>
+<p>如果你接受了分解的思想，你可能会有这样的疑问：为什么偏偏选择三角函数而不用其他函数进行分解？</p>
+<p>大自然中很多现象可以抽象成一个线性时不变系统来研究，无论你用微分方程还是传递函数或者状态空间描述。</p>
+<p><strong>线性时不变系统</strong>：输入输出信号满足线性关系，而且系统参数不随时间变换。对于大自然界的很多系统，一个正弦曲线信号输入后，输出的仍是正弦曲线，只有幅度和相位可能发生变化，但是频率和波的形状仍是一样的。也就是说正弦信号是系统的特征向量！</p>
+<p>当然，指数信号也是系统的特征向量，表示能量的衰减或积聚。自然界的衰减或者扩散现象大多是指数形式的，或者既有波动又有指数衰减，因此具有特征的基函数就由三角函数变成复指数函数。</p>
+<p><strong>正弦信号</strong>恰好是很多线性时不变系统的特征向量。于是就有了<strong>傅里叶变换</strong>。对于更一般的线性时不变系统，<strong>复指数信号</strong>(表示耗散或衰减)是系统的“特征向量”。于是就有了<strong>拉普拉斯变换</strong>。$z $变换也是同样的道理，这时 $ z^n$ 是离散系统的“特征向量”。</p>
+<h3 id="时域频域的概念">时域频域的概念</h3>
+<p>什么是时域？从我们出生，我们看到的世界都以时间贯穿，人的身高、汽车的轨迹都会随着时间发生改变。这种以时间作为参照来观察动态世界的方法我们称其为时域分析</p>
+<p>频域(frequency domain)是描述信号在频率方面特性时用到的一种坐标系。用线性代数的语言就是装着正弦函数的空。频域最重要的性质是：它不是真实的，而是一个数学构造。正弦波是频域中唯一存在的波形，这是频域中最重要的规则，即正弦波是对频域的描述，因为时域中的任何波形都可用正弦波合成。</p>
+<p>对于一个信号来说，信号强度随时间的变化规律就是时域特性，信号是由哪些单一频率的信号合成的就是频域特性。</p>
+<h3 id="数学上的时域频域">数学上的时域频域</h3>
+<p>从数学上理解，频域的概念就是由正弦信号构成的空间。或者说这个空间里装着正弦信号。</p>
+<p><img src="/2023/07/31/Matrix/Snipaste_2023-06-10_16-43-39.png" alt></p>
+<p>对于泰勒展开，我们选取了多项式作为基，于是由多项式构成的空间就叫多项式空间。对于傅里叶变换，我们只是选取了三角函数作为基，于是由三角函数构成的空间就叫频率空间或者叫频域。</p>
+<p>时域分析与频域分析是对信号的两个观察面。时域分析是以时间轴为坐标表示动态信号的关系；频域分析是把信号变为以频率轴为坐标表示出来。一般来说，时域的表示较为形象与直观，频域分析则更为简练，剖析问题更为深刻和方便。</p>
+<p>贯穿时域与频域的方法之一，就是传中说的傅里叶分析。傅里叶分析可分为傅里叶级数（Fourier Serie）和傅里叶变换(Fourier Transformation)。</p>
+<p>“任意连续周期信号可以由一组适当的正弦曲线组合而成” 总而言之，不管是傅里叶级数，还是傅里叶变换、拉普拉斯变换、z 变换，本质上都是线性代数里面讲的求特征值和特征向量。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://genewlan.github.io">ZhangLei</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://genewlan.github.io/2023/07/31/Matrix/">http://genewlan.github.io/2023/07/31/Matrix/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://genewlan.github.io" target="_blank">GeneWlan</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Math-Matrix/">Math Matrix</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/07/31/outlier-detection/" title="outlier_detection"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">outlier_detection</div></div></a></div><div class="next-post pull-right"><a href="/2023/06/11/mathmodeling2/" title="Interpolation and Fitting"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Interpolation and Fitting</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ZhangLei</div><div class="author-info__description">change or die!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/genewlan/" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:xiaolobglee@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">线性代数有什么用？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">2.</span> <span class="toc-text">线性代数的内容及发展简史</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text">空间与坐标系</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7"><span class="toc-number">3.1.</span> <span class="toc-text">线性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A9%BA%E9%97%B4-space"><span class="toc-number">3.2.</span> <span class="toc-text">空间(space)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E7%A9%BA%E9%97%B4"><span class="toc-number">3.3.</span> <span class="toc-text">线性空间</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text">矩阵与变换</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text">矩阵与方程组</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">6.</span> <span class="toc-text">矩阵与基和坐标</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">7.</span> <span class="toc-text">特殊的矩阵</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%8B%E8%BD%AC%E7%9F%A9%E9%98%B5"><span class="toc-number">7.1.</span> <span class="toc-text">旋转矩阵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E8%A7%92%E7%9F%A9%E9%98%B5"><span class="toc-number">7.2.</span> <span class="toc-text">对角矩阵</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">8.</span> <span class="toc-text">矩阵的等价与相似</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">9.</span> <span class="toc-text">矩阵的相似对角化</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E5%BE%81%E5%80%BC%E4%B8%BA%E4%BB%80%E4%B9%88%E7%89%B9%E5%BE%81"><span class="toc-number">9.1.</span> <span class="toc-text">特征值为什么特征</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A5%9E%E5%A5%87%E7%9A%84e"><span class="toc-number">9.2.</span> <span class="toc-text">神奇的e</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%80%89%E5%9F%BA"><span class="toc-number">9.3.</span> <span class="toc-text">如何选基</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">10.</span> <span class="toc-text">矩阵的复数域对角化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">11.</span> <span class="toc-text">内积与相关</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">12.</span> <span class="toc-text">内积与范数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AC%A7%E6%B0%8F%E8%B7%9D%E7%A6%BB-euclidean-distance"><span class="toc-number">12.1.</span> <span class="toc-text">欧氏距离(Euclidean Distance)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%BC%E5%93%88%E9%A1%BF%E8%B7%9D%E7%A6%BB-manhattan-distance"><span class="toc-number">12.2.</span> <span class="toc-text">曼哈顿距离(Manhattan Distance)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%87%E6%AF%94%E9%9B%AA%E5%A4%AB%E8%B7%9D%E7%A6%BB-chebyshev-distance"><span class="toc-number">12.3.</span> <span class="toc-text">切比雪夫距离 ( Chebyshev Distance )</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%B5%E5%8F%AF%E5%A4%AB%E6%96%AF%E5%9F%BA%E8%B7%9D%E7%A6%BB-minkowski-distance"><span class="toc-number">12.4.</span> <span class="toc-text">闵可夫斯基距离(Minkowski Distance)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9F%A9%E9%98%B5%E8%8C%83%E6%95%B0"><span class="toc-number">12.5.</span> <span class="toc-text">矩阵范数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B1%E5%AF%BC%E7%9F%A9%E9%98%B5%E8%8C%83%E6%95%B0"><span class="toc-number">12.5.1.</span> <span class="toc-text">诱导矩阵范数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9D%9E%E8%AF%B1%E5%AF%BC%E7%9F%A9%E9%98%B5%E8%8C%83%E6%95%B0"><span class="toc-number">12.5.2.</span> <span class="toc-text">非诱导矩阵范数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B9%BF%E4%B9%89%E8%B7%9D%E7%A6%BB"><span class="toc-number">12.6.</span> <span class="toc-text">广义距离</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E5%8C%96%E6%AC%A7%E6%B0%8F%E8%B7%9D%E7%A6%BB-standardized-euclidean-distance"><span class="toc-number">12.6.1.</span> <span class="toc-text">标准化欧氏距离 (Standardized Euclidean distance )</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A9%AC%E6%B0%8F%E8%B7%9D%E7%A6%BB-mahalanobis-distance"><span class="toc-number">12.6.2.</span> <span class="toc-text">马氏距离(Mahalanobis Distance)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B1%89%E6%98%8E%E8%B7%9D%E7%A6%BB-hamming-distance"><span class="toc-number">12.6.3.</span> <span class="toc-text">汉明距离(Hamming distance)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9D%B0%E5%8D%A1%E5%BE%B7%E7%9B%B8%E4%BC%BC%E7%B3%BB%E6%95%B0-jaccard-similarity-coefficient"><span class="toc-number">12.6.4.</span> <span class="toc-text">杰卡德相似系数(Jaccard similarity coefficient)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">13.</span> <span class="toc-text">优美的二次型</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">14.</span> <span class="toc-text">行列式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">15.</span> <span class="toc-text">积分变换</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E8%A7%A3%E7%9A%84%E8%A7%92%E5%BA%A6"><span class="toc-number">15.1.</span> <span class="toc-text">分解的角度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E5%BE%81%E4%BF%A1%E5%8F%B7%E8%A7%92%E5%BA%A6"><span class="toc-number">15.2.</span> <span class="toc-text">特征信号角度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%B6%E5%9F%9F%E9%A2%91%E5%9F%9F%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="toc-number">15.2.1.</span> <span class="toc-text">时域频域的概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6%E4%B8%8A%E7%9A%84%E6%97%B6%E5%9F%9F%E9%A2%91%E5%9F%9F"><span class="toc-number">15.2.2.</span> <span class="toc-text">数学上的时域频域</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/30/Neural-Network-Frame/" title="Neural-Network-Frame">Neural-Network-Frame</a><time datetime="2023-09-30T10:55:16.000Z" title="发表于 2023-09-30 18:55:16">2023-09-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/30/bayes-net/" title="bayes-net">bayes-net</a><time datetime="2023-09-30T10:49:09.000Z" title="发表于 2023-09-30 18:49:09">2023-09-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/31/Practise/" title="LDA Modeling Practise">LDA Modeling Practise</a><time datetime="2023-08-31T06:45:25.000Z" title="发表于 2023-08-31 14:45:25">2023-08-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/31/%E9%80%9A%E4%BF%97%E7%90%86%E8%A7%A3LDA%E4%B8%BB%E9%A2%98%E6%A8%A1/" title="通俗理解LDA主题模">通俗理解LDA主题模</a><time datetime="2023-08-31T06:09:26.000Z" title="发表于 2023-08-31 14:09:26">2023-08-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/07/31/outlier-detection/" title="outlier_detection">outlier_detection</a><time datetime="2023-07-31T14:40:34.000Z" title="发表于 2023-07-31 22:40:34">2023-07-31</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By ZhangLei</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'J0s1l0MeDfMbgw4y4awgy2jX-MdYXbMMI',
+      appKey: '3vZoaKxqWQYlKbXXdXuSxBsT',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div><!-- hexo injector body_end start --><div id="background-effect"></div><script src="https://cdn.jsdelivr.net/npm/three@0.121.1/build/three.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.birds.min.js"></script><script>VANTA.BIRDS({"el":"#background-effect","mouseControls":true,"touchControls":true,"gyroControls":false,"minHeight":200,"minWidth":200,"scale":1,"scaleMobile":1})</script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body></html>

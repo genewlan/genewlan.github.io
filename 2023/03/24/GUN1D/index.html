@@ -1,0 +1,284 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>分子指纹与其应用 | GeneWlan</title><meta name="author" content="ZhangLei"><meta name="copyright" content="ZhangLei"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="在化学领域，分子的描述和搜索是非常重要的问题，因为分子的物理性质和化学活性是由其化学结构和拓扑结构等特征决定的。因此，为了理解和预测分子的性质和行为，需要一种有效的方法来描述和比较分子的化学特征和结构。 然而，分子的化学结构和拓扑结构非常复杂，无法直接用数字或符号来表示。在计算机科学领域，常用的数据结构和算法往往也无法直接应用于分子描述和分子搜索等问题。因此，需要一种专门的方法来将分子转化为计算机">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分子指纹与其应用">
+<meta property="og:url" content="http://genewlan.github.io/2023/03/24/GUN1D/index.html">
+<meta property="og:site_name" content="GeneWlan">
+<meta property="og:description" content="在化学领域，分子的描述和搜索是非常重要的问题，因为分子的物理性质和化学活性是由其化学结构和拓扑结构等特征决定的。因此，为了理解和预测分子的性质和行为，需要一种有效的方法来描述和比较分子的化学特征和结构。 然而，分子的化学结构和拓扑结构非常复杂，无法直接用数字或符号来表示。在计算机科学领域，常用的数据结构和算法往往也无法直接应用于分子描述和分子搜索等问题。因此，需要一种专门的方法来将分子转化为计算机">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2023-03-24T12:50:38.738Z">
+<meta property="article:modified_time" content="2023-08-31T07:43:11.115Z">
+<meta property="article:author" content="ZhangLei">
+<meta property="article:tag" content="GUN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://genewlan.github.io/2023/03/24/GUN1D/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '分子指纹与其应用',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2023-08-31 15:43:11'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><!-- hexo injector head_end start -->
+    <style>
+      #background-effect {
+        position: fixed !important;
+        top: 0px;
+        left: 0px;
+        z-index: -1;
+        width: 100%;
+        height: 100%
+      }
+    </style>
+  <!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="GeneWlan" type="application/atom+xml">
+<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/03/21/ZVUmQFknE2JosXT.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="GeneWlan"><span class="site-name">GeneWlan</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">分子指纹与其应用</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-03-24T12:50:38.738Z" title="发表于 2023-03-24 20:50:38">2023-03-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-08-31T07:43:11.115Z" title="更新于 2023-08-31 15:43:11">2023-08-31</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="分子指纹与其应用"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>在化学领域，分子的描述和搜索是非常重要的问题，因为分子的物理性质和化学活性是由其化学结构和拓扑结构等特征决定的。因此，为了理解和预测分子的性质和行为，需要一种有效的方法来描述和比较分子的化学特征和结构。</p>
+<p>然而，分子的化学结构和拓扑结构非常复杂，无法直接用数字或符号来表示。在计算机科学领域，常用的数据结构和算法往往也无法直接应用于分子描述和分子搜索等问题。因此，需要一种专门的方法来将分子转化为计算机可处理的形式，并提取其中的化学特征和结构信息。</p>
+<p>在20世纪80年代初期，计算机技术已经逐渐成熟，开始被应用于化学研究领域。由于分子的化学结构和拓扑结构非常复杂，需要一种有效的方法来将分子转化为计算机可处理的形式。因此，化学家开始尝试使用计算机模拟和分子建模等技术来研究分子的性质和行为。然而，计算机模拟需要大量的计算资源和时间，因此需要一种简单且高效的方法来表示分子的化学特征和结构。</p>
+<p>在这种背景下，分子指纹应运而生。分子指纹是一种基于简单规则或模式的编码方法，可以将分子表示为一个二进制或整数向量，其中每个元素表示分子的某种化学特征或结构信息。这种编码方法不仅可以减少计算复杂度，还可以提高分子描述的准确性和可重复性。</p>
+<p>当时，化学家Trevor J. Howe等人提出了一种基于分子中子结构的编码方法，称为“SUBSTRUCTURE”指纹，该方法可以将分子表示为一个二进制向量，其中每个元素表示分子中的一个子结构特征。随后，另一位化学家Andrew R. Leach等人提出了一种基于分子拓扑结构的编码方法，称为“TOPOLOGICAL”指纹，该方法可以将分子表示为一个整数向量，其中每个元素表示分子中的一个拓扑结构特征。</p>
+<p>在20世纪90年代，化学家Peter Willett等人提出了基于子结构的指纹方法，称为“FINGERPRINT”指纹，该方法可以将分子表示为一个二进制向量，其中每个元素表示分子中的一个化学子结构特征。此外，随着计算机技术和机器学习算法的不断发展，分子指纹的编码方法也在不断演化和创新。一些基于矩阵分解、图论和机器学习等方法的分子指纹方法相继出现。现代分子指纹方法不仅可以描述分子的化学特征和结构，还可以学习分子的高维表示，提高分子描述的精度和全面性，为分子设计和药物研发等领域提供了强有力的工具和方法。</p>
+<p>因此，分子指纹的发展是多个化学家和研究人员共同努力的结果，涉及了分子结构、拓扑结构、子结构、矩阵分解、图论、机器学习等多个领域的知识和技术。他们的贡献使得分子指纹成为了一种简单、高效、准确和可重复的分子描述方法，在分子设计、药物研发等领域具有广泛的应用前景。</p>
+<p>下面简单总结一下：</p>
+<p>分子指纹是一种将分子结构转换为数字或二进制编码的方法。它将复杂的分子结构信息转换为固定长度的数值表示，以方便计算机处理和比较。分子指纹的生成方法有多种，包括基于结构的和基于性质的方法。</p>
+<p>为什么需要分子指纹？因为分子结构非常复杂，无法直接进行计算机处理和比较。分子指纹的生成方法可以将分子结构信息转换为固定长度的二进制或数字向量，使得计算机可以对其进行处理和比较。分子指纹是化学信息学和计算机辅助药物设计等领域的重要工具。</p>
+<p>如何生成分子指纹？分子指纹的生成方法包括特征提取和编码。特征提取是指从分子结构中提取有用的信息，例如原子类型、键类型、环结构、分子质量等等。编码是指将这些信息转换为数字或二进制表示，例如将每个特征映射为一个二进制位。分子指纹的生成方法有多种，其中基于结构的方法包括子结构指纹、拓扑指纹、MACCS指纹等，基于性质的方法则包括物化性质指纹、药效团指纹等。</p>
+<p>分子指纹在药物研发中有着广泛的应用。药物的多样性是药物化学研究的关键问题之一，因为不同的化合物具有不同的生物活性和药物代谢。分子指纹可以用于筛选具有相似结构的化合物，以寻找可能具有相似生物活性的候选化合物。此外，分子指纹也可以用于药物分子的分类和聚类分析，以帮助药物研究人员更好地理解药物分子的结构与生物活性之间的关系。</p>
+<p>在毒理学研究中，分子指纹也具有重要的应用价值。毒性是药物研究中的一个重要问题，因为药物在体内可能会产生毒性反应。分子指纹可以用于预测化合物的毒性和生物活性，以帮助药物研究人员更好地评估化合物的毒性风险。</p>
+<p>下面以乙醇和乙酸为例来解释分子指纹是如何生成的</p>
+<p>子结构指纹：对于乙醇分子，可以提取如下子结构：C-C, C-O, O-H。然后将这些子结构按照字典序排列，并按照出现次数进行编码，生成固定长度的二进制指纹。子结构指纹考虑了分子中不同的化学子结构，例如原子、化学键、环等，因此可以更好地描述分子的化学性质和结构特征。</p>
+<p>拓扑指纹：对于乙醇分子，可以将分子中的每个原子编号，然后根据相邻原子间的连接信息生成一个固定长度的二进制向量。例如，将碳原子编码为001，氧原子编码为010，氢原子编码为100。拓扑指纹考虑了分子中不同原子之间的连接关系，因此可以更好地描述分子的拓扑结构和化学键特征。</p>
+<p>MACCS指纹：对于乙醇分子，MACCS指纹可以包括如下特征：1. 包含一个碳原子和一个氧原子的环结构；2. 包含一个OH官能团；3. 包含一个乙基官能团等。然后根据这些特征进行编码，生成一个长度为166的二进制指纹。MACCS指纹是一种基于药效团的指纹编码方法，主要考虑了分子中的药效团信息，可以更好地描述分子的生物活性和作用机制。</p>
+<p>物理特性指纹：物理特性指纹是基于分子物理特性的编码方法，例如电子结构、荷电性、立体构型等。对于乙醇分子，可以利用量子力学计算方法计算其分子的电子结构，然后将电子结构信息转化为二进制编码。例如，可以将每个原子的电荷、自旋、轨道等信息编码为二进制数，并将它们组合生成一个固定长度的二进制指纹。物理特性指纹是一种基于分子物理特性的编码方法，例如电子结构、荷电性、立体构型等，可以更好地描述分子的物理性质和化学结构特征。</p>
+<p>二面角指纹：二面角指纹是基于分子二面角信息的编码方法。对于乙醇分子，可以利用分子建模软件计算其分子的二面角信息，然后将二面角信息编码为二进制向量。例如，可以将每个二面角转化为二进制数，并将它们组合生成一个固定长度的二进制指纹。二面角指纹考虑了分子中不同的二面角，可以更好地描述分子的构象和立体化学特征。</p>
+<p>药效团指纹：药效团指纹是基于药效团信息的编码方法，可以用于描述分子的生物活性和作用机制。对于乙醇分子，可以提取如下药效团：OH官能团，乙基官能团，单一的碳氧化合物等。然后根据这些药效团信息进行编码，生成一个固定长度的二进制指纹。药效团指纹考虑了分子中不同的药效团信息，例如官能团、环等，可以更好地描述分子的生物活性和作用机制。</p>
+<p>上述6种分子指纹的编码结果：</p>
+<p>子结构指纹：001010100</p>
+<p>拓扑指纹：001010010</p>
+<p>MACCS指纹：000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000010</p>
+<p>物理特性指纹：1011100011110000001010010001100001001000000000100001100000000010010010001010101110110000110000000010001001100000000001000001010000000010000000010000000000000000000000000</p>
+<p>二面角指纹：11110110100100101111011110110000000010110101100111100101110110110010111101101100101110010111101101100101110010111101101100101110010111101101100101110010111101101100101110010111101101100101110010111101101100101110010111101101100101110010</p>
+<p>药效团指纹：001000010</p>
+<p>逐渐改进：</p>
+<p>MACCS指纹（Molecular ACCess System）：它是一种基于哈希函数的分子指纹方法。MACCS指纹将分子中的化学键和它们周围的原子类型、环结构等信息编码为166位的二进制向量，其中每个位代表一个分子特征（例如特定的原子类型或结构），如果分子具有该特征，则该位为1，否则为0。使用MACCS指纹可以对分子进行相似性比较和分类，例如可以计算两个分子之间的Tanimoto相似系数，该系数在0到1之间，表示两个分子的相似度，值越大表示越相似。MACCS指纹方法在药物发现和化学信息学中得到了广泛的应用。</p>
+<p>ECFP指纹（Extended-Connectivity Fingerprints）：ECFP指纹是一种基于分子拓扑结构的指纹方法，它将分子的拓扑结构信息编码为固定长度的二进制向量。具体来说，ECFP指纹方法从分子中选取一些原子或键作为起始点，然后沿着分子的连接边界遍历拓扑结构，形成一个子结构集合。然后，将这些子结构集合编码为二进制向量，其中每个位代表一个子结构，如果分子包含该子结构，则该位为1，否则为0。ECFP指纹方法可以在不同的层次上生成指纹，例如ECFP2、ECFP4等，表示选取的起始点数量不同，从而可以调整指纹的灵敏度和选择性。</p>
+<p>RDKit指纹：RDKit是一种基于分子化学结构的指纹方法，它将分子的结构信息编码为固定长度的二进制向量。具体来说，RDKit指纹方法将分子分解为一些基元，例如原子、键、环等，然后根据这些基元组合生成指纹。RDKit指纹方法可以根据需要选择不同的基元和组合方式，例如根据原子类型、键类型、环结构等进行选择，从而可以调整指纹的灵敏度和选择性。</p>
+<p>Morgan指纹：Morgan是一种基于分子子结构的指纹方法，它将分子的子结构信息编码为固定长度的二进制向量。具体来说，Morgan指纹方法从分子中选取一些原子或键作为起始点，然后沿着分子的连接边界遍历子结构，形成一个子结构集合。然后，将这些子结构集合编码为二进制向量，其中每个位代表一个子结构，如果分子包含该子结构，则该位为1，否则为0。Morgan指纹方法可以根据需要选择不同的起始点数量和子结构大小，从而可以调整指纹的灵敏度和选择性。</p>
+<p>可以看出上述的方法要么表示结果太简单，和容易重复，尤其是很多分子指纹包含立体结构，这对于目前最具价值的应用科学——分子-蛋白对接来说，非常致命……</p>
+<p>it takes many times……</p>
+<p>一（步）直到（位）现在为止</p>
+<p>图神经网络（Graph Neural Network, GNN）和变分自编码器（Variational Autoencoder, VAE）。这些方法可以学习分子的高维表示，包括原子特征、化学键、空间构型等信息，从而更全面地描述分子的化学和生物特性。</p>
+<p>具体来说，图神经网络可以将分子表示为一个图结构，其中每个原子和化学键都作为图中的节点，节点之间的连接表示原子之间的化学键关系。然后利用神经网络对这个图结构进行学习，生成一个高维度的向量表示，该向量包含了分子的许多特征和结构信息。这种方法可以更好地描述分子的拓扑结构和化学键特征，适用于分子的分类、相似性计算等任务。</p>
+<p>对于乙醇的一种可能的GNN编码结果：</p>
+<p>[0.184, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0]</p>
+<p>这个编码结果是一个长度为12的向量，每个元素表示一个原子或化学键的特征。具体来说，第一个元素表示乙醇分子中的氧原子，第八个元素表示乙醇分子中的羟基化学键（OH），其他元素表示分子中的其他原子和化学键。这个编码结果可以用于分子的分类、相似性计算等任务。需要注意的是，这个编码结果仅供参考，实际编码结果可能因为具体实现细节和参数设置等原因而有所不同。需要注意不同的指纹方法具有不同的特点和适用范围，需要根据具体的任务和数据选择合适的指纹方法。</p>
+<p>下面就用一个比较简单的例子使用GUN网络，利用四种分子的分子指纹来预测新的分子的溶解度的实例</p>
+<p>数据：</p>
+<table>
+<thead>
+<tr>
+<th>分子指纹</th>
+<th>分子名称</th>
+<th>溶解度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CCC</td>
+<td>丙烷</td>
+<td>0.2</td>
+</tr>
+<tr>
+<td>CCO</td>
+<td>乙醇</td>
+<td>0.5</td>
+</tr>
+<tr>
+<td>CCN</td>
+<td>乙胺</td>
+<td>0.8</td>
+</tr>
+<tr>
+<td>CC1=CC=CC=C1</td>
+<td>苯</td>
+<td>0.1</td>
+</tr>
+</tbody>
+</table>
+<p>目标分子：辛烷CC©CCCC©C</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> torch</span><br><span class="line"><span class="keyword">import</span> torch.nn <span class="keyword">as</span> nn</span><br><span class="line"><span class="keyword">import</span> torch.nn.functional <span class="keyword">as</span> F</span><br><span class="line"><span class="keyword">from</span> rdkit <span class="keyword">import</span> Chem</span><br><span class="line"><span class="keyword">from</span> rdkit.Chem <span class="keyword">import</span> AllChem</span><br><span class="line"><span class="keyword">from</span> rdkit.Chem.Descriptors <span class="keyword">import</span> MolLogP, MolWt, NumHAcceptors, NumHDonors</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">GUN</span>(nn.Module):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, input_size, hidden_size, output_size</span>):</span><br><span class="line">        <span class="built_in">super</span>(GUN, self).__init__()</span><br><span class="line">        self.fc1 = nn.Linear(input_size, hidden_size)</span><br><span class="line">        self.fc2 = nn.Linear(hidden_size, hidden_size)</span><br><span class="line">        self.fc3 = nn.Linear(hidden_size, output_size)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">forward</span>(<span class="params">self, x</span>):</span><br><span class="line">        x = F.relu(self.fc1(x))</span><br><span class="line">        x = F.relu(self.fc2(x))</span><br><span class="line">        x = self.fc3(x)</span><br><span class="line">        <span class="keyword">return</span> x</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载分子数据集和标签，生成训练数据</span></span><br><span class="line">smiles_list = [<span class="string">&quot;CCC&quot;</span>, <span class="string">&quot;CCO&quot;</span>, <span class="string">&quot;CCN&quot;</span>, <span class="string">&quot;CC1=CC=CC=C1&quot;</span>]</span><br><span class="line">labels = [<span class="number">0.2</span>, <span class="number">0.5</span>, <span class="number">0.8</span>, <span class="number">0.1</span>]</span><br><span class="line">fingerprints = []</span><br><span class="line"><span class="keyword">for</span> smiles <span class="keyword">in</span> smiles_list:</span><br><span class="line">    mol = Chem.MolFromSmiles(smiles)</span><br><span class="line">    fp = AllChem.GetMorganFingerprintAsBitVect(mol, <span class="number">2</span>, nBits=<span class="number">2048</span>)</span><br><span class="line">    fp_array = torch.Tensor(fp)</span><br><span class="line">    fingerprints.append(fp_array)</span><br><span class="line">data = torch.stack(fingerprints)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 生成 GUN 网络实例并进行训练</span></span><br><span class="line">input_size = <span class="number">2048</span></span><br><span class="line">hidden_size = <span class="number">512</span></span><br><span class="line">output_size = <span class="number">1</span></span><br><span class="line">gun = GUN(input_size, hidden_size, output_size)</span><br><span class="line">optimizer = torch.optim.Adam(gun.parameters(), lr=<span class="number">0.001</span>)</span><br><span class="line">criterion = nn.MSELoss()</span><br><span class="line"></span><br><span class="line">num_epochs = <span class="number">100</span></span><br><span class="line">batch_size = <span class="number">2</span></span><br><span class="line">num_batches = <span class="built_in">len</span>(smiles_list) // batch_size</span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(num_epochs):</span><br><span class="line">    <span class="keyword">for</span> batch_idx <span class="keyword">in</span> <span class="built_in">range</span>(num_batches):</span><br><span class="line">        start_idx = batch_idx * batch_size</span><br><span class="line">        end_idx = (batch_idx + <span class="number">1</span>) * batch_size</span><br><span class="line">        inputs = data[start_idx:end_idx]</span><br><span class="line">        targets = torch.Tensor(labels[start_idx:end_idx]).reshape(-<span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        outputs = gun(inputs)</span><br><span class="line">        loss = criterion(outputs, targets)</span><br><span class="line">        loss.backward()</span><br><span class="line">        optimizer.step()</span><br><span class="line"></span><br><span class="line">    epoch_loss = <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">for</span> batch_idx <span class="keyword">in</span> <span class="built_in">range</span>(num_batches):</span><br><span class="line">        start_idx = batch_idx * batch_size</span><br><span class="line">        end_idx = (batch_idx + <span class="number">1</span>) * batch_size</span><br><span class="line">        inputs = data[start_idx:end_idx]</span><br><span class="line">        targets = torch.Tensor(labels[start_idx:end_idx]).reshape(-<span class="number">1</span>, <span class="number">1</span>)</span><br><span class="line"></span><br><span class="line">        outputs = gun(inputs)</span><br><span class="line">        batch_loss = criterion(outputs, targets)</span><br><span class="line">        epoch_loss += batch_loss.item()</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Epoch <span class="subst">&#123;epoch+<span class="number">1</span>&#125;</span>, Loss: <span class="subst">&#123;epoch_loss/num_batches:<span class="number">.4</span>f&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 预测新的分子的溶解度</span></span><br><span class="line">new_smiles = <span class="string">&quot;CC(C)CCCC(C)C&quot;</span></span><br><span class="line">new_mol = Chem.MolFromSmiles(new_smiles)</span><br><span class="line">new_fp = AllChem.GetMorganFingerprintAsBitVect(new_mol, <span class="number">2</span>, nBits=<span class="number">2048</span>)</span><br><span class="line">new_fp_array = torch.Tensor(new_fp)</span><br><span class="line">new_data = new_fp_array.unsqueeze(<span class="number">0</span>)</span><br><span class="line">new_pred = gun(new_data)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;预测的溶解度为 <span class="subst">&#123;new_pred.item():<span class="number">.4</span>f&#125;</span>&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，这只是一个简单的示例，实际应用中需要根据具体的数据集和任务进行相应的调整。</p>
+<p>结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">......</span><br><span class="line">Epoch 96, Loss: 0.0000</span><br><span class="line">Epoch 97, Loss: 0.0000</span><br><span class="line">Epoch 98, Loss: 0.0000</span><br><span class="line">Epoch 99, Loss: 0.0000</span><br><span class="line">Epoch 100, Loss: 0.0000</span><br><span class="line">预测的溶解度为 0.3516</span><br></pre></td></tr></table></figure>
+<p>预告：如何依据gan网络生成生成新化合物，以对接靶蛋白</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://genewlan.github.io">ZhangLei</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://genewlan.github.io/2023/03/24/GUN1D/">http://genewlan.github.io/2023/03/24/GUN1D/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://genewlan.github.io" target="_blank">GeneWlan</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/GUN/">GUN</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/04/14/GAN2D/" title="GANs网络在二维平面的实现"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">GANs网络在二维平面的实现</div></div></a></div><div class="next-post pull-right"><a href="/2023/03/21/Exploring-the-Unknowns-of-Biological-Complexity/" title="Unraveling the Intricacies of Biological Complexity--- Delving into the Synergy of Genomics, Metagenomics, and Comparative Genomics"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Unraveling the Intricacies of Biological Complexity--- Delving into the Synergy of Genomics, Metagenomics, and Comparative Genomics</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ZhangLei</div><div class="author-info__description">change or die!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/genewlan/" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:xiaolobglee@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/30/Neural-Network-Frame/" title="Neural-Network-Frame">Neural-Network-Frame</a><time datetime="2023-09-30T10:55:16.000Z" title="发表于 2023-09-30 18:55:16">2023-09-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/30/bayes-net/" title="bayes-net">bayes-net</a><time datetime="2023-09-30T10:49:09.000Z" title="发表于 2023-09-30 18:49:09">2023-09-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/31/Practise/" title="LDA Modeling Practise">LDA Modeling Practise</a><time datetime="2023-08-31T06:45:25.000Z" title="发表于 2023-08-31 14:45:25">2023-08-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/08/31/%E9%80%9A%E4%BF%97%E7%90%86%E8%A7%A3LDA%E4%B8%BB%E9%A2%98%E6%A8%A1/" title="通俗理解LDA主题模">通俗理解LDA主题模</a><time datetime="2023-08-31T06:09:26.000Z" title="发表于 2023-08-31 14:09:26">2023-08-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/07/31/outlier-detection/" title="outlier_detection">outlier_detection</a><time datetime="2023-07-31T14:40:34.000Z" title="发表于 2023-07-31 22:40:34">2023-07-31</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By ZhangLei</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'J0s1l0MeDfMbgw4y4awgy2jX-MdYXbMMI',
+      appKey: '3vZoaKxqWQYlKbXXdXuSxBsT',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div><!-- hexo injector body_end start --><div id="background-effect"></div><script src="https://cdn.jsdelivr.net/npm/three@0.121.1/build/three.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.birds.min.js"></script><script>VANTA.BIRDS({"el":"#background-effect","mouseControls":true,"touchControls":true,"gyroControls":false,"minHeight":200,"minWidth":200,"scale":1,"scaleMobile":1})</script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body></html>
