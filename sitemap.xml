@@ -162,13 +162,6 @@
   </url>
   
   <url>
-    <loc>http://genewlan.github.io/tags/GANS/</loc>
-    <lastmod>2023-09-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://genewlan.github.io/tags/GUN/</loc>
     <lastmod>2023-09-30</lastmod>
     <changefreq>weekly</changefreq>
@@ -183,7 +176,7 @@
   </url>
   
   <url>
-    <loc>http://genewlan.github.io/tags/Math-Matrix/</loc>
+    <loc>http://genewlan.github.io/tags/GANS/</loc>
     <lastmod>2023-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -204,6 +197,13 @@
   </url>
   
   <url>
+    <loc>http://genewlan.github.io/tags/Math-Matrix/</loc>
+    <lastmod>2023-09-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>http://genewlan.github.io/tags/bayes-net/</loc>
     <lastmod>2023-09-30</lastmod>
     <changefreq>weekly</changefreq>
@@ -211,14 +211,14 @@
   </url>
   
   <url>
-    <loc>http://genewlan.github.io/tags/algorithm/</loc>
+    <loc>http://genewlan.github.io/tags/Modeling/</loc>
     <lastmod>2023-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://genewlan.github.io/tags/Modeling/</loc>
+    <loc>http://genewlan.github.io/tags/algorithm/</loc>
     <lastmod>2023-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
