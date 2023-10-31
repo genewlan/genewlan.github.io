@@ -6,7 +6,7 @@
   <link href="http://genewlan.github.io/atom.xml" rel="self"/>
   
   <link href="http://genewlan.github.io/"/>
-  <updated>2023-09-30T11:01:17.925Z</updated>
+  <updated>2023-10-31T09:12:39.996Z</updated>
   <id>http://genewlan.github.io/</id>
   
   <author>
@@ -15,6 +15,62 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ggplot_picture_bioinformation</title>
+    <link href="http://genewlan.github.io/2023/10/31/ggplot-picture/"/>
+    <id>http://genewlan.github.io/2023/10/31/ggplot-picture/</id>
+    <published>2023-10-31T09:08:06.000Z</published>
+    <updated>2023-10-31T09:12:39.996Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2 id=&quot;none&quot;&gt;&lt;/h2&gt;
+&lt;p&gt;代码参考【来源于ocima公众号】&lt;/p&gt;
+&lt;h3 id=&quot;两组显著性差异图&quot;&gt;两组显著性差异图**&lt;/h3&gt;
+&lt;figure class=&quot;highlight r&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td</summary>
+        
+      
+    
+    
+    
+    
+    <category term="ggplot" scheme="http://genewlan.github.io/tags/ggplot/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>50_ggplot_picture</title>
+    <link href="http://genewlan.github.io/2023/10/31/picture/"/>
+    <id>http://genewlan.github.io/2023/10/31/picture/</id>
+    <published>2023-10-31T08:48:54.000Z</published>
+    <updated>2023-10-31T09:12:21.347Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1&gt;50个ggplot2可视化案例&lt;/h1&gt;
+&lt;p&gt;&lt;strong&gt;一个有效的图标:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;在不歪曲事实的情况下传达正确的信息&lt;/li&gt;
+&lt;li&gt;简单而优雅的表达信息内容&lt;/li&gt;
+&lt;li&gt;通过美学表达信息，而不是掩盖信息&lt;/li&gt;
+&lt;l</summary>
+        
+      
+    
+    
+    
+    
+    <category term="ggplot" scheme="http://genewlan.github.io/tags/ggplot/"/>
+    
+  </entry>
   
   <entry>
     <title>Neural-Network-Frame</title>

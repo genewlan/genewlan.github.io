@@ -1,3 +1,5 @@
+http://genewlan.github.io/2023/10/31/ggplot-picture/
+http://genewlan.github.io/2023/10/31/picture/
 http://genewlan.github.io/2023/09/30/Neural-Network-Frame/
 http://genewlan.github.io/2023/09/30/bayes-net/
 http://genewlan.github.io/2023/08/31/Practise/
@@ -15,15 +17,16 @@ http://genewlan.github.io/2023/08/31/%E9%80%9A%E4%BF%97%E7%90%86%E8%A7%A3LDA%E4%
 http://genewlan.github.io/tags/index.html
 http://genewlan.github.io/categories/index.html
 http://genewlan.github.io/
-http://genewlan.github.io/tags/Genomics/
 http://genewlan.github.io/tags/GUN/
-http://genewlan.github.io/tags/Mathmodeling/
+http://genewlan.github.io/tags/Genomics/
 http://genewlan.github.io/tags/GANS/
-http://genewlan.github.io/tags/frame/
-http://genewlan.github.io/tags/Neural-Network-Frame/
+http://genewlan.github.io/tags/Mathmodeling/
 http://genewlan.github.io/tags/Math-Matrix/
 http://genewlan.github.io/tags/bayes-net/
+http://genewlan.github.io/tags/frame/
+http://genewlan.github.io/tags/Neural-Network-Frame/
 http://genewlan.github.io/tags/Modeling/
 http://genewlan.github.io/tags/algorithm/
 http://genewlan.github.io/tags/Topic-Modeling-LDA-Dirichlet-%E5%88%86%E5%B8%83/
+http://genewlan.github.io/tags/ggplot/
 http://genewlan.github.io/tags/Topic-Modeling/
