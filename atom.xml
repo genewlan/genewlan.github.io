@@ -6,7 +6,7 @@
   <link href="http://genewlan.github.io/atom.xml" rel="self"/>
   
   <link href="http://genewlan.github.io/"/>
-  <updated>2023-10-31T09:12:39.996Z</updated>
+  <updated>2023-11-30T13:04:38.997Z</updated>
   <id>http://genewlan.github.io/</id>
   
   <author>
@@ -15,6 +15,56 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Clustering</title>
+    <link href="http://genewlan.github.io/2023/11/30/Clustering/"/>
+    <id>http://genewlan.github.io/2023/11/30/Clustering/</id>
+    <published>2023-11-30T13:03:41.000Z</published>
+    <updated>2023-11-30T13:04:38.997Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1&gt;Clustering  聚类&lt;/h1&gt;
+&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://en.wikipedia.org/wiki/Cluster_analysis&quot;&gt;Clustering&lt;/a&gt; of unlabeled data can be</summary>
+        
+      
+    
+    
+    
+    
+    <category term="clustering" scheme="http://genewlan.github.io/tags/clustering/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Transformer</title>
+    <link href="http://genewlan.github.io/2023/11/30/Transformer/"/>
+    <id>http://genewlan.github.io/2023/11/30/Transformer/</id>
+    <published>2023-11-30T12:44:09.000Z</published>
+    <updated>2023-11-30T12:51:51.201Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h1&gt;[转]Transformer通俗笔记：从Word2Vec、Seq2Seq逐步理解到GPT&lt;/h1&gt;
+&lt;h2</summary>
+        
+      
+    
+    
+    
+    
+    <category term="NLP" scheme="http://genewlan.github.io/tags/NLP/"/>
+    
+  </entry>
   
   <entry>
     <title>ggplot_picture_bioinformation</title>

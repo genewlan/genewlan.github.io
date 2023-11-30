@@ -1,0 +1,1058 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>Clustering | GeneWlan</title><meta name="author" content="ZhangLei"><meta name="copyright" content="ZhangLei"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Clustering  聚类 [TOC] Clustering of unlabeled data can be performed with the module sklearn.cluster. 可以使用模块 sklearn.cluster 对未标记的数据进行聚类。 Each clustering algorithm comes in two variants: a class, that i">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Clustering">
+<meta property="og:url" content="http://genewlan.github.io/2023/11/30/Clustering/index.html">
+<meta property="og:site_name" content="GeneWlan">
+<meta property="og:description" content="Clustering  聚类 [TOC] Clustering of unlabeled data can be performed with the module sklearn.cluster. 可以使用模块 sklearn.cluster 对未标记的数据进行聚类。 Each clustering algorithm comes in two variants: a class, that i">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2023-11-30T13:03:41.000Z">
+<meta property="article:modified_time" content="2023-11-30T13:04:38.997Z">
+<meta property="article:author" content="ZhangLei">
+<meta property="article:tag" content="clustering">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://genewlan.github.io/2023/11/30/Clustering/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Clustering',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-11-30 21:04:38'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><!-- hexo injector head_end start -->
+    <style>
+      #background-effect {
+        position: fixed !important;
+        top: 0px;
+        left: 0px;
+        z-index: -1;
+        width: 100%;
+        height: 100%
+      }
+    </style>
+  <!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="GeneWlan" type="application/atom+xml">
+<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/03/21/ZVUmQFknE2JosXT.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="GeneWlan"><span class="site-name">GeneWlan</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Clustering</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-11-30T13:03:41.000Z" title="发表于 2023-11-30 21:03:41">2023-11-30</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-11-30T13:04:38.997Z" title="更新于 2023-11-30 21:04:38">2023-11-30</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Clustering"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1>Clustering  聚类</h1>
+<p>[TOC]</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Cluster_analysis">Clustering</a> of unlabeled data can be performed with the module <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/classes.html#module-sklearn.cluster"><code>sklearn.cluster</code></a>.<br>
+可以使用模块 <code>sklearn.cluster</code> 对未标记的数据进行聚类。</p>
+<p>Each clustering algorithm comes in two variants: a class, that implements the <code>fit</code> method to learn the clusters on train data, and a function, that, given train data, returns an array of integer labels corresponding to the different clusters. For the class, the labels over the training data can be found in the <code>labels_</code> attribute.<br>
+每种聚类算法都有两种变体：一个类，用于实现在训练数据上学习聚类 <code>fit</code> 的方法，以及一个函数，在给定训练数据的情况下，返回对应于不同聚类的整数标签数组。对于类，可以在 <code>labels_</code> 属性中找到训练数据上的标签。</p>
+<h2 id="overview-of-clustering-methods-1-1-聚类方法概述">Overview of clustering methods<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#overview-of-clustering-methods">¶</a> 1.1. 聚类方法概述 ¶</h2>
+<p><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_cluster_comparison.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_cluster_comparison_001.png" alt="img"></a></p>
+<p>A comparison of the clustering algorithms in scikit-learn<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#id42">¶</a><br>
+scikit-learn 中聚类算法的比较 ¶</p>
+<table>
+<thead>
+<tr>
+<th>Method name 方法名称</th>
+<th>Parameters 参数</th>
+<th>Scalability 可扩展性</th>
+<th>Usecase 使用案例</th>
+<th>Geometry (metric used) 几何图形（使用的指标）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#k-means">K-Means K-均值</a></td>
+<td>number of clusters 簇数</td>
+<td>Very large <code>n_samples</code>, medium <code>n_clusters</code> with <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#mini-batch-kmeans">MiniBatch code</a> 非常大 <code>n_samples</code> ，中型 <code>n_clusters</code> ，带 MiniBatch 代码</td>
+<td>General-purpose, even cluster size, flat geometry, not too many clusters, inductive 通用型，均匀的簇大小，扁平的几何形状，没有太多的簇，感应式</td>
+<td>Distances between points 点与点之间的距离</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#affinity-propagation">Affinity propagation 亲和力传播</a></td>
+<td>damping, sample preference 阻尼、样品偏好</td>
+<td>Not scalable with n_samples 无法通过 n_samples 进行扩展</td>
+<td>Many clusters, uneven cluster size, non-flat geometry, inductive 簇多，簇大小不均匀，几何形状不平整，感应</td>
+<td>Graph distance (e.g. nearest-neighbor graph) 图形距离（例如最近邻图形）</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#mean-shift">Mean-shift 均值偏移</a></td>
+<td>bandwidth 带宽</td>
+<td>Not scalable with <code>n_samples</code> 无法使用 <code>n_samples</code></td>
+<td>Many clusters, uneven cluster size, non-flat geometry, inductive 簇多，簇大小不均匀，几何形状不平整，感应</td>
+<td>Distances between points 点与点之间的距离</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#spectral-clustering">Spectral clustering 光谱聚类</a></td>
+<td>number of clusters 簇数</td>
+<td>Medium <code>n_samples</code>, small <code>n_clusters</code> 中型 <code>n_samples</code> 、小型 <code>n_clusters</code></td>
+<td>Few clusters, even cluster size, non-flat geometry, transductive 团簇少，簇大小均匀，几何形状非平面，可转导</td>
+<td>Graph distance (e.g. nearest-neighbor graph) 图形距离（例如最近邻图形）</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#hierarchical-clustering">Ward hierarchical clustering 病房分层聚类</a></td>
+<td>number of clusters or distance threshold 聚类数或距离阈值</td>
+<td>Large <code>n_samples</code> and <code>n_clusters</code> 大 <code>n_samples</code> 和 <code>n_clusters</code></td>
+<td>Many clusters, possibly connectivity constraints, transductive 许多集群，可能是连通性约束，转导</td>
+<td>Distances between points 点与点之间的距离</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#hierarchical-clustering">Agglomerative clustering 团聚聚类</a></td>
+<td>number of clusters or distance threshold, linkage type, distance 簇数或距离阈值、链接类型、距离</td>
+<td>Large <code>n_samples</code> and <code>n_clusters</code> 大 <code>n_samples</code> 和 <code>n_clusters</code></td>
+<td>Many clusters, possibly connectivity constraints, non Euclidean distances, transductive 许多集群，可能是连通性约束，非欧几里得距离，转导</td>
+<td>Any pairwise distance 任何成对距离</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#dbscan">DBSCAN DBSCAN扫描</a></td>
+<td>neighborhood size 社区规模</td>
+<td>Very large <code>n_samples</code>, medium <code>n_clusters</code> 非常大 <code>n_samples</code> ，中 <code>n_clusters</code></td>
+<td>Non-flat geometry, uneven cluster sizes, outlier removal, transductive 非平面几何形状、不均匀的簇大小、异常值去除、转导</td>
+<td>Distances between nearest points 最近点之间的距离</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#hdbscan">HDBSCAN HDBSCAN的</a></td>
+<td>minimum cluster membership, minimum point neighbors 最小集群成员资格、最小点邻居</td>
+<td>large <code>n_samples</code>, medium <code>n_clusters</code> 大 <code>n_samples</code> ， 中 <code>n_clusters</code></td>
+<td>Non-flat geometry, uneven cluster sizes, outlier removal, transductive, hierarchical, variable cluster density 非平面几何形状、不均匀的簇大小、异常值去除、转导、分层、可变簇密度</td>
+<td>Distances between nearest points 最近点之间的距离</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#optics">OPTICS 光学</a></td>
+<td>minimum cluster membership 最低群集成员身份</td>
+<td>Very large <code>n_samples</code>, large <code>n_clusters</code> 非常大，大 <code>n_samples</code> <code>n_clusters</code></td>
+<td>Non-flat geometry, uneven cluster sizes, variable cluster density, outlier removal, transductive 非平面几何形状、不均匀的团簇大小、可变的团簇密度、异常值去除、转导</td>
+<td>Distances between points 点与点之间的距离</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/mixture.html#mixture">Gaussian mixtures 高斯混合物</a></td>
+<td>many 多</td>
+<td>Not scalable 不可扩展</td>
+<td>Flat geometry, good for density estimation, inductive 扁平的几何形状，适合密度估计，电感式</td>
+<td>Mahalanobis distances to centers 马哈拉诺比斯到中心的距离</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#birch">BIRCH 桦树</a></td>
+<td>branching factor, threshold, optional global clusterer. 分支因子、阈值、可选的全局聚类器。</td>
+<td>Large <code>n_clusters</code> and <code>n_samples</code> 大 <code>n_clusters</code> 和 <code>n_samples</code></td>
+<td>Large dataset, outlier removal, data reduction, inductive 大数据集、异常值去除、数据缩减、归纳</td>
+<td>Euclidean distance between points 两点之间的欧几里得距离</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#bisect-k-means">Bisecting K-Means 平分 K 均值</a></td>
+<td>number of clusters 簇数</td>
+<td>Very large <code>n_samples</code>, medium <code>n_clusters</code> 非常大 <code>n_samples</code> ，中 <code>n_clusters</code></td>
+<td>General-purpose, even cluster size, flat geometry, no empty clusters, inductive, hierarchical 通用，均匀的簇大小，扁平的几何形状，无空簇，感应式，分层</td>
+<td>Distances between points 点与点之间的距离</td>
+</tr>
+</tbody>
+</table>
+<p>Non-flat geometry clustering is useful when the clusters have a specific shape, i.e. a non-flat manifold, and the standard euclidean distance is not the right metric. This case arises in the two top rows of the figure above.<br>
+当聚类具有特定形状（即非平面流形）并且标准欧几里得距离不是正确的度量时，非平面几何聚类非常有用。这种情况出现在上图的顶部两行。</p>
+<p>Gaussian mixture models, useful for clustering, are described in <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/mixture.html#mixture">another chapter of the documentation</a> dedicated to mixture models. KMeans can be seen as a special case of Gaussian mixture model with equal covariance per component.<br>
+高斯混合模型对聚类很有用，在专门介绍混合模型的文档的另一章中进行了介绍。KMeans 可以看作是每个分量协方差相等的高斯混合模型的特例。</p>
+<p><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/glossary.html#term-transductive">Transductive</a> clustering methods (in contrast to <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/glossary.html#term-inductive">inductive</a> clustering methods) are not designed to be applied to new, unseen data.<br>
+转导聚类方法（与归纳聚类方法相反）并非旨在应用于新的、看不见的数据。</p>
+<h2 id="k-means">K-means<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#k-means">¶</a></h2>
+<p>The [<code>KMeans</code>]algorithm clusters data by trying to separate samples in n groups of equal variance, minimizing a criterion known as the <em>inertia</em> or within-cluster sum-of-squares (see below). This algorithm requires the number of clusters to be specified. It scales well to large numbers of samples and has been used across a large range of application areas in many different fields.<br>
+该 <code>KMeans</code> 算法通过尝试将样本分成 n 组相等方差来对数据进行聚类，从而最小化称为惯性或簇内平方和的标准（见下文）。此算法需要指定簇数。它可以很好地扩展到大量样品，并已用于许多不同领域的各种应用领域。</p>
+<p>The k-means algorithm divides a set of (N) samples (X) into (K) disjoint clusters (C), each described by the mean (\mu_j) of the samples in the cluster. The means are commonly called the cluster “centroids”; note that they are not, in general, points from (X), although they live in the same space.<br>
+k-means 算法将一组 \（N\） 个样本 \（X\） 划分为 \（K\） 个不相交的聚类 \（C\），每个聚类由聚类中样本的平均值 \（\mu_j\） 描述。这些均值通常称为簇“质心”;请注意，尽管它们位于同一空间中，但它们通常不是来自 \（X\） 的点。</p>
+<p>The K-means algorithm aims to choose centroids that minimise the <strong>inertia</strong>, or <strong>within-cluster sum-of-squares criterion</strong>:<br>
+K-means 算法旨在选择最小化惯性或簇内平方和准则的质心：</p>
+<p>[\sum_{i=0}^{n}\min_{\mu_j \in C}(||x_i - \mu_j||^2)]<br>
+[\sum_{i=0}^{n}\min_{\mu_j \in C}（||x_i - \mu_j||^2）]</p>
+<p>Inertia can be recognized as a measure of how internally coherent clusters are. It suffers from various drawbacks:<br>
+惯性可以被认为是衡量集群内部连贯性程度的指标。它有各种缺点：</p>
+<ul>
+<li>Inertia makes the assumption that clusters are convex and isotropic, which is not always the case. It responds poorly to elongated clusters, or manifolds with irregular shapes.<br>
+惯性假设团簇是凸的和各向同性的，但情况并非总是如此。它对细长的簇或形状不规则的流形反应不佳。</li>
+<li>Inertia is not a normalized metric: we just know that lower values are better and zero is optimal. But in very high-dimensional spaces, Euclidean distances tend to become inflated (this is an instance of the so-called “curse of dimensionality”). Running a dimensionality reduction algorithm such as <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/decomposition.html#pca">Principal component analysis (PCA)</a> prior to k-means clustering can alleviate this problem and speed up the computations.<br>
+惯性不是一个归一化的指标：我们只知道值越低越好，零值是最优的。但是在非常高维的空间中，欧几里得距离往往会膨胀（这是所谓的“维度诅咒”的一个例子）。在 k 均值聚类之前运行降维算法（如主成分分析 （PCA））可以缓解此问题并加快计算速度。</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_assumptions.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_kmeans_assumptions_002.png" alt="img"></a></p>
+<p>K-means is often referred to as Lloyd’s algorithm. In basic terms, the algorithm has three steps. The first step chooses the initial centroids, with the most basic method being to choose (k) samples from the dataset (X). After initialization, K-means consists of looping between the two other steps. The first step assigns each sample to its nearest centroid. The second step creates new centroids by taking the mean value of all of the samples assigned to each previous centroid. The difference between the old and the new centroids are computed and the algorithm repeats these last two steps until this value is less than a threshold. In other words, it repeats until the centroids do not move significantly.<br>
+K-means 通常被称为劳埃德算法。基本上，该算法有三个步骤。第一步选择初始质心，最基本的方法是从数据集\（X\）中选择\（k\）个样本。初始化后，K-means 由其他两个步骤之间的循环组成。第一步将每个样品分配到离其最近的质心。第二步通过获取分配给每个前一个质心的所有样本的平均值来创建新的质心。计算旧质心和新质心之间的差值，算法重复最后两个步骤，直到该值小于阈值。换句话说，它重复直到质心没有显着移动。</p>
+<p><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_digits.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_kmeans_digits_001.png" alt="img"></a></p>
+<p>K-means is equivalent to the expectation-maximization algorithm with a small, all-equal, diagonal covariance matrix.<br>
+K-means 等效于具有小的、完全相等的对角线协方差矩阵的期望最大化算法。</p>
+<p>The algorithm can also be understood through the concept of <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Voronoi_diagram">Voronoi diagrams</a>. First the Voronoi diagram of the points is calculated using the current centroids. Each segment in the Voronoi diagram becomes a separate cluster. Secondly, the centroids are updated to the mean of each segment. The algorithm then repeats this until a stopping criterion is fulfilled. Usually, the algorithm stops when the relative decrease in the objective function between iterations is less than the given tolerance value. This is not the case in this implementation: iteration stops when centroids move less than the tolerance.<br>
+该算法也可以通过 Voronoi 图的概念来理解。首先，使用当前质心计算点的 Voronoi 图。Voronoi 图中的每个线段都成为一个单独的聚类。其次，将质心更新为每段的均值。然后，该算法重复此操作，直到满足停止条件。通常，当迭代之间目标函数的相对减少小于给定的容差值时，算法会停止。在此实现中并非如此：当质心移动小于容差时，迭代将停止。</p>
+<p>Given enough time, K-means will always converge, however this may be to a local minimum. This is highly dependent on the initialization of the centroids. As a result, the computation is often done several times, with different initializations of the centroids. One method to help address this issue is the k-means++ initialization scheme, which has been implemented in scikit-learn (use the <code>init='k-means++'</code> parameter). This initializes the centroids to be (generally) distant from each other, leading to probably better results than random initialization, as shown in the reference.<br>
+如果有足够的时间，K-means将始终收敛，但这可能是局部最小值。这高度依赖于质心的初始化。因此，计算通常要进行多次，对质心进行不同的初始化。帮助解决此问题的一种方法是 k-means++ 初始化方案，该方案已在 scikit-learn 中实现（使用参数 <code>init='k-means++'</code> ）。这会将质心初始化为（通常）彼此相距较远，从而产生可能比随机初始化更好的结果，如参考中所示。</p>
+<p>K-means++ can also be called independently to select seeds for other clustering algorithms, see <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.kmeans_plusplus.html#sklearn.cluster.kmeans_plusplus"><code>sklearn.cluster.kmeans_plusplus</code></a> for details and example usage.<br>
+K-means++ 也可以独立调用，为其他聚类算法选择种子，有关详细信息和示例用法，请参阅 <code>sklearn.cluster.kmeans_plusplus</code> 。</p>
+<p>The algorithm supports sample weights, which can be given by a parameter <code>sample_weight</code>. This allows to assign more weight to some samples when computing cluster centers and values of inertia. For example, assigning a weight of 2 to a sample is equivalent to adding a duplicate of that sample to the dataset (X).<br>
+该算法支持样本权重，该权重可以由参数 <code>sample_weight</code> 给出。这允许在计算聚类中心和惯性值时为某些样本分配更多权重。例如，为样本分配权重 2 等同于将该样本的副本添加到数据集 \（X\）。</p>
+<p>K-means can be used for vector quantization. This is achieved using the transform method of a trained model of <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html#sklearn.cluster.KMeans"><code>KMeans</code></a>.<br>
+K-means 可用于矢量量化。这是使用 的训练模型的变换方法实现的 <code>KMeans</code> 。</p>
+<h3 id="low-level-parallelism-低级并行性">Low-level parallelism<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#low-level-parallelism">¶</a>  低级并行性 ¶</h3>
+<p>[<code>KMeans</code>]benefits from OpenMP based parallelism through Cython. Small chunks of data (256 samples) are processed in parallel, which in addition yields a low memory footprint. For more details on how to control the number of threads, please refer to our <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/computing/parallelism.html#parallelism">Parallelism</a> notes.<br>
+<code>KMeans</code> 通过Cython受益于基于OpenMP的并行性。小块数据（256 个样本）是并行处理的，此外，内存占用量也很小。有关如何控制线程数的更多详细信息，请参阅我们的并行性说明。</p>
+<h3 id="mini-batch-k-means-批量-k-means">Mini Batch K-Means<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#mini-batch-k-means">¶</a> 批量 K-Means ¶</h3>
+<p>The <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.MiniBatchKMeans.html#sklearn.cluster.MiniBatchKMeans"><code>MiniBatchKMeans</code></a> is a variant of the [<code>KMeans</code>]algorithm which uses mini-batches to reduce the computation time, while still attempting to optimise the same objective function. Mini-batches are subsets of the input data, randomly sampled in each training iteration. These mini-batches drastically reduce the amount of computation required to converge to a local solution. In contrast to other algorithms that reduce the convergence time of k-means, mini-batch k-means produces results that are generally only slightly worse than the standard algorithm.<br>
+该 <code>MiniBatchKMeans</code> 算法是该 <code>KMeans</code> 算法的一种变体，它使用小批量来减少计算时间，同时仍然尝试优化相同的目标函数。小批量是输入数据的子集，在每次训练迭代中随机采样。这些小批量大大减少了收敛到本地解决方案所需的计算量。与其他减少 k 均值收敛时间的算法相比，小批量 k-means 产生的结果通常仅比标准算法稍差。</p>
+<p>The algorithm iterates between two major steps, similar to vanilla k-means. In the first step, (b) samples are drawn randomly from the dataset, to form a mini-batch. These are then assigned to the nearest centroid. In the second step, the centroids are updated. In contrast to k-means, this is done on a per-sample basis. For each sample in the mini-batch, the assigned centroid is updated by taking the streaming average of the sample and all previous samples assigned to that centroid. This has the effect of decreasing the rate of change for a centroid over time. These steps are performed until convergence or a predetermined number of iterations is reached.<br>
+该算法在两个主要步骤之间迭代，类似于 vanilla k-means。第一步，从数据集中随机抽取\（b\）个样本，形成一个小批量。然后将它们分配给最近的质心。在第二步中，更新质心。与 k 均值相比，这是基于每个样本完成的。对于小批量中的每个样品，通过获取样品的流平均值和分配给该质心的所有先前样品来更新分配的质心。这具有降低质心随时间变化率的效果。这些步骤将一直执行，直到收敛或达到预定的迭代次数。</p>
+<p><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.MiniBatchKMeans.html#sklearn.cluster.MiniBatchKMeans"><code>MiniBatchKMeans</code></a> converges faster than <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.KMeans.html#sklearn.cluster.KMeans"><code>KMeans</code></a>, but the quality of the results is reduced. In practice this difference in quality can be quite small, as shown in the example and cited reference.<br>
+<code>MiniBatchKMeans</code> 收敛速度比 <code>KMeans</code> 快，但结果的质量会降低。在实践中，这种质量差异可能非常小，如示例和引用的参考文献所示。</p>
+<p><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_mini_batch_kmeans.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_mini_batch_kmeans_001.png" alt="img"></a></p>
+<h2 id="affinity-propagation-亲和传播">Affinity Propagation<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#affinity-propagation">¶</a> 亲和传播 ¶</h2>
+<p><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.AffinityPropagation.html#sklearn.cluster.AffinityPropagation"><code>AffinityPropagation</code></a> creates clusters by sending messages between pairs of samples until convergence. A dataset is then described using a small number of exemplars, which are identified as those most representative of other samples. The messages sent between pairs represent the suitability for one sample to be the exemplar of the other, which is updated in response to the values from other pairs. This updating happens iteratively until convergence, at which point the final exemplars are chosen, and hence the final clustering is given.<br>
+<code>AffinityPropagation</code> 通过在样本对之间发送消息直到收敛来创建聚类。然后使用少量示例来描述数据集，这些示例被标识为其他样本中最具代表性的示例。对之间发送的消息表示一个样本是否适合作为另一个样本的示例，该样本会根据其他对的值进行更新。这种更新以迭代方式进行，直到收敛，此时选择最终的示例，从而给出最终的聚类。</p>
+<p><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_affinity_propagation.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_affinity_propagation_001.png" alt="img"></a></p>
+<p>Affinity Propagation can be interesting as it chooses the number of clusters based on the data provided. For this purpose, the two important parameters are the <em>preference</em>, which controls how many exemplars are used, and the <em>damping factor</em> which damps the responsibility and availability messages to avoid numerical oscillations when updating these messages.<br>
+Affinity Propagation 可能很有趣，因为它会根据提供的数据选择集群的数量。为此，两个重要参数是首选项（控制使用的示例数量）和阻尼因子（抑制责任和可用性消息，以避免在更新这些消息时出现数字振荡）。</p>
+<p>The main drawback of Affinity Propagation is its complexity. The algorithm has a time complexity of the order (O(N^2 T)), where (N) is the number of samples and (T) is the number of iterations until convergence. Further, the memory complexity is of the order (O(N^2)) if a dense similarity matrix is used, but reducible if a sparse similarity matrix is used. This makes Affinity Propagation most appropriate for small to medium sized datasets.<br>
+Affinity Propagation 的主要缺点是它的复杂性。该算法的时间复杂度为\（O（N^2 T）\），其中\（N\）是样本数，\（T\）是收敛前的迭代次数。此外，如果使用密集相似性矩阵，则内存复杂度为\（O（N^2）\）量级，但如果使用稀疏相似性矩阵，则内存复杂度可约。这使得 Affinity Propagation 最适合中小型数据集。</p>
+<p><strong>Algorithm description:</strong> The messages sent between points belong to one of two categories. The first is the responsibility (r(i, k)), which is the accumulated evidence that sample (k) should be the exemplar for sample (i). The second is the availability (a(i, k)) which is the accumulated evidence that sample (i) should choose sample (k) to be its exemplar, and considers the values for all other samples that (k) should be an exemplar. In this way, exemplars are chosen by samples if they are (1) similar enough to many samples and (2) chosen by many samples to be representative of themselves.<br>
+算法说明：点间发送的消息属于两类之一。首先是责任\（r（i， k）\），这是样本\（k\）应该是样本\（i\）的典范的累积证据。第二个是可用性\（a（i， k）\），它是样本\（i\）应选择样本\（k\）作为其样本的累积证据，并考虑\（k\）应作为样本的所有其他样本的值。这样，如果样本 （1） 与许多样本足够相似，并且 （2） 由许多样本选择以代表它们自己，则样本将由样本选择。</p>
+<p>More formally, the responsibility of a sample (k) to be the exemplar of sample (i) is given by:<br>
+更正式地说，样本\（k\）作为样本\（i\）的示例的责任由下式给出：</p>
+<p>[r(i, k) \leftarrow s(i, k) - max [ a(i, k’) + s(i, k’) \forall k’ \neq k ]]<br>
+[r（i， k） \leftarrow s（i， k） - 最大 [ a（i， k’） + s（i， k’） \forall k’ \neq k ]]</p>
+<p>Where (s(i, k)) is the similarity between samples (i) and (k). The availability of sample (k) to be the exemplar of sample (i) is given by:<br>
+其中 \（s（i， k）\） 是样本 \（i\） 和 \（k\） 之间的相似度。样本 \（k\） 作为样本 \（i\） 示例的可用性由下式给出：</p>
+<p>[a(i, k) \leftarrow min [0, r(k, k) + \sum_{i’~s.t.~i’ \notin {i, k}}{r(i’, k)}]]<br>
+[a（i， k） \leftarrow min [0， r（k， k） + \sum_{i’~s.t.~i’ \notin {i， k}}{r（i’， k）}]]</p>
+<p>To begin with, all values for (r) and (a) are set to zero, and the calculation of each iterates until convergence. As discussed above, in order to avoid numerical oscillations when updating the messages, the damping factor (\lambda) is introduced to iteration process:<br>
+首先，\（r\） 和 \（a\） 的所有值都设置为零，并且每次迭代的计算直到收敛。如上所述，为了避免更新消息时出现数值振荡，在迭代过程中引入了阻尼因子 \（\lambda\）：</p>
+<p>[r_{t+1}(i, k) = \lambda\cdot r_{t}(i, k) + (1-\lambda)\cdot r_{t+1}(i, k)]<br>
+[r_{t+1}（i， k） = \lambda\cdot r_{t}（i， k） + （1-\lambda）\cdot r_{t+1}（i， k）]</p>
+<p>[a_{t+1}(i, k) = \lambda\cdot a_{t}(i, k) + (1-\lambda)\cdot a_{t+1}(i, k)]<br>
+[a_{t+1}（i， k） = \lambda\cdot a_{t}（i， k） + （1-\lambda）\cdot a_{t+1}（i， k）]</p>
+<p>where (t) indicates the iteration times.<br>
+其中\（t\）表示迭代次数。</p>
+<h2 id="mean-shift-均值偏移">Mean Shift<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#mean-shift">¶</a>  均值偏移 ¶</h2>
+<p><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.MeanShift.html#sklearn.cluster.MeanShift"><code>MeanShift</code></a> clustering aims to discover <em>blobs</em> in a smooth density of samples. It is a centroid based algorithm, which works by updating candidates for centroids to be the mean of the points within a given region. These candidates are then filtered in a post-processing stage to eliminate near-duplicates to form the final set of centroids.<br>
+<code>MeanShift</code> 聚类旨在发现样本密度平滑的斑点。它是一种基于质心的算法，其工作原理是将质心的候选者更新为给定区域内点的平均值。然后，在后处理阶段对这些候选物进行过滤，以消除近乎重复的质心，形成最终的质心集。</p>
+<p>The position of centroid candidates is iteratively adjusted using a technique called hill climbing, which finds local maxima of the estimated probability density. Given a candidate centroid (x) for iteration (t), the candidate is updated according to the following equation:<br>
+质心候选者的位置使用一种称为爬山的技术进行迭代调整，该技术可找到估计概率密度的局部最大值。给定迭代 \（t\） 的候选质心 \（x\），候选质心根据以下等式更新：</p>
+<p>[x^{t+1} = x^t + m(x^t)]<br>
+[x^{t+1} = x^t + m（x^t）]</p>
+<p>Where (m) is the <em>mean shift</em> vector that is computed for each centroid that points towards a region of the maximum increase in the density of points. To compute (m) we define (N(x)) as the neighborhood of samples within a given distance around (x). Then (m) is computed using the following equation, effectively updating a centroid to be the mean of the samples within its neighborhood:<br>
+其中 \（m\） 是针对指向点密度最大增加区域的每个质心计算的平均位移向量。为了计算\（m\），我们将\（N（x）\）定义为围绕\（x\）的给定距离内的样本邻域。然后使用以下等式计算\（m\），有效地将质心更新为其邻域内样本的平均值：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">\[m(x) = \frac&#123;1&#125;&#123;|N(x)|&#125; \sum_&#123;x_j \in N(x)&#125;x_j - x\]</span><br><span class="line">\[m（x） = \frac&#123;1&#125;&#123;|N（x）|&#125;\sum_&#123;x_j \in N（x）&#125;x_j - x\]</span><br></pre></td></tr></table></figure>
+<p>In general, the equation for (m) depends on a kernel used for density estimation. The generic formula is:<br>
+通常，\（m\） 的方程取决于用于密度估计的核。通用公式为：</p>
+<p>[m(x) = \frac{\sum_{x_j \in N(x)}K(x_j - x)x_j}{\sum_{x_j \in N(x)}K(x_j - x)} - x]<br>
+[m（x） = \frac{\sum_{x_j \in N（x）}K（x_j - x）x_j}{\sum_{x_j \in N（x）}K（x_j - x）} - x]</p>
+<p>In our implementation, (K(x)) is equal to 1 if (x) is small enough and is equal to 0 otherwise. Effectively (K(y - x)) indicates whether (y) is in the neighborhood of (x).<br>
+在我们的实现中，如果 \（x\） 足够小，\（K（x）\） 等于 1，否则等于 0。实际上，\（K（y - x）\） 表示 \（y\） 是否在 \（x\） 的邻域。</p>
+<p>The algorithm automatically sets the number of clusters, instead of relying on a parameter <code>bandwidth</code>, which dictates the size of the region to search through. This parameter can be set manually, but can be estimated using the provided <code>estimate_bandwidth</code> function, which is called if the bandwidth is not set.<br>
+该算法会自动设置聚类的数量，而不是依赖于参数，该参数 <code>bandwidth</code> 决定了要搜索的区域的大小。此参数可以手动设置，但可以使用提供的 <code>estimate_bandwidth</code> 函数进行估计，如果未设置带宽，则调用该函数。</p>
+<p>The algorithm is not highly scalable, as it requires multiple nearest neighbor searches during the execution of the algorithm. The algorithm is guaranteed to converge, however the algorithm will stop iterating when the change in centroids is small.<br>
+该算法的可扩展性不高，因为它在算法执行期间需要多个最近邻搜索。该算法保证收敛，但是当质心的变化很小时，算法将停止迭代。</p>
+<p>Labelling a new sample is performed by finding the nearest centroid for a given sample.<br>
+标记新样品是通过为给定样品找到最接近的质心来执行的。</p>
+<p><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_mean_shift.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_mean_shift_001.png" alt="img"></a></p>
+<h2 id="spectral-clustering-光谱聚类">Spectral clustering<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#spectral-clustering">¶</a>  光谱聚类 ¶</h2>
+<p><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.SpectralClustering.html#sklearn.cluster.SpectralClustering"><code>SpectralClustering</code></a> performs a low-dimension embedding of the affinity matrix between samples, followed by clustering, e.g., by KMeans, of the components of the eigenvectors in the low dimensional space. It is especially computationally efficient if the affinity matrix is sparse and the <code>amg</code> solver is used for the eigenvalue problem (Note, the <code>amg</code> solver requires that the <a target="_blank" rel="noopener" href="https://github.com/pyamg/pyamg">pyamg</a> module is installed.)<br>
+<code>SpectralClustering</code> 对样本之间的亲和矩阵进行低维嵌入，然后对低维空间中特征向量的分量进行聚类，例如，通过KMeans。如果亲和矩阵是稀疏的，并且求解器用于特征值问题，则计算效率特别高（请注意， <code>amg</code> <code>amg</code> 求解器要求安装 pyamg 模块。</p>
+<p>The present version of SpectralClustering requires the number of clusters to be specified in advance. It works well for a small number of clusters, but is not advised for many clusters.<br>
+当前版本的 SpectralClustering 需要提前指定聚类数量。它适用于少数集群，但不建议用于许多集群。</p>
+<p>For two clusters, SpectralClustering solves a convex relaxation of the <a target="_blank" rel="noopener" href="https://people.eecs.berkeley.edu/~malik/papers/SM-ncut.pdf">normalized cuts</a> problem on the similarity graph: cutting the graph in two so that the weight of the edges cut is small compared to the weights of the edges inside each cluster. This criteria is especially interesting when working on images, where graph vertices are pixels, and weights of the edges of the similarity graph are computed using a function of a gradient of the image.<br>
+对于两个聚类，SpectralClustering 求解相似性图上归一化切割问题的凸松弛：将图形一分为二，以便与每个聚类内边缘的权重相比，切割边的权重较小。在处理图像时，此标准特别有趣，其中图形顶点是像素，并且相似度图的边缘权重是使用图像梯度函数计算的。</p>
+<p><strong><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_segmentation_toy.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_segmentation_toy_001.png" alt="img"></a></strong></p>
+<p><strong><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_segmentation_toy.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_segmentation_toy_002.png" alt="img"></a></strong></p>
+<p>Warning 警告</p>
+<p>Transforming distance to well-behaved similarities<br>
+将距离转化为表现良好的相似性</p>
+<p>Note that if the values of your similarity matrix are not well distributed, e.g. with negative values or with a distance matrix rather than a similarity, the spectral problem will be singular and the problem not solvable. In which case it is advised to apply a transformation to the entries of the matrix. For instance, in the case of a signed distance matrix, is common to apply a heat kernel:<br>
+请注意，如果相似性矩阵的值分布不均匀，例如使用负值或使用距离矩阵而不是相似性，则谱问题将是奇异的，并且问题无法解决。在这种情况下，建议对矩阵的条目应用转换。例如，在有符号距离矩阵的情况下，应用热核是很常见的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">similarity = np.exp(-beta * distance / distance.std())</span><br></pre></td></tr></table></figure>
+<p>See the examples for such an application.<br>
+请参阅此类应用程序的示例。</p>
+<h3 id="different-label-assignment-strategies-不同的标签分配策略">Different label assignment strategies<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#different-label-assignment-strategies">¶</a> 不同的标签分配策略 ¶</h3>
+<p>Different label assignment strategies can be used, corresponding to the <code>assign_labels</code> parameter of <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.SpectralClustering.html#sklearn.cluster.SpectralClustering"><code>SpectralClustering</code></a>. <code>&quot;kmeans&quot;</code> strategy can match finer details, but can be unstable. In particular, unless you control the <code>random_state</code>, it may not be reproducible from run-to-run, as it depends on random initialization. The alternative <code>&quot;discretize&quot;</code> strategy is 100% reproducible, but tends to create parcels of fairly even and geometrical shape. The recently added <code>&quot;cluster_qr&quot;</code> option is a deterministic alternative that tends to create the visually best partitioning on the example application below.<br>
+可以使用不同的标签分配策略，对应于 <code>SpectralClustering</code> 的 <code>assign_labels</code> 参数。 <code>&quot;kmeans&quot;</code> 策略可以匹配更精细的细节，但可能不稳定。特别是，除非您控制 ，否则它可能无法从运行到运行重现 <code>random_state</code> ，因为它依赖于随机初始化。替代 <code>&quot;discretize&quot;</code> 策略是 100% 可重复的，但往往会创建相当均匀和几何形状的地块。最近添加 <code>&quot;cluster_qr&quot;</code> 的选项是一种确定性的替代方法，它倾向于在下面的示例应用程序上创建视觉上最佳的分区。</p>
+<table>
+<thead>
+<tr>
+<th><code>assign_labels=&quot;kmeans&quot;</code></th>
+<th><code>assign_labels=&quot;discretize&quot;</code></th>
+<th><code>assign_labels=&quot;cluster_qr&quot;</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_coin_segmentation.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_coin_segmentation_001.png" alt="img"></a></td>
+<td><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_coin_segmentation.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_coin_segmentation_002.png" alt="img"></a></td>
+<td><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_coin_segmentation.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_coin_segmentation_003.png" alt="img"></a></td>
+</tr>
+</tbody>
+</table>
+<h3 id="spectral-clustering-graphs-谱聚类图">Spectral Clustering Graphs<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#spectral-clustering-graphs">¶</a> 谱聚类图 ¶</h3>
+<p>Spectral Clustering can also be used to partition graphs via their spectral embeddings. In this case, the affinity matrix is the adjacency matrix of the graph, and SpectralClustering is initialized with <code>affinity='precomputed'</code>:<br>
+光谱聚类还可用于通过其光谱嵌入对图形进行分区。在本例中，亲和矩阵是图的邻接矩阵，SpectralClustering 初始化为 <code>affinity='precomputed'</code> ：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from sklearn.cluster import SpectralClustering</span><br><span class="line">&gt;&gt;&gt; sc = SpectralClustering(3, affinity=&#x27;precomputed&#x27;, n_init=100,</span><br><span class="line">                            assign_labels=&#x27;discretize&#x27;)</span><br><span class="line">&gt;&gt;&gt; sc.fit_predict(adjacency_matrix)</span><br></pre></td></tr></table></figure>
+<h2 id="hierarchical-clustering-分层聚类">Hierarchical clustering<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#hierarchical-clustering">¶</a>  分层聚类 ¶</h2>
+<p>Hierarchical clustering is a general family of clustering algorithms that build nested clusters by merging or splitting them successively. This hierarchy of clusters is represented as a tree (or dendrogram). The root of the tree is the unique cluster that gathers all the samples, the leaves being the clusters with only one sample. See the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Hierarchical_clustering">Wikipedia page</a> for more details.<br>
+分层聚类分析是聚类分析算法的通用系列，它通过连续合并或拆分嵌套聚类来构建嵌套聚类。这种聚类层次结构表示为树（或树状图）。树的根是收集所有样本的唯一簇，叶子是只有一个样本的簇。有关更多详细信息，请参阅维基百科页面。</p>
+<p>The <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.AgglomerativeClustering.html#sklearn.cluster.AgglomerativeClustering"><code>AgglomerativeClustering</code></a> object performs a hierarchical clustering using a bottom up approach: each observation starts in its own cluster, and clusters are successively merged together. The linkage criteria determines the metric used for the merge strategy:<br>
+对象 <code>AgglomerativeClustering</code> 使用自下而上的方法执行分层聚类：每个观测值从自己的聚类开始，然后聚类依次合并在一起。关联条件确定用于合并策略的指标：</p>
+<ul>
+<li><strong>Ward</strong> minimizes the sum of squared differences within all clusters. It is a variance-minimizing approach and in this sense is similar to the k-means objective function but tackled with an agglomerative hierarchical approach.<br>
+Ward 最小化所有聚类内的平方差和。这是一种方差最小化方法，从这个意义上说，它类似于 k 均值目标函数，但采用集聚分层方法处理。</li>
+<li><strong>Maximum</strong> or <strong>complete linkage</strong> minimizes the maximum distance between observations of pairs of clusters.<br>
+最大或完全链接使成对的集群观测值之间的最大距离最小化。</li>
+<li><strong>Average linkage</strong> minimizes the average of the distances between all observations of pairs of clusters.<br>
+平均链接最小化了集群对的所有观测值之间的距离平均值。</li>
+<li><strong>Single linkage</strong> minimizes the distance between the closest observations of pairs of clusters.<br>
+单连杆使成对的集群的最近观测值之间的距离最小化。</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.AgglomerativeClustering.html#sklearn.cluster.AgglomerativeClustering"><code>AgglomerativeClustering</code></a> can also scale to large number of samples when it is used jointly with a connectivity matrix, but is computationally expensive when no connectivity constraints are added between samples: it considers at each step all the possible merges.<br>
+<code>AgglomerativeClustering</code> 当它与连通性矩阵一起使用时，也可以扩展到大量样本，但当样本之间没有添加连通性约束时，计算成本很高：它会在每个步骤中考虑所有可能的合并。</p>
+<h3 id="different-linkage-type-ward-complete-average-and-single-linkage">Different linkage type: Ward, complete, average, and single linkage<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#different-linkage-type-ward-complete-average-and-single-linkage">¶</a></h3>
+<p><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.AgglomerativeClustering.html#sklearn.cluster.AgglomerativeClustering"><code>AgglomerativeClustering</code></a> supports Ward, single, average, and complete linkage strategies.<br>
+<code>AgglomerativeClustering</code> 支持沃德、单联动、平均联动、完全联动策略。</p>
+<p><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_linkage_comparison.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_linkage_comparison_001.png" alt="img"></a></p>
+<p>Agglomerative cluster has a “rich get richer” behavior that leads to uneven cluster sizes. In this regard, single linkage is the worst strategy, and Ward gives the most regular sizes. However, the affinity (or distance used in clustering) cannot be varied with Ward, thus for non Euclidean metrics, average linkage is a good alternative. Single linkage, while not robust to noisy data, can be computed very efficiently and can therefore be useful to provide hierarchical clustering of larger datasets. Single linkage can also perform well on non-globular data.<br>
+集聚集群具有“富人致富”的行为，导致集群大小不均匀。在这方面，单连杆是最差的策略，沃德给出的尺寸最规则。然而，亲和力（或聚类中使用的距离）不能随 Ward 而变化，因此对于非欧几里得度量，平均链接是一个很好的选择。单一链接虽然对嘈杂的数据不可靠，但可以非常有效地计算，因此可用于提供较大数据集的分层聚类。单链接在非球状数据上也可以表现良好。</p>
+<h3 id="visualization-of-cluster-hierarchy-集群层次结构的可视化">Visualization of cluster hierarchy<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#visualization-of-cluster-hierarchy">¶</a>  集群层次结构的可视化 ¶</h3>
+<p>It’s possible to visualize the tree representing the hierarchical merging of clusters as a dendrogram. Visual inspection can often be useful for understanding the structure of the data, though more so in the case of small sample sizes.<br>
+可以将表示聚类分层合并的树可视化为树状图。目视检查通常有助于理解数据的结构，但在样本量较小的情况下更是如此。</p>
+<p><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_agglomerative_dendrogram.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_agglomerative_dendrogram_001.png" alt="img"></a></p>
+<h3 id="1-6-3-adding-connectivity-constraints-1-6-3-添加连接约束">1.6.3. Adding connectivity constraints<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#adding-connectivity-constraints">¶</a> 1.6.3. 添加连接约束 ¶</h3>
+<p>An interesting aspect of <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.AgglomerativeClustering.html#sklearn.cluster.AgglomerativeClustering"><code>AgglomerativeClustering</code></a> is that connectivity constraints can be added to this algorithm (only adjacent clusters can be merged together), through a connectivity matrix that defines for each sample the neighboring samples following a given structure of the data. For instance, in the swiss-roll example below, the connectivity constraints forbid the merging of points that are not adjacent on the swiss roll, and thus avoid forming clusters that extend across overlapping folds of the roll.<br>
+一个有趣的方面 <code>AgglomerativeClustering</code> 是，可以通过连通性矩阵将连通性约束添加到该算法中（只有相邻的聚类可以合并在一起），该连通性矩阵为每个样本定义遵循给定数据结构的相邻样本。例如，在下面的 swiss-roll 示例中，连通性约束禁止合并 swiss roll 上不相邻的点，从而避免形成跨越 roll 重叠褶皱的聚类。</p>
+<p><strong><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_ward_structured_vs_unstructured.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_ward_structured_vs_unstructured_001.png" alt="img"></a></strong></p>
+<p><strong><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_ward_structured_vs_unstructured.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_ward_structured_vs_unstructured_002.png" alt="img"></a></strong></p>
+<p>These constraint are useful to impose a certain local structure, but they also make the algorithm faster, especially when the number of the samples is high.<br>
+这些约束对于施加某种局部结构很有用，但它们也使算法更快，尤其是在样本数量较多时。</p>
+<p>The connectivity constraints are imposed via an connectivity matrix: a scipy sparse matrix that has elements only at the intersection of a row and a column with indices of the dataset that should be connected. This matrix can be constructed from a-priori information: for instance, you may wish to cluster web pages by only merging pages with a link pointing from one to another. It can also be learned from the data, for instance using <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.kneighbors_graph.html#sklearn.neighbors.kneighbors_graph"><code>sklearn.neighbors.kneighbors_graph</code></a> to restrict merging to nearest neighbors as in <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_agglomerative_clustering.html#sphx-glr-auto-examples-cluster-plot-agglomerative-clustering-py">this example</a>, or using <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.image.grid_to_graph.html#sklearn.feature_extraction.image.grid_to_graph"><code>sklearn.feature_extraction.image.grid_to_graph</code></a> to enable only merging of neighboring pixels on an image, as in the <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_coin_ward_segmentation.html#sphx-glr-auto-examples-cluster-plot-coin-ward-segmentation-py">coin</a> example.<br>
+连通性约束是通过连通性矩阵施加的：一个 scipy 稀疏矩阵，该矩阵仅在行和列的交点处具有元素，该列具有应连接的数据集的索引。这个矩阵可以从先验信息中构造：例如，您可能希望通过仅合并具有从一个页面指向另一个链接的页面来对网页进行聚类。它也可以从数据中学习，例如，用于限制合并到最近邻，如本例所示，或用于 <code>sklearn.neighbors.kneighbors_graph</code> <code>sklearn.feature_extraction.image.grid_to_graph</code> 仅启用图像上相邻像素的合并，如硬币示例所示。</p>
+<p>Warning 警告</p>
+<p><strong>Connectivity constraints with single, average and complete linkage<br>
+具有单个、平均和完整链接的连接限制</strong></p>
+<p>Connectivity constraints and single, complete or average linkage can enhance the ‘rich getting richer’ aspect of agglomerative clustering, particularly so if they are built with <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.neighbors.kneighbors_graph.html#sklearn.neighbors.kneighbors_graph"><code>sklearn.neighbors.kneighbors_graph</code></a>. In the limit of a small number of clusters, they tend to give a few macroscopically occupied clusters and almost empty ones. (see the discussion in <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_agglomerative_clustering.html#sphx-glr-auto-examples-cluster-plot-agglomerative-clustering-py">Agglomerative clustering with and without structure</a>). Single linkage is the most brittle linkage option with regard to this issue.<br>
+连通性约束和单一、完全或平均链接可以增强集聚聚类的“富人越来越富”的方面，特别是如果它们是用 <code>sklearn.neighbors.kneighbors_graph</code> .在少量簇的限制下，它们往往会给出一些宏观上占据的簇和几乎空的簇。（参见有结构和无结构的团聚聚类中的讨论）。就此问题而言，单连杆是最脆弱的连杆选择。</p>
+<p><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_agglomerative_clustering.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_agglomerative_clustering_001.png" alt="img"></a><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_agglomerative_clustering.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_agglomerative_clustering_002.png" alt="img"></a><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_agglomerative_clustering.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_agglomerative_clustering_003.png" alt="img"></a><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_agglomerative_clustering.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_agglomerative_clustering_004.png" alt="img"></a></p>
+<h3 id="1-6-4-varying-the-metric-1-6-4-改变指标">1.6.4. Varying the metric<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#varying-the-metric">¶</a> 1.6.4. 改变指标 ¶</h3>
+<p>Single, average and complete linkage can be used with a variety of distances (or affinities), in particular Euclidean distance (<em>l2</em>), Manhattan distance (or Cityblock, or <em>l1</em>), cosine distance, or any precomputed affinity matrix.<br>
+单个、平均和完全链接可用于各种距离（或亲和力），特别是欧几里得距离 （l2）、曼哈顿距离（或 Cityblock 或 l1）、余弦距离或任何预先计算的亲和矩阵。</p>
+<ul>
+<li><em>l1</em> distance is often good for sparse features, or sparse noise: i.e. many of the features are zero, as in text mining using occurrences of rare words.<br>
+L1 距离通常适用于稀疏特征或稀疏噪声：即许多特征为零，例如使用生僻词的出现进行文本挖掘。</li>
+<li><em>cosine</em> distance is interesting because it is invariant to global scalings of the signal.<br>
+余弦距离很有趣，因为它对信号的全局缩放是不变的。</li>
+</ul>
+<p>The guidelines for choosing a metric is to use one that maximizes the distance between samples in different classes, and minimizes that within each class.<br>
+选择指标的准则是使用一个最大化不同类别中样本之间的距离，并最小化每个类别中的距离的指标。</p>
+<p><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_agglomerative_clustering_metrics.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_agglomerative_clustering_metrics_005.png" alt="img"></a><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_agglomerative_clustering_metrics.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_agglomerative_clustering_metrics_006.png" alt="img"></a><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_agglomerative_clustering_metrics.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_agglomerative_clustering_metrics_007.png" alt="img"></a></p>
+<h3 id="bisecting-k-means-平分-k-means">Bisecting K-Means<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#bisecting-k-means">¶</a> 平分 K-Means ¶</h3>
+<p>The [<code>BisectingKMeans</code>] is an iterative variant of [<code>KMeans</code>], using divisive hierarchical clustering. Instead of creating all centroids at once, centroids are picked progressively based on a previous clustering: a cluster is split into two new clusters repeatedly until the target number of clusters is reached.<br>
+是 <code>BisectingKMeans</code> 的迭代变体 <code>KMeans</code> ，使用分裂分层聚类。质心不是一次创建所有质心，而是根据先前的聚类逐步选取：一个聚类重复拆分为两个新聚类，直到达到目标聚类数。</p>
+<p>[<code>BisectingKMeans</code>] is more efficient than [<code>KMeans</code>]when the number of clusters is large since it only works on a subset of the data at each bisection while [<code>KMeans</code>]always works on the entire dataset.<br>
+<code>BisectingKMeans</code> 比聚类数量较多 <code>KMeans</code> 时更有效，因为它只适用于每个平分法的数据子集，而 <code>KMeans</code> 始终适用于整个数据集。</p>
+<p>Although [<code>BisectingKMeans</code>] can’t benefit from the advantages of the <code>&quot;k-means++&quot;</code> initialization by design, it will still produce comparable results than <code>KMeans(init=&quot;k-means++&quot;)</code> in terms of inertia at cheaper computational costs, and will likely produce better results than <code>KMeans</code> with a random initialization.<br>
+虽然 <code>BisectingKMeans</code> 不能从设计初始化的优势中受益，但它仍然会产生与 <code>KMeans(init=&quot;k-means++&quot;)</code> 惯性相当的结果，并且计算成本更低，并且可能产生比 <code>KMeans</code> 随机 <code>&quot;k-means++&quot;</code> 初始化更好的结果。</p>
+<p>This variant is more efficient to agglomerative clustering if the number of clusters is small compared to the number of data points.<br>
+如果聚类数量与数据点数量相比较小，则此变体对聚集聚类更有效。</p>
+<p>This variant also does not produce empty clusters.<br>
+此变体也不会生成空集群。</p>
+<ul>
+<li>
+<p>There exist two strategies for selecting the cluster to split: 有两种策略可用于选择要拆分的集群：</p>
+<p><code>bisecting_strategy=&quot;largest_cluster&quot;</code> selects the cluster having the most points <code>bisecting_strategy=&quot;largest_cluster&quot;</code> 选择点数最多的集群<code>bisecting_strategy=&quot;biggest_inertia&quot;</code> selects the cluster with biggest inertia (cluster with biggest Sum of Squared Errors within) <code>bisecting_strategy=&quot;biggest_inertia&quot;</code> 选择惯性最大的簇（误差平方和最大的簇）</p>
+</li>
+</ul>
+<p>Picking by largest amount of data points in most cases produces result as accurate as picking by inertia and is faster (especially for larger amount of data points, where calculating error may be costly).<br>
+在大多数情况下，按最大数量的数据点进行拣选会产生与惯性拣选一样准确的结果，并且速度更快（特别是对于大量数据点，其中计算误差可能代价高昂）。</p>
+<p>Picking by largest amount of data points will also likely produce clusters of similar sizes while <code>KMeans</code> is known to produce clusters of different sizes.<br>
+按最大数量的数据点进行选择也可能会产生类似大小的聚类，而 <code>KMeans</code> 已知会产生不同大小的聚类。</p>
+<p>Difference between Bisecting K-Means and regular K-Means can be seen on example <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_bisect_kmeans.html#sphx-glr-auto-examples-cluster-plot-bisect-kmeans-py">Bisecting K-Means and Regular K-Means Performance Comparison</a>. While the regular K-Means algorithm tends to create non-related clusters, clusters from Bisecting K-Means are well ordered and create quite a visible hierarchy.<br>
+平分 K-Means 和常规 K-Means 之间的区别可以在 Bisecting K-Means 和 Regular K-Means Performance Comparison 示例中看到。虽然常规的 K-Means 算法倾向于创建不相关的聚类，但 Bisecting K-Means 的聚类是有序的，并创建相当可见的层次结构。</p>
+<h2 id="dbscan">DBSCAN<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#dbscan">¶</a></h2>
+<p>The <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html#sklearn.cluster.DBSCAN"><code>DBSCAN</code></a> algorithm views clusters as areas of high density separated by areas of low density. Due to this rather generic view, clusters found by DBSCAN can be any shape, as opposed to k-means which assumes that clusters are convex shaped. The central component to the DBSCAN is the concept of <em>core samples</em>, which are samples that are in areas of high density. A cluster is therefore a set of core samples, each close to each other (measured by some distance measure) and a set of non-core samples that are close to a core sample (but are not themselves core samples). There are two parameters to the algorithm, <code>min_samples</code> and <code>eps</code>, which define formally what we mean when we say <em>dense</em>. Higher <code>min_samples</code> or lower <code>eps</code> indicate higher density necessary to form a cluster.<br>
+该 <code>DBSCAN</code> 算法将聚类视为由低密度区域分隔的高密度区域。由于这种相当通用的视图，DBSCAN 找到的聚类可以是任何形状，而不是假设聚类是凸形的 k 均值。DBSCAN的核心组成部分是岩心样本的概念，岩心样本是位于高密度区域的样本。因此，聚类是一组核心样本，每个样本彼此靠近（通过某种距离测量来测量）和一组接近核心样本（但本身不是核心样本）的非核心样本。该算法有两个参数，和 <code>eps</code> ， <code>min_samples</code> 它们正式定义了我们所说的密集时的含义。越高或越低表示形成集群所需的密度越 <code>eps</code> 高 <code>min_samples</code> 。</p>
+<p>More formally, we define a core sample as being a sample in the dataset such that there exist <code>min_samples</code> other samples within a distance of <code>eps</code>, which are defined as <em>neighbors</em> of the core sample. This tells us that the core sample is in a dense area of the vector space. A cluster is a set of core samples that can be built by recursively taking a core sample, finding all of its neighbors that are core samples, finding all of <em>their</em> neighbors that are core samples, and so on. A cluster also has a set of non-core samples, which are samples that are neighbors of a core sample in the cluster but are not themselves core samples. Intuitively, these samples are on the fringes of a cluster.<br>
+更正式地说，我们将核心样本定义为数据集中的样本，这样在 的距离内存在 <code>min_samples</code> 其他样本 <code>eps</code> ，这些样本被定义为核心样本的邻居。这告诉我们，核心样本位于向量空间的密集区域。集群是一组核心样本，可以通过递归获取核心样本、查找其所有作为核心样本的邻居、查找它们的所有核心样本邻居等来构建。集群还具有一组非核心样本，这些样本是集群中核心样本的邻居，但本身不是核心样本。直观地说，这些样本位于集群的边缘。</p>
+<p>Any core sample is part of a cluster, by definition. Any sample that is not a core sample, and is at least <code>eps</code> in distance from any core sample, is considered an outlier by the algorithm.<br>
+根据定义，任何核心样本都是集群的一部分。任何不是岩心样本的样本，并且至少 <code>eps</code> 与任何岩心样本保持一定距离，都会被算法视为异常值。</p>
+<p>While the parameter <code>min_samples</code> primarily controls how tolerant the algorithm is towards noise (on noisy and large data sets it may be desirable to increase this parameter), the parameter <code>eps</code> is <em>crucial to choose appropriately</em> for the data set and distance function and usually cannot be left at the default value. It controls the local neighborhood of the points. When chosen too small, most data will not be clustered at all (and labeled as <code>-1</code> for “noise”). When chosen too large, it causes close clusters to be merged into one cluster, and eventually the entire data set to be returned as a single cluster. Some heuristics for choosing this parameter have been discussed in the literature, for example based on a knee in the nearest neighbor distances plot (as discussed in the references below).<br>
+虽然该参数 <code>min_samples</code> 主要控制算法对噪声的容忍度（在嘈杂和大型数据集上，可能需要增加此参数），但对于为数据集和距离函数适当选择该参数 <code>eps</code> 至关重要，并且通常不能保留为默认值。它控制点的局部邻域。如果选择得太小，大多数数据根本不会聚类（并标记为 <code>-1</code> “噪声”）。如果选择得太大，则会导致紧密的聚类合并为一个聚类，并最终将整个数据集作为单个聚类返回。文献中已经讨论了选择此参数的一些启发式方法，例如基于最近邻距离图中的拐点（如下面的参考文献中所述）。</p>
+<p>In the figure below, the color indicates cluster membership, with large circles indicating core samples found by the algorithm. Smaller circles are non-core samples that are still part of a cluster. Moreover, the outliers are indicated by black points below.<br>
+在下图中，颜色表示集群成员资格，大圆圈表示算法找到的核心样本。较小的圆圈是非核心样本，它们仍然是集群的一部分。此外，异常值由下面的黑点表示。</p>
+<p><strong><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_dbscan.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_dbscan_002.png" alt="img"></a></strong></p>
+<h2 id="hdbscan">HDBSCAN<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#hdbscan">¶</a></h2>
+<p>The <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.HDBSCAN.html#sklearn.cluster.HDBSCAN"><code>HDBSCAN</code></a> algorithm can be seen as an extension of <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html#sklearn.cluster.DBSCAN"><code>DBSCAN</code></a> and <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.OPTICS.html#sklearn.cluster.OPTICS"><code>OPTICS</code></a>. Specifically, <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html#sklearn.cluster.DBSCAN"><code>DBSCAN</code></a> assumes that the clustering criterion (i.e. density requirement) is <em>globally homogeneous</em>. In other words, <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html#sklearn.cluster.DBSCAN"><code>DBSCAN</code></a> may struggle to successfully capture clusters with different densities. <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.HDBSCAN.html#sklearn.cluster.HDBSCAN"><code>HDBSCAN</code></a> alleviates this assumption and explores all possible density scales by building an alternative representation of the clustering problem.<br>
+该 <code>HDBSCAN</code> 算法可以看作是 <code>DBSCAN</code> 和 <code>OPTICS</code> 的扩展。具体来说， <code>DBSCAN</code> 假设聚类标准（即密度要求）是全局同质的。换句话说， <code>DBSCAN</code> 可能很难成功捕获具有不同密度的集群。 <code>HDBSCAN</code> 缓解了这一假设，并通过构建聚类问题的替代表示来探索所有可能的密度尺度。</p>
+<h3 id="mutual-reachability-graph-相互可达性图">Mutual Reachability Graph<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#mutual-reachability-graph">¶</a>  相互可达性图 ¶</h3>
+<p>HDBSCAN first defines (d_c(x_p)), the <em>core distance</em> of a sample (x_p), as the distance to its <code>min_samples</code> th-nearest neighbor, counting itself. For example, if <code>min_samples=5</code> and (x_<em>) is the 5th-nearest neighbor of (x_p) then the core distance is:<br>
+HDBSCAN首先将样本\（x_p\）的核心距离\（d_c（x_p）\）定义为到其 <code>min_samples</code> 最近邻的距离，计算自身。例如，如果 <code>min_samples=5</code> 和 \（x_</em>\） 是 \（x_p\） 的第 5 个最近邻，则核心距离为：</p>
+<p>[d_c(x_p)=d(x_p, x_<em>).]<br>
+[d_c（x_p）=d（x_p， x_</em>）.]</p>
+<p>Next it defines (d_m(x_p, x_q)), the <em>mutual reachability distance</em> of two points (x_p, x_q), as:<br>
+接下来，它将 \（d_m（x_p， x_q）\），两点 \（x_p， x_q\） 的相互可达距离定义为：</p>
+<p>[d_m(x_p, x_q) = \max{d_c(x_p), d_c(x_q), d(x_p, x_q)}]<br>
+[d_m（x_p， x_q） = \max{d_c（x_p）， d_c（x_q）， d（x_p， x_q）}]</p>
+<p>These two notions allow us to construct the <em>mutual reachability graph</em> (G_{ms}) defined for a fixed choice of <code>min_samples</code> by associating each sample (x_p) with a vertex of the graph, and thus edges between points (x_p, x_q) are the mutual reachability distance (d_m(x_p, x_q)) between them. We may build subsets of this graph, denoted as (G_{ms,\varepsilon}), by removing any edges with value greater than (\varepsilon): from the original graph. Any points whose core distance is less than (\varepsilon): are at this staged marked as noise. The remaining points are then clustered by finding the connected components of this trimmed graph.<br>
+这两个概念允许我们通过将每个样本 \（x_p\） 与图的顶点相关联来构建为固定选择定义的 <code>min_samples</code> 相互可达性图 \G_（}\），因此点 \（x_p， x_q\） 之间的边是它们之间的相互可达性距离 \（d_m（x_p， x_q）\）。我们可以通过从原始图中删除任何值大于 \（\varepsilon\） 的边来构建此图的子集，表示为 \（G_{ms，\varepsilon}\）。任何核心距离小于\（\varepsilon\）：的点在此阶段被标记为噪声。然后，通过查找此修剪图的连接分量来对其余点进行聚类。</p>
+<p>Note 注意</p>
+<p>Taking the connected components of a trimmed graph (G_{ms,\varepsilon}) is equivalent to running DBSCAN* with <code>min_samples</code> and (\varepsilon). DBSCAN* is a slightly modified version of DBSCAN mentioned in [<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#cm2013">CM2013]</a>.<br>
+取修剪图\（G_{ms，\varepsilon}\）的连接分量等同于使用 <code>min_samples</code> 和\（\varepsilon\）运行DBSCAN*。DBSCAN* 是 [CM2013] 中提到的 DBSCAN 的略微修改版本。</p>
+<h3 id="hierarchical-clustering-分层聚类">Hierarchical Clustering<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#id11">¶</a> 分层聚类 ¶</h3>
+<p>HDBSCAN can be seen as an algorithm which performs DBSCAN* clustering across all values of (\varepsilon). As mentioned prior, this is equivalent to finding the connected components of the mutual reachability graphs for all values of (\varepsilon). To do this efficiently, HDBSCAN first extracts a minimum spanning tree (MST) from the fully -connected mutual reachability graph, then greedily cuts the edges with highest weight. An outline of the HDBSCAN algorithm is as follows:<br>
+HDBSCAN 可以看作是一种算法，它对 \（\varepsilon\） 的所有值执行 DBSCAN* 聚类。如前所述，这等效于查找 \（\varepsilon\） 的所有值的相互可达性图的连接分量。为了有效地做到这一点，HDBSCAN 首先从全连接的相互可达性图中提取最小生成树 （MST），然后贪婪地切割权重最高的边缘。HDBSCAN算法的概述如下：</p>
+<ol>
+<li>Extract the MST of (G_{ms})<br>
+提取\（G_{ms}\） 的 MST</li>
+<li>Extend the MST by adding a “self edge” for each vertex, with weight equal to the core distance of the underlying sample.<br>
+通过为每个顶点添加一个“自边”来扩展 MST，其权重等于基础样本的核心距离。</li>
+<li>Initialize a single cluster and label for the MST.<br>
+初始化 MST 的单个群集和标签。</li>
+<li>Remove the edge with the greatest weight from the MST (ties are removed simultaneously).<br>
+从 MST 上取下重量最大的边缘（同时取下扎带）。</li>
+<li>Assign cluster labels to the connected components which contain the end points of the now-removed edge. If the component does not have at least one edge it is instead assigned a “null” label marking it as noise.<br>
+将聚类标签分配给包含现已移除的边的端点的连接元件。如果组件没有至少一条边，则会为其分配一个“空”标签，将其标记为噪声。</li>
+<li>Repeat 4-5 until there are no more connected components.<br>
+重复 4-5，直到没有更多连接的组件。</li>
+</ol>
+<p>HDBSCAN is therefore able to obtain all possible partitions achievable by DBSCAN* for a fixed choice of <code>min_samples</code> in a hierarchical fashion. Indeed, this allows HDBSCAN to perform clustering across multiple densities and as such it no longer needs (\varepsilon) to be given as a hyperparameter. Instead it relies solely on the choice of <code>min_samples</code>, which tends to be a more robust hyperparameter.<br>
+因此，HDBSCAN 能够获得 DBSCAN* 可实现的所有可能分区，以便 <code>min_samples</code> 以分层方式进行固定选择。事实上，这使得 HDBSCAN 能够跨多个密度执行聚类，因此它不再需要将 \（\varepsilon\） 作为超参数给出。相反，它完全依赖于 <code>min_samples</code> 的选择，这往往是一个更健壮的超参数。</p>
+<p><strong><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_hdbscan.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_hdbscan_005.png" alt="img"></a></strong></p>
+<p><strong><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_hdbscan.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_hdbscan_007.png" alt="img"></a></strong></p>
+<p>HDBSCAN can be smoothed with an additional hyperparameter <code>min_cluster_size</code> which specifies that during the hierarchical clustering, components with fewer than <code>minimum_cluster_size</code> many samples are considered noise. In practice, one can set <code>minimum_cluster_size = min_samples</code> to couple the parameters and simplify the hyperparameter space.<br>
+HDBSCAN 可以使用额外的超参数进行平滑处理，该超参数 <code>min_cluster_size</code> 指定在分层聚类期间，样本少于 <code>minimum_cluster_size</code> 许多的组件被视为噪声。在实践中，可以设置 <code>minimum_cluster_size = min_samples</code> 耦合参数并简化超参数空间。</p>
+<h2 id="optics">OPTICS<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#optics">¶</a></h2>
+<p>The <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.OPTICS.html#sklearn.cluster.OPTICS"><code>OPTICS</code></a> algorithm shares many similarities with the <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html#sklearn.cluster.DBSCAN"><code>DBSCAN</code></a> algorithm, and can be considered a generalization of DBSCAN that relaxes the <code>eps</code> requirement from a single value to a value range. The key difference between DBSCAN and OPTICS is that the OPTICS algorithm builds a <em>reachability</em> graph, which assigns each sample both a <code>reachability_</code> distance, and a spot within the cluster <code>ordering_</code> attribute; these two attributes are assigned when the model is fitted, and are used to determine cluster membership. If OPTICS is run with the default value of <em>inf</em> set for <code>max_eps</code>, then DBSCAN style cluster extraction can be performed repeatedly in linear time for any given <code>eps</code> value using the <code>cluster_optics_dbscan</code> method. Setting <code>max_eps</code> to a lower value will result in shorter run times, and can be thought of as the maximum neighborhood radius from each point to find other potential reachable points.<br>
+该 <code>OPTICS</code> 算法与该 <code>DBSCAN</code> 算法有许多相似之处，可以认为是 DBSCAN 的泛化，它将 <code>eps</code> 要求从单个值放宽到一个值范围。DBSCAN 和 OPTICS 之间的主要区别在于，OPTICS 算法构建了一个可达性图，该图为每个样本分配距离 <code>reachability_</code> 和聚类 <code>ordering_</code> 属性中的点;这两个属性在拟合模型时分配，用于确定聚类成员资格。如果 OPTICS 在 的默认值 inf 设置为 的情况下 <code>max_eps</code> 运行，则可以使用该 <code>cluster_optics_dbscan</code> 方法在线性时间内对任何给定 <code>eps</code> 值重复执行 DBSCAN 样式聚类提取。设置为 <code>max_eps</code> 较低的值将导致更短的运行时间，并且可以将其视为从每个点开始的最大邻域半径，以查找其他潜在的可到达点。</p>
+<p><strong><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_optics.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_optics_001.png" alt="img"></a></strong></p>
+<p>The <em>reachability</em> distances generated by OPTICS allow for variable density extraction of clusters within a single data set. As shown in the above plot, combining <em>reachability</em> distances and data set <code>ordering_</code> produces a <em>reachability plot</em>, where point density is represented on the Y-axis, and points are ordered such that nearby points are adjacent. ‘Cutting’ the reachability plot at a single value produces DBSCAN like results; all points above the ‘cut’ are classified as noise, and each time that there is a break when reading from left to right signifies a new cluster. The default cluster extraction with OPTICS looks at the steep slopes within the graph to find clusters, and the user can define what counts as a steep slope using the parameter <code>xi</code>. There are also other possibilities for analysis on the graph itself, such as generating hierarchical representations of the data through reachability-plot dendrograms, and the hierarchy of clusters detected by the algorithm can be accessed through the <code>cluster_hierarchy_</code> parameter. The plot above has been color-coded so that cluster colors in planar space match the linear segment clusters of the reachability plot. Note that the blue and red clusters are adjacent in the reachability plot, and can be hierarchically represented as children of a larger parent cluster.<br>
+OPTICS生成的可达距离允许在单个数据集中对聚类进行可变密度提取。如上图所示，将可达距离和数据集 <code>ordering_</code> 组合在一起会产生可达性图，其中点密度在 Y 轴上表示，并且对点进行排序，使附近的点相邻。将可达性图“切割”为单个值会产生类似DBSCAN的结果;“切口”上方的所有点都被归类为噪声，从左到右读取时，每次中断都表示一个新的集群。使用 OPTICS 的默认聚类提取会查看图形中的陡坡以查找聚类，用户可以使用参数 <code>xi</code> 定义什么是陡坡。在图形本身上还有其他分析的可能性，例如通过可达性图树状图生成数据的分层表示，并且可以通过 <code>cluster_hierarchy_</code> 参数访问算法检测到的聚类层次结构。上面的图已经过颜色编码，以便平面空间中的聚类颜色与可达性图的线性线段聚类相匹配。请注意，蓝色和红色聚类在可达性图中相邻，可以分层表示为较大父聚类的子聚类。</p>
+<h2 id="birch">BIRCH<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#birch">¶</a></h2>
+<p>The <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.cluster.Birch.html#sklearn.cluster.Birch"><code>Birch</code></a> builds a tree called the Clustering Feature Tree (CFT) for the given data. The data is essentially lossy compressed to a set of Clustering Feature nodes (CF Nodes). The CF Nodes have a number of subclusters called Clustering Feature subclusters (CF Subclusters) and these CF Subclusters located in the non-terminal CF Nodes can have CF Nodes as children.<br>
+为 <code>Birch</code> 给定数据构建一个称为聚类特征树 （CFT） 的树。数据基本上是有损压缩到一组聚类功能节点（CF 节点）的。CF 节点具有许多称为聚类功能子集群（CF 子集群）的子集群，这些位于非终端 CF 节点中的 CF 子集群可以将 CF 节点作为子节点。</p>
+<p>The CF Subclusters hold the necessary information for clustering which prevents the need to hold the entire input data in memory. This information includes:<br>
+CF 子集群保存了聚类所需的信息，从而避免了将整个输入数据保存在内存中的需要。这些信息包括：</p>
+<ul>
+<li>Number of samples in a subcluster.<br>
+子集群中的样本数。</li>
+<li>Linear Sum - An n-dimensional vector holding the sum of all samples<br>
+线性求和 - 保存所有样本之和的 n 维向量</li>
+<li>Squared Sum - Sum of the squared L2 norm of all samples.<br>
+平方和 - 所有样本的 L2 范数的平方和。</li>
+<li>Centroids - To avoid recalculation linear sum / n_samples.<br>
+质心 - 避免重新计算线性总和/n_samples。</li>
+<li>Squared norm of the centroids.<br>
+质心的平方范数。</li>
+</ul>
+<p>The BIRCH algorithm has two parameters, the threshold and the branching factor. The branching factor limits the number of subclusters in a node and the threshold limits the distance between the entering sample and the existing subclusters.<br>
+BIRCH 算法有两个参数，即阈值和分支因子。分支因子限制节点中的子聚类数量，阈值限制输入样本与现有子聚类之间的距离。</p>
+<p>This algorithm can be viewed as an instance or data reduction method, since it reduces the input data to a set of subclusters which are obtained directly from the leaves of the CFT. This reduced data can be further processed by feeding it into a global clusterer. This global clusterer can be set by <code>n_clusters</code>. If <code>n_clusters</code> is set to None, the subclusters from the leaves are directly read off, otherwise a global clustering step labels these subclusters into global clusters (labels) and the samples are mapped to the global label of the nearest subcluster.<br>
+该算法可以被视为一种实例或数据缩减方法，因为它将输入数据简化为一组子簇，这些子簇直接从 CFT 的叶子中获得。这种减少的数据可以通过将其输入全局聚类器来进一步处理。此全局聚类器可以通过 设置 <code>n_clusters</code> 。如果 <code>n_clusters</code> 设置为“无”，则直接读出叶子中的子聚类，否则全局聚类步骤会将这些子聚类标记为全局聚类（标签），并将样本映射到最近子聚类的全局标签。</p>
+<p><strong>Algorithm description: 算法说明：</strong></p>
+<ul>
+<li>A new sample is inserted into the root of the CF Tree which is a CF Node. It is then merged with the subcluster of the root, that has the smallest radius after merging, constrained by the threshold and branching factor conditions. If the subcluster has any child node, then this is done repeatedly till it reaches a leaf. After finding the nearest subcluster in the leaf, the properties of this subcluster and the parent subclusters are recursively updated.<br>
+将一个新样本插入到 CF 树的根中，该树是一个 CF 节点。然后，它与根的子簇合并，该子簇在合并后具有最小的半径，受阈值和分支因子条件的约束。如果子集群有任何子节点，则重复执行此操作，直到它到达叶。在叶中找到最近的子集群后，将以递归方式更新此子集群和父子集群的属性。</li>
+<li>If the radius of the subcluster obtained by merging the new sample and the nearest subcluster is greater than the square of the threshold and if the number of subclusters is greater than the branching factor, then a space is temporarily allocated to this new sample. The two farthest subclusters are taken and the subclusters are divided into two groups on the basis of the distance between these subclusters.<br>
+如果通过合并新样本和最近的子聚类获得的子聚类的半径大于阈值的平方，并且子聚类的数量大于分支因子，则临时为该新样本分配一个空间。取两个最远的子簇，并根据这些子簇之间的距离将子簇分为两组。</li>
+<li>If this split node has a parent subcluster and there is room for a new subcluster, then the parent is split into two. If there is no room, then this node is again split into two and the process is continued recursively, till it reaches the root.<br>
+如果此拆分节点具有父子集群，并且有空间容纳新的子集群，则父节点将拆分为两个。如果没有空间，则此节点再次一分为二，并且该过程以递归方式继续，直到到达根。</li>
+</ul>
+<p><strong>BIRCH or MiniBatchKMeans?<br>
+BIRCH 还是 MiniBatchKMeans？</strong></p>
+<ul>
+<li>BIRCH does not scale very well to high dimensional data. As a rule of thumb if <code>n_features</code> is greater than twenty, it is generally better to use MiniBatchKMeans.<br>
+BIRCH 不能很好地扩展到高维数据。根据经验，如果 <code>n_features</code> 大于 20，则通常最好使用 MiniBatchKMeans。</li>
+<li>If the number of instances of data needs to be reduced, or if one wants a large number of subclusters either as a preprocessing step or otherwise, BIRCH is more useful than MiniBatchKMeans.<br>
+如果需要减少数据实例的数量，或者想要将大量子集群作为预处理步骤或其他方式，则 BIRCH 比 MiniBatchKMeans 更有用。</li>
+</ul>
+<p><strong>How to use partial_fit? 如何使用partial_fit？</strong></p>
+<p>To avoid the computation of global clustering, for every call of <code>partial_fit</code> the user is advised<br>
+为了避免全局聚类的计算，建议对用户的每次调用 <code>partial_fit</code> 进行</p>
+<ol>
+<li>To set <code>n_clusters=None</code> initially<br>
+初始设置 <code>n_clusters=None</code></li>
+<li>Train all data by multiple calls to partial_fit.<br>
+通过多次调用 partial_fit 来训练所有数据。</li>
+<li>Set <code>n_clusters</code> to a required value using <code>brc.set_params(n_clusters=n_clusters)</code>.<br>
+<code>n_clusters</code> 使用 <code>brc.set_params(n_clusters=n_clusters)</code> 设置为所需的值。</li>
+<li>Call <code>partial_fit</code> finally with no arguments, i.e. <code>brc.partial_fit()</code> which performs the global clustering.<br>
+不带参数的 finally 调用 <code>partial_fit</code> ，即 <code>brc.partial_fit()</code> 执行全局聚类。</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_birch_vs_minibatchkmeans.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_birch_vs_minibatchkmeans_001.png" alt="img"></a></p>
+<h2 id="clustering-performance-evaluation-聚类性能评估">Clustering performance evaluation<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#clustering-performance-evaluation">¶</a> 聚类性能评估 ¶</h2>
+<p>Evaluating the performance of a clustering algorithm is not as trivial as counting the number of errors or the precision and recall of a supervised classification algorithm. In particular any evaluation metric should not take the absolute values of the cluster labels into account but rather if this clustering define separations of the data similar to some ground truth set of classes or satisfying some assumption such that members belong to the same class are more similar than members of different classes according to some similarity metric.<br>
+评估聚类算法的性能并不像计算错误数或监督分类算法的精度和召回率那样微不足道。特别是，任何评估指标都不应考虑聚类标签的绝对值，而应考虑此聚类定义的数据分离，类似于某些基本实况类集或满足某些假设，以便根据某些相似性指标，属于同一类的成员比不同类的成员更相似。</p>
+<h3 id="rand-index-兰德索引">Rand index<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#rand-index">¶</a> 兰德索引 ¶</h3>
+<p>Given the knowledge of the ground truth class assignments <code>labels_true</code> and our clustering algorithm assignments of the same samples <code>labels_pred</code>, the <strong>(adjusted or unadjusted) Rand index</strong> is a function that measures the <strong>similarity</strong> of the two assignments, ignoring permutations:<br>
+给定对相同样本 <code>labels_pred</code> 的真值类赋值 <code>labels_true</code> 和聚类算法赋值的了解，（调整或未调整的）兰德指数是一个函数，用于衡量两个赋值的相似性，忽略排列：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from sklearn import metrics</span><br><span class="line">&gt;&gt;&gt; labels_true = [0, 0, 0, 1, 1, 1]</span><br><span class="line">&gt;&gt;&gt; labels_pred = [0, 0, 1, 1, 2, 2]</span><br><span class="line">&gt;&gt;&gt; metrics.rand_score(labels_true, labels_pred)</span><br><span class="line">0.66...</span><br></pre></td></tr></table></figure>
+<p>The Rand index does not ensure to obtain a value close to 0.0 for a random labelling. The adjusted Rand index <strong>corrects for chance</strong> and will give such a baseline.<br>
+Rand 指数不确保随机标记获得接近 0.0 的值。调整后的兰德指数对机会进行校正，并将给出这样的基线。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; metrics.adjusted_rand_score(labels_true, labels_pred)</span><br><span class="line">0.24...</span><br></pre></td></tr></table></figure>
+<p>As with all clustering metrics, one can permute 0 and 1 in the predicted labels, rename 2 to 3, and get the same score:<br>
+与所有聚类指标一样，可以在预测标签中置换 0 和 1，将 2 重命名为 3，并获得相同的分数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; labels_pred = [1, 1, 0, 0, 3, 3]</span><br><span class="line">&gt;&gt;&gt; metrics.rand_score(labels_true, labels_pred)</span><br><span class="line">0.66...</span><br><span class="line">&gt;&gt;&gt; metrics.adjusted_rand_score(labels_true, labels_pred)</span><br><span class="line">0.24...</span><br></pre></td></tr></table></figure>
+<p>Furthermore, both <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.rand_score.html#sklearn.metrics.rand_score"><code>rand_score</code></a> <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.adjusted_rand_score.html#sklearn.metrics.adjusted_rand_score"><code>adjusted_rand_score</code></a> are <strong>symmetric</strong>: swapping the argument does not change the scores. They can thus be used as <strong>consensus measures</strong>:<br>
+此外，两者都 <code>rand_score</code> <code>adjusted_rand_score</code> 是对称的：交换参数不会改变分数。因此，它们可以用作共识措施：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; metrics.rand_score(labels_pred, labels_true)</span><br><span class="line">0.66...</span><br><span class="line">&gt;&gt;&gt; metrics.adjusted_rand_score(labels_pred, labels_true)</span><br><span class="line">0.24...</span><br></pre></td></tr></table></figure>
+<p>Perfect labeling is scored 1.0:<br>
+完美标签得分为 1.0：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; labels_pred = labels_true[:]</span><br><span class="line">&gt;&gt;&gt; metrics.rand_score(labels_true, labels_pred)</span><br><span class="line">1.0</span><br><span class="line">&gt;&gt;&gt; metrics.adjusted_rand_score(labels_true, labels_pred)</span><br><span class="line">1.0</span><br></pre></td></tr></table></figure>
+<p>Poorly agreeing labels (e.g. independent labelings) have lower scores, and for the adjusted Rand index the score will be negative or close to zero. However, for the unadjusted Rand index the score, while lower, will not necessarily be close to zero.:<br>
+不一致的标签（例如独立标签）的分数较低，对于调整后的兰德指数，分数将为负或接近零。然而，对于未经调整的兰德指数，分数虽然较低，但不一定接近于零。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; labels_true = [0, 0, 0, 0, 0, 0, 1, 1]</span><br><span class="line">&gt;&gt;&gt; labels_pred = [0, 1, 2, 3, 4, 5, 5, 6]</span><br><span class="line">&gt;&gt;&gt; metrics.rand_score(labels_true, labels_pred)</span><br><span class="line">0.39...</span><br><span class="line">&gt;&gt;&gt; metrics.adjusted_rand_score(labels_true, labels_pred)</span><br><span class="line">-0.07...</span><br></pre></td></tr></table></figure>
+<h4 id="advantages-优点">Advantages<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#advantages">¶</a>  优点 ¶</h4>
+<ul>
+<li><strong>Interpretability</strong>: The unadjusted Rand index is proportional to the number of sample pairs whose labels are the same in both <code>labels_pred</code> and <code>labels_true</code>, or are different in both.<br>
+可解释性：未调整的 Rand 指数与两个 <code>labels_pred</code> <code>labels_true</code> 和 的标签相同或不同的样本对的数量成正比。</li>
+<li><strong>Random (uniform) label assignments have an adjusted Rand index score close to 0.0</strong> for any value of <code>n_clusters</code> and <code>n_samples</code> (which is not the case for the unadjusted Rand index or the V-measure for instance).<br>
+对于任何 <code>n_clusters</code> and <code>n_samples</code> 值，随机（统一）标签分配的调整后 Rand 指数得分接近 0.0（例如，未调整的 Rand 指数或 V 度量值并非如此）。</li>
+<li><strong>Bounded range</strong>: Lower values indicate different labelings, similar clusterings have a high (adjusted or unadjusted) Rand index, 1.0 is the perfect match score. The score range is [0, 1] for the unadjusted Rand index and [-1, 1] for the adjusted Rand index.<br>
+有界范围：较低的值表示不同的标签，相似的聚类具有较高（调整或未调整）的 Rand 指数，1.0 是完美匹配分数。未调整的 Rand 指数的分数范围为 [0， 1]，调整后的 Rand 指数的分数范围为 [-1， 1]。</li>
+<li><strong>No assumption is made on the cluster structure</strong>: The (adjusted or unadjusted) Rand index can be used to compare all kinds of clustering algorithms, and can be used to compare clustering algorithms such as k-means which assumes isotropic blob shapes with results of spectral clustering algorithms which can find cluster with “folded” shapes.<br>
+不对聚类结构进行任何假设：（调整或未调整）Rand 指数可用于比较各种聚类算法，并可用于比较聚类算法，例如假设各向同性斑点形状的 k 均值与光谱聚类算法的结果，后者可以找到具有“折叠”形状的聚类。</li>
+</ul>
+<h4 id="drawbacks-缺点">Drawbacks<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#drawbacks">¶</a> 缺点 ¶</h4>
+<ul>
+<li>
+<p>Contrary to inertia, the <strong>(adjusted or unadjusted) Rand index requires knowledge of the ground truth classes</strong> which is almost never available in practice or requires manual assignment by human annotators (as in the supervised learning setting).<br>
+与惯性相反，（调整或未调整）兰德指数需要了解基本实况类，这在实践中几乎从未获得过，或者需要人工注释者手动分配（如在监督学习环境中）。</p>
+<p>However (adjusted or unadjusted) Rand index can also be useful in a purely unsupervised setting as a building block for a Consensus Index that can be used for clustering model selection (TODO).<br>
+但是，（调整或未调整）Rand 指数在纯无监督环境中也可用于作为共识指数的构建块，该指数可用于聚类模型选择 （TODO）。</p>
+</li>
+<li>
+<p>The <strong>unadjusted Rand index is often close to 1.0</strong> even if the clusterings themselves differ significantly. This can be understood when interpreting the Rand index as the accuracy of element pair labeling resulting from the clusterings: In practice there often is a majority of element pairs that are assigned the <code>different</code> pair label under both the predicted and the ground truth clustering resulting in a high proportion of pair labels that agree, which leads subsequently to a high score.<br>
+未经调整的兰德指数通常接近 1.0，即使聚类本身差异很大。当将 Rand 指数解释为聚类产生的元素对标记的准确性时，可以理解这一点：在实践中，通常大多数元素对在预测和真值聚类下都被分配了 <code>different</code> 对标签，导致高比例的对标签一致，从而导致高分。</p>
+</li>
+</ul>
+<h4 id="mathematical-formulation-数学公式">Mathematical formulation<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#mathematical-formulation">¶</a> 数学公式 ¶</h4>
+<p>If C is a ground truth class assignment and K the clustering, let us define (a) and (b) as:<br>
+如果 C 是真值类赋值，K 是聚类，那么我们将 \（a\） 和 \（b\） 定义为：</p>
+<ul>
+<li>(a), the number of pairs of elements that are in the same set in C and in the same set in K<br>
+\（a\），在 C 中在同一集合中和在 K 中在同一集合中的元素对数</li>
+<li>(b), the number of pairs of elements that are in different sets in C and in different sets in K<br>
+\（b\），在 C 中处于不同集合中的元素对数，在 K 中处于不同集合中的元素对数</li>
+</ul>
+<p>The unadjusted Rand index is then given by:<br>
+未经调整的兰特指数由下式给出：</p>
+<p>[\text{RI} = \frac{a + b}{C_2^{n_{samples}}}]<br>
+[\text{RI} = \frac{a + b}{C_2^{n_{样本}}}]</p>
+<p>where (C_2^{n_{samples}}) is the total number of possible pairs in the dataset. It does not matter if the calculation is performed on ordered pairs or unordered pairs as long as the calculation is performed consistently.<br>
+其中 \（C_2^{n_{samples}}\） 是数据集中可能的对总数。计算是在有序对还是无序对上执行并不重要，只要一致地执行计算即可。</p>
+<p>However, the Rand index does not guarantee that random label assignments will get a value close to zero (esp. if the number of clusters is in the same order of magnitude as the number of samples).<br>
+但是，Rand 指数并不能保证随机标签分配将获得接近于零的值（特别是如果聚类数与样本数处于同一数量级）。</p>
+<p>To counter this effect we can discount the expected RI (E[\text{RI}]) of random labelings by defining the adjusted Rand index as follows:</p>
+<p>[\text{ARI} = \frac{\text{RI} - E[\text{RI}]}{\max(\text{RI}) - E[\text{RI}]}]</p>
+<h3 id="mutual-information-based-scores">Mutual Information based scores<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#mutual-information-based-scores">¶</a></h3>
+<p>Given the knowledge of the ground truth class assignments <code>labels_true</code> and our clustering algorithm assignments of the same samples <code>labels_pred</code>, the <strong>Mutual Information</strong> is a function that measures the <strong>agreement</strong> of the two assignments, ignoring permutations. Two different normalized versions of this measure are available, <strong>Normalized Mutual Information (NMI)</strong> and <strong>Adjusted Mutual Information (AMI)</strong>. NMI is often used in the literature, while AMI was proposed more recently and is <strong>normalized against chance</strong>:<br>
+给定对相同样本 <code>labels_pred</code> 的真值类赋值 <code>labels_true</code> 和聚类算法赋值的了解，互信息是一个测量两个赋值一致性的函数，忽略排列。此度量值有两个不同的规范化版本，即规范化互信息 （NMI） 和调整互信息 （AMI）。NMI 经常在文献中使用，而 AMI 是最近提出的，并且偶然被归一化：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from sklearn import metrics</span><br><span class="line">&gt;&gt;&gt; labels_true = [0, 0, 0, 1, 1, 1]</span><br><span class="line">&gt;&gt;&gt; labels_pred = [0, 0, 1, 1, 2, 2]</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; metrics.adjusted_mutual_info_score(labels_true, labels_pred)  </span><br><span class="line">0.22504...</span><br></pre></td></tr></table></figure>
+<p>One can permute 0 and 1 in the predicted labels, rename 2 to 3 and get the same score:<br>
+可以在预测标签中置换 0 和 1，重命名 2 到 3 并获得相同的分数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; labels_pred = [1, 1, 0, 0, 3, 3]</span><br><span class="line">&gt;&gt;&gt; metrics.adjusted_mutual_info_score(labels_true, labels_pred)  </span><br><span class="line">0.22504...</span><br></pre></td></tr></table></figure>
+<p>All, <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.mutual_info_score.html#sklearn.metrics.mutual_info_score"><code>mutual_info_score</code></a>, <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.adjusted_mutual_info_score.html#sklearn.metrics.adjusted_mutual_info_score"><code>adjusted_mutual_info_score</code></a> and <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.normalized_mutual_info_score.html#sklearn.metrics.normalized_mutual_info_score"><code>normalized_mutual_info_score</code></a> are symmetric: swapping the argument does not change the score. Thus they can be used as a <strong>consensus measure</strong>:<br>
+所有、 <code>mutual_info_score</code> 和 <code>adjusted_mutual_info_score</code> <code>normalized_mutual_info_score</code> 都是对称的：交换参数不会改变分数。因此，它们可以用作共识度量：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; metrics.adjusted_mutual_info_score(labels_pred, labels_true)  </span><br><span class="line">0.22504...</span><br></pre></td></tr></table></figure>
+<p>Perfect labeling is scored 1.0:<br>
+完美标签得分为 1.0：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; labels_pred = labels_true[:]</span><br><span class="line">&gt;&gt;&gt; metrics.adjusted_mutual_info_score(labels_true, labels_pred)  </span><br><span class="line">1.0</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; metrics.normalized_mutual_info_score(labels_true, labels_pred)  </span><br><span class="line">1.0</span><br></pre></td></tr></table></figure>
+<p>This is not true for <code>mutual_info_score</code>, which is therefore harder to judge:<br>
+但事实并非如此 <code>mutual_info_score</code> ，因此更难判断：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; metrics.mutual_info_score(labels_true, labels_pred)  </span><br><span class="line">0.69...</span><br></pre></td></tr></table></figure>
+<p>Bad (e.g. independent labelings) have non-positive scores:<br>
+不良（例如独立标签）具有非正分数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; labels_true = [0, 1, 2, 0, 3, 4, 5, 1]</span><br><span class="line">&gt;&gt;&gt; labels_pred = [1, 1, 0, 0, 2, 2, 2, 2]</span><br><span class="line">&gt;&gt;&gt; metrics.adjusted_mutual_info_score(labels_true, labels_pred)  </span><br><span class="line">-0.10526...</span><br></pre></td></tr></table></figure>
+<h4 id="advantages-优点">Advantages<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#id14">¶</a> 优点 ¶</h4>
+<ul>
+<li><strong>Random (uniform) label assignments have a AMI score close to 0.0</strong> for any value of <code>n_clusters</code> and <code>n_samples</code> (which is not the case for raw Mutual Information or the V-measure for instance).<br>
+对于任何值 <code>n_clusters</code> and <code>n_samples</code> 的随机（统一）标签分配，AMI 分数都接近 0.0（例如，原始互信息或 V 度量并非如此）。</li>
+<li><strong>Upper bound of 1</strong>: Values close to zero indicate two label assignments that are largely independent, while values close to one indicate significant agreement. Further, an AMI of exactly 1 indicates that the two label assignments are equal (with or without permutation).<br>
+上限 1：接近零的值表示两个标签分配在很大程度上是独立的，而接近 1 的值表示非常一致。此外，AMI 正好为 1 表示两个标签分配相等（有或没有排列）。</li>
+</ul>
+<h4 id="drawbacks-缺点">Drawbacks<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#id15">¶</a> 缺点 ¶</h4>
+<ul>
+<li>
+<p>Contrary to inertia, <strong>MI-based measures require the knowledge of the ground truth classes</strong> while almost never available in practice or requires manual assignment by human annotators (as in the supervised learning setting).<br>
+与惯性相反，基于 MI 的测量需要了解基本实况类，而在实践中几乎不可用，或者需要人工注释者手动分配（如在监督学习设置中）。</p>
+<p>However MI-based measures can also be useful in purely unsupervised setting as a building block for a Consensus Index that can be used for clustering model selection.<br>
+然而，基于 MI 的测量在纯粹的无监督设置中也很有用，作为可用于聚类模型选择的共识指数的构建块。</p>
+</li>
+<li>
+<p>NMI and MI are not adjusted against chance.<br>
+NMI 和 MI 不会因偶然性而进行调整。</p>
+</li>
+</ul>
+<h4 id="mathematical-formulation-数学公式">Mathematical formulation<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#id16">¶</a> 数学公式 ¶</h4>
+<p>Assume two label assignments (of the same N objects), (U) and (V). Their entropy is the amount of uncertainty for a partition set, defined by:<br>
+假设有两个标签赋值（相同的 N 个对象），\（U\） 和 \（V\）。它们的熵是分区集的不确定性量，定义如下：</p>
+<p>[H(U) = - \sum_{i=1}^{|U|}P(i)\log(P(i))]<br>
+[H（U） = - \sum_{i=1}^{|U|}P（i）\log（P（i））]</p>
+<p>where (P(i) = |U_i| / N) is the probability that an object picked at random from (U) falls into class (U_i). Likewise for (V):<br>
+其中 \（P（i） = |U_i|/ N\） 是从 \（U\） 中随机选择的对象落入类 \（U_i\） 的概率。\（V\） 也是如此：</p>
+<p>[H(V) = - \sum_{j=1}^{|V|}P’(j)\log(P’(j))]<br>
+[H（V） = - \sum_{j=1}^{|V|}P’（j）\log（P’（j））]</p>
+<p>With (P’(j) = |V_j| / N). The mutual information (MI) between (U) and (V) is calculated by:<br>
+其中\（P’（j） = |V_j|/ N\）。\（U\） 和 \（V\） 之间的互信息 （MI） 由下式计算：</p>
+<p>[\text{MI}(U, V) = \sum_{i=1}^{|U|}\sum_{j=1}^{|V|}P(i, j)\log\left(\frac{P(i,j)}{P(i)P’(j)}\right)]<br>
+[\text{MI}（U， V） = \sum_{i=1}^{|U|}\sum_{j=1}^{|V|}P（i， j）\log\left（\frac{P（i，j）}{P（i）P’（j）}\right）]</p>
+<p>where (P(i, j) = |U_i \cap V_j| / N) is the probability that an object picked at random falls into both classes (U_i) and (V_j).<br>
+其中 \（P（i， j） = |U_i \cap V_j|/ N\） 是随机拾取的对象同时属于类 \（U_i\） 和类 \（V_j\） 的概率。</p>
+<p>It also can be expressed in set cardinality formulation:<br>
+它也可以用集合基数公式表示：</p>
+<p>[\text{MI}(U, V) = \sum_{i=1}^{|U|} \sum_{j=1}^{|V|} \frac{|U_i \cap V_j|}{N}\log\left(\frac{N|U_i \cap V_j|}{|U_i||V_j|}\right)]<br>
+[\text{MI}（U， V） = \sum_{i=1}^{|U|}\sum_{j=1}^{|V|}\frac{|U_i \cap V_j|}{N}\log\left（\frac{N|U_i \cap V_j|}{|U_i||V_j|}\right）]</p>
+<p>The normalized mutual information is defined as<br>
+规范化的互信息定义为</p>
+<p>[\text{NMI}(U, V) = \frac{\text{MI}(U, V)}{\text{mean}(H(U), H(V))}]<br>
+[\text{NMI}（U， V） = \frac{\text{MI}（U， V）}{\text{mean}（H（U）， H（V））}]</p>
+<p>This value of the mutual information and also the normalized variant is not adjusted for chance and will tend to increase as the number of different labels (clusters) increases, regardless of the actual amount of “mutual information” between the label assignments.<br>
+互信息和归一化变体的这个值不会因偶然性而调整，并且随着不同标签（聚类）数量的增加而趋于增加，而不管标签分配之间的“互信息”的实际数量如何。</p>
+<p>The expected value for the mutual information can be calculated using the following equation [<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#veb2009">VEB2009]</a>. In this equation, (a_i = |U_i|) (the number of elements in (U_i)) and (b_j = |V_j|) (the number of elements in (V_j)).<br>
+互信息的期望值可以使用以下公式[VEB2009]计算。在这个等式中，\（a_i = |U_i|\）（\（U_i\）中的元素数）和\（b_j = |V_j|\）（\（V_j\）中的元素数）。</p>
+<p>[E[\text{MI}(U,V)]=\sum_{i=1}^{|U|} \sum_{j=1}^{|V|} \sum_{n_{ij}=(a_i+b_j-N)^+ }^{\min(a_i, b_j)} \frac{n_{ij}}{N}\log \left( \frac{ N.n_{ij}}{a_i b_j}\right) \frac{a_i!b_j!(N-a_i)!(N-b_j)!}{N!n_{ij}!(a_i-n_{ij})!(b_j-n_{ij})! (N-a_i-b_j+n_{ij})!}]<br>
+[E[\text{MI}（U，V）]=\sum_{i=1}^{|U|} \sum_{j=1}^{|V|} \sum_{n_{ij}=（a_i+b_j-N）^+ }^{\min（a_i， b_j）} \frac{n_{ij}}{N}\log \left（ \frac{ N.n_{ij}}{a_i b_j}\right） \frac{a_i！b_j！（ N-a_i）！ （N-b_j）！} {N！n_{ij}！ （a_i-n_{ij}）！ （b_j-n_{ij}）！ （N-a_i-b_j+n_{ij}）！} ]</p>
+<p>Using the expected value, the adjusted mutual information can then be calculated using a similar form to that of the adjusted Rand index:<br>
+使用期望值，可以使用与调整后的兰德指数类似的形式计算调整后的互信息：</p>
+<p>[\text{AMI} = \frac{\text{MI} - E[\text{MI}]}{\text{mean}(H(U), H(V)) - E[\text{MI}]}]<br>
+[\text{AMI} = \frac{\text{MI} - E[\text{MI}]}{\text{mean}（H（U）， H（V）） - E[\text{MI}]}]</p>
+<p>For normalized mutual information and adjusted mutual information, the normalizing value is typically some <em>generalized</em> mean of the entropies of each clustering. Various generalized means exist, and no firm rules exist for preferring one over the others. The decision is largely a field-by-field basis; for instance, in community detection, the arithmetic mean is most common. Each normalizing method provides “qualitatively similar behaviours” [<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#yat2016">YAT2016]</a>. In our implementation, this is controlled by the <code>average_method</code> parameter.<br>
+对于归一化互信息和调整互信息，归一化值通常是每个聚类的熵的广义平均值。存在各种通用方法，并且没有确定的规则来偏爱其中一种。该决定在很大程度上是逐个领域作出的;例如，在社区检测中，算术平均值是最常见的。每种归一化方法都提供了“定性相似的行为”[YAT2016]。在我们的实现中，这是由参数控制的 <code>average_method</code> 。</p>
+<p>Vinh et al. (2010) named variants of NMI and AMI by their averaging method [<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#veb2010">VEB2010]</a>. Their ‘sqrt’ and ‘sum’ averages are the geometric and arithmetic means; we use these more broadly common names.<br>
+Vinh等人（2010）通过平均法命名了NMI和AMI的变体[VEB2010]。它们的“平方”和“总和”平均值是几何和算术平均值;我们使用这些更广泛通用的名称。</p>
+<h3 id="homogeneity-completeness-and-v-measure-同质性-完整性和-v-measure">Homogeneity, completeness and V-measure<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#homogeneity-completeness-and-v-measure">¶</a> 同质性、完整性和 V-measure ¶</h3>
+<p>Given the knowledge of the ground truth class assignments of the samples, it is possible to define some intuitive metric using conditional entropy analysis.<br>
+鉴于对样本的真值类分配的了解，可以使用条件熵分析定义一些直观的指标。</p>
+<p>In particular Rosenberg and Hirschberg (2007) define the following two desirable objectives for any cluster assignment:<br>
+特别是，Rosenberg和Hirschberg（2007）为任何集群分配定义了以下两个理想目标：</p>
+<ul>
+<li><strong>homogeneity</strong>: each cluster contains only members of a single class.<br>
+同质性：每个集群仅包含单个类的成员。</li>
+<li><strong>completeness</strong>: all members of a given class are assigned to the same cluster.<br>
+完整性：给定类的所有成员都分配到同一集群。</li>
+</ul>
+<p>We can turn those concept as scores <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.homogeneity_score.html#sklearn.metrics.homogeneity_score"><code>homogeneity_score</code></a> and <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.completeness_score.html#sklearn.metrics.completeness_score"><code>completeness_score</code></a>. Both are bounded below by 0.0 and above by 1.0 (higher is better):<br>
+我们可以将这些概念转换为分数 <code>homogeneity_score</code> 和 <code>completeness_score</code> .两者都以 0.0 为界，高于 1.0（越高越好）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from sklearn import metrics</span><br><span class="line">&gt;&gt;&gt; labels_true = [0, 0, 0, 1, 1, 1]</span><br><span class="line">&gt;&gt;&gt; labels_pred = [0, 0, 1, 1, 2, 2]</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; metrics.homogeneity_score(labels_true, labels_pred)</span><br><span class="line">0.66...</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; metrics.completeness_score(labels_true, labels_pred)</span><br><span class="line">0.42...</span><br></pre></td></tr></table></figure>
+<p>Their harmonic mean called <strong>V-measure</strong> is computed by <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.v_measure_score.html#sklearn.metrics.v_measure_score"><code>v_measure_score</code></a>:<br>
+它们的谐波平均值称为 V-measure，计算公式为 <code>v_measure_score</code> ：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; metrics.v_measure_score(labels_true, labels_pred)</span><br><span class="line">0.51...</span><br></pre></td></tr></table></figure>
+<p>This function’s formula is as follows:<br>
+该函数的公式如下：</p>
+<p>[v = \frac{(1 + \beta) \times \text{homogeneity} \times \text{completeness}}{(\beta \times \text{homogeneity} + \text{completeness})}]<br>
+[v = \frac{（1 + \beta） \times \text{同质性} \times \text{完整性}}{（\beta \times \text{homogeneity} + \text{完整性}）}]</p>
+<p><code>beta</code> defaults to a value of 1.0, but for using a value less than 1 for beta:<br>
+<code>beta</code> 默认值为 1.0，但对于 beta 使用小于 1 的值：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; metrics.v_measure_score(labels_true, labels_pred, beta=0.6)</span><br><span class="line">0.54...</span><br></pre></td></tr></table></figure>
+<p>more weight will be attributed to homogeneity, and using a value greater than 1:<br>
+更多的权重将归因于同质性，并使用大于 1 的值：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; metrics.v_measure_score(labels_true, labels_pred, beta=1.8)</span><br><span class="line">0.48...</span><br></pre></td></tr></table></figure>
+<p>more weight will be attributed to completeness.<br>
+更多的权重将归因于完整性。</p>
+<p>The V-measure is actually equivalent to the mutual information (NMI) discussed above, with the aggregation function being the arithmetic mean [<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#b2011">B2011]</a>.<br>
+V-measure实际上等价于上面讨论的互信息（NMI），聚合函数是算术平均值[B2011]。</p>
+<p>Homogeneity, completeness and V-measure can be computed at once using <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.homogeneity_completeness_v_measure.html#sklearn.metrics.homogeneity_completeness_v_measure"><code>homogeneity_completeness_v_measure</code></a> as follows:<br>
+同质性、完整性和 V 度量可以使用 <code>homogeneity_completeness_v_measure</code> 以下方法同时计算：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; metrics.homogeneity_completeness_v_measure(labels_true, labels_pred)</span><br><span class="line">(0.66..., 0.42..., 0.51...)</span><br></pre></td></tr></table></figure>
+<p>The following clustering assignment is slightly better, since it is homogeneous but not complete:<br>
+以下聚类分配稍微好一些，因为它是同质的，但不完整：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; labels_pred = [0, 0, 0, 1, 2, 2]</span><br><span class="line">&gt;&gt;&gt; metrics.homogeneity_completeness_v_measure(labels_true, labels_pred)</span><br><span class="line">(1.0, 0.68..., 0.81...)</span><br></pre></td></tr></table></figure>
+<p>Note 注意</p>
+<p><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.v_measure_score.html#sklearn.metrics.v_measure_score"><code>v_measure_score</code></a> is <strong>symmetric</strong>: it can be used to evaluate the <strong>agreement</strong> of two independent assignments on the same dataset.<br>
+<code>v_measure_score</code> 是对称的：它可用于评估同一数据集上两个独立赋值的一致性。</p>
+<p>This is not the case for <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.completeness_score.html#sklearn.metrics.completeness_score"><code>completeness_score</code></a> and <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.homogeneity_score.html#sklearn.metrics.homogeneity_score"><code>homogeneity_score</code></a>: both are bound by the relationship:<br>
+<code>completeness_score</code> 但 和 <code>homogeneity_score</code> 的情况并非如此：两者都受关系的约束：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">homogeneity_score(a, b) == completeness_score(b, a)</span><br></pre></td></tr></table></figure>
+<h4 id="advantages-优点">Advantages<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#id21">¶</a>  优点 ¶</h4>
+<ul>
+<li><strong>Bounded scores</strong>: 0.0 is as bad as it can be, 1.0 is a perfect score.<br>
+有界分数：0.0 是尽可能糟糕的，1.0 是满分。</li>
+<li>Intuitive interpretation: clustering with bad V-measure can be <strong>qualitatively analyzed in terms of homogeneity and completeness</strong> to better feel what ‘kind’ of mistakes is done by the assignment.<br>
+直观的解释：可以根据同质性和完整性对具有不良 V 度量的聚类进行定性分析，以更好地感受作业造成的“类型”错误。</li>
+<li><strong>No assumption is made on the cluster structure</strong>: can be used to compare clustering algorithms such as k-means which assumes isotropic blob shapes with results of spectral clustering algorithms which can find cluster with “folded” shapes.<br>
+不对聚类结构进行任何假设：可用于比较聚类算法，例如假设各向同性斑点形状的 k-means，以及可以找到具有“折叠”形状的聚类的光谱聚类算法的结果。</li>
+</ul>
+<h4 id="drawbacks-缺点">Drawbacks<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#id22">¶</a>  缺点 ¶</h4>
+<ul>
+<li>
+<p>The previously introduced metrics are <strong>not normalized with regards to random labeling</strong>: this means that depending on the number of samples, clusters and ground truth classes, a completely random labeling will not always yield the same values for homogeneity, completeness and hence v-measure. In particular <strong>random labeling won’t yield zero scores especially when the number of clusters is large</strong>.<br>
+对于随机标记，前面介绍的指标没有标准化：这意味着根据样本、聚类和真值类的数量，完全随机的标记并不总是产生相同的同质性、完整性和 v 度值。特别是，随机标记不会产生零分，尤其是当聚类数量很大时。</p>
+<p>This problem can safely be ignored when the number of samples is more than a thousand and the number of clusters is less than 10. <strong>For smaller sample sizes or larger number of clusters it is safer to use an adjusted index such as the Adjusted Rand Index (ARI)</strong>.<br>
+当样本数超过一千个且聚类数小于 10 个时，可以安全地忽略此问题。对于较小的样本量或较多的聚类，使用调整后的指数（如调整后的兰德指数 （ARI）））更安全。</p>
+</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/auto_examples/cluster/plot_adjusted_for_chance_measures.html"><img src="https://scikit-learn.org/stable/_images/sphx_glr_plot_adjusted_for_chance_measures_001.png" alt="img"></a></p>
+<ul>
+<li>These metrics <strong>require the knowledge of the ground truth classes</strong> while almost never available in practice or requires manual assignment by human annotators (as in the supervised learning setting).<br>
+这些指标需要了解基本实况类，而在实践中几乎不可用，或者需要人工注释者手动分配（如在监督学习设置中）。</li>
+</ul>
+<h4 id="mathematical-formulation-数学公式">Mathematical formulation<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#id23">¶</a> 数学公式 ¶</h4>
+<p>Homogeneity and completeness scores are formally given by:<br>
+同质性和完整性分数的正式公式为：</p>
+<p>[h = 1 - \frac{H(C|K)}{H©}]<br>
+[h = 1 - \frac{H（C|K）}{H（C）}]</p>
+<p>[c = 1 - \frac{H(K|C)}{H(K)}]<br>
+[c = 1 - \frac{H（K|C）}{H（K）}]</p>
+<p>where (H(C|K)) is the <strong>conditional entropy of the classes given the cluster assignments</strong> and is given by:<br>
+其中 \（H（C|K）\） 是给定聚类赋值的类的条件熵，由下式给出：</p>
+<p>[H(C|K) = - \sum_{c=1}^{|C|} \sum_{k=1}^{|K|} \frac{n_{c,k}}{n} \cdot \log\left(\frac{n_{c,k}}{n_k}\right)]<br>
+[H（C|K） = - \sum_{c=1}^{|C|}\sum_{k=1}^{|K|}\frac{n_{c，k}}{n} \cdot \log\left（\frac{n_{c，k}}{n_k}\right）]</p>
+<p>and (H©) is the <strong>entropy of the classes</strong> and is given by:<br>
+\（H（C）\） 是类的熵，由下式给出：</p>
+<p>[H© = - \sum_{c=1}^{|C|} \frac{n_c}{n} \cdot \log\left(\frac{n_c}{n}\right)]<br>
+[H（C） = - \sum_{c=1}^{|C|}\frac{n_c}{n} \cdot \log\left（\frac{n_c}{n}\right）]</p>
+<p>with (n) the total number of samples, (n_c) and (n_k) the number of samples respectively belonging to class (c) and cluster (k), and finally (n_{c,k}) the number of samples from class (c) assigned to cluster (k).<br>
+其中\（n\）是样本总数，\（n_c\）和\（n_k\）分别属于类\（c\）和聚类\（k\）的样本数，最后\（n_{c，k}\）类\（c\）分配给聚类\（k\）的样本数。</p>
+<p>The <strong>conditional entropy of clusters given class</strong> (H(K|C)) and the <strong>entropy of clusters</strong> (H(K)) are defined in a symmetric manner.<br>
+给定类 \（H（K|C）\） 和簇 \（H（K）\） 的熵以对称方式定义。</p>
+<p>Rosenberg and Hirschberg further define <strong>V-measure</strong> as the <strong>harmonic mean of homogeneity and completeness</strong>:<br>
+Rosenberg 和 Hirschberg 进一步将 V-measure 定义为均匀性和完备性的谐波平均值：</p>
+<p>[v = 2 \cdot \frac{h \cdot c}{h + c}]</p>
+<h3 id="fowlkes-mallows-scores-fowlkes-mallows得分">Fowlkes-Mallows scores<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#fowlkes-mallows-scores">¶</a>  Fowlkes-Mallows得分 ¶</h3>
+<p>The Fowlkes-Mallows index (<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.fowlkes_mallows_score.html#sklearn.metrics.fowlkes_mallows_score"><code>sklearn.metrics.fowlkes_mallows_score</code></a>) can be used when the ground truth class assignments of the samples is known. The Fowlkes-Mallows score FMI is defined as the geometric mean of the pairwise precision and recall:<br>
+Fowlkes-Mallows指数（ <code>sklearn.metrics.fowlkes_mallows_score</code> ）可用于样本的真值类分配已知的情况。Fowlkes-Mallows 评分 FMI 定义为成对精度和召回率的几何平均值：</p>
+<p>[\text{FMI} = \frac{\text{TP}}{\sqrt{(\text{TP} + \text{FP}) (\text{TP} + \text{FN})}}]<br>
+[\text{FMI} = \frac{\text{TP}}{\sqrt{（\text{TP} + \text{FP}） （\text{TP} + \text{FN}）}}]</p>
+<p>Where <code>TP</code> is the number of <strong>True Positive</strong> (i.e. the number of pair of points that belong to the same clusters in both the true labels and the predicted labels), <code>FP</code> is the number of <strong>False Positive</strong> (i.e. the number of pair of points that belong to the same clusters in the true labels and not in the predicted labels) and <code>FN</code> is the number of <strong>False Negative</strong> (i.e the number of pair of points that belongs in the same clusters in the predicted labels and not in the true labels).<br>
+其中 <code>TP</code> ，是真阳性数（即在真实标签和预测标签中属于同一聚类的对点数）， <code>FP</code> 是假阳性数（即在真实标签中属于同一聚类而不是在预测标签中的对点数）和 <code>FN</code> 假阴性数（即属于预测标签中的相同聚类，而不是真实标签中的相同聚类）。</p>
+<p>The score ranges from 0 to 1. A high value indicates a good similarity between two clusters.<br>
+分数范围从 0 到 1。较高的值表示两个聚类之间的相似性良好。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from sklearn import metrics</span><br><span class="line">&gt;&gt;&gt; labels_true = [0, 0, 0, 1, 1, 1]</span><br><span class="line">&gt;&gt;&gt; labels_pred = [0, 0, 1, 1, 2, 2]</span><br><span class="line">&gt;&gt;&gt; metrics.fowlkes_mallows_score(labels_true, labels_pred)</span><br><span class="line">0.47140...</span><br></pre></td></tr></table></figure>
+<p>One can permute 0 and 1 in the predicted labels, rename 2 to 3 and get the same score:<br>
+可以在预测标签中置换 0 和 1，重命名 2 到 3 并获得相同的分数：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; labels_pred = [1, 1, 0, 0, 3, 3]</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; metrics.fowlkes_mallows_score(labels_true, labels_pred)</span><br><span class="line">0.47140...</span><br></pre></td></tr></table></figure>
+<p>Perfect labeling is scored 1.0:<br>
+完美标签得分为 1.0：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; labels_pred = labels_true[:]</span><br><span class="line">&gt;&gt;&gt; metrics.fowlkes_mallows_score(labels_true, labels_pred)</span><br><span class="line">1.0</span><br></pre></td></tr></table></figure>
+<p>Bad (e.g. independent labelings) have zero scores:<br>
+不良（例如独立标签）的得分为零：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; labels_true = [0, 1, 2, 0, 3, 4, 5, 1]</span><br><span class="line">&gt;&gt;&gt; labels_pred = [1, 1, 0, 0, 2, 2, 2, 2]</span><br><span class="line">&gt;&gt;&gt; metrics.fowlkes_mallows_score(labels_true, labels_pred)</span><br><span class="line">0.0</span><br></pre></td></tr></table></figure>
+<h4 id="advantages-优点">Advantages<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#id25">¶</a> 优点 ¶</h4>
+<ul>
+<li><strong>Random (uniform) label assignments have a FMI score close to 0.0</strong> for any value of <code>n_clusters</code> and <code>n_samples</code> (which is not the case for raw Mutual Information or the V-measure for instance).<br>
+对于任何值 <code>n_clusters</code> and <code>n_samples</code> 的随机（统一）标签分配，FMI 分数接近 0.0（例如，原始互信息或 V 度量并非如此）。</li>
+<li><strong>Upper-bounded at 1</strong>: Values close to zero indicate two label assignments that are largely independent, while values close to one indicate significant agreement. Further, values of exactly 0 indicate <strong>purely</strong> independent label assignments and a FMI of exactly 1 indicates that the two label assignments are equal (with or without permutation).<br>
+1 处的上限：接近 0 的值表示两个标签分配在很大程度上是独立的，而接近 1 的值表示非常一致。此外，值正好为 0 表示完全独立的标签分配，而 FMI 正好为 1 表示两个标签分配相等（有或没有排列）。</li>
+<li><strong>No assumption is made on the cluster structure</strong>: can be used to compare clustering algorithms such as k-means which assumes isotropic blob shapes with results of spectral clustering algorithms which can find cluster with “folded” shapes.<br>
+不对聚类结构进行任何假设：可用于比较聚类算法，例如假设各向同性斑点形状的 k-means，以及可以找到具有“折叠”形状的聚类的光谱聚类算法的结果。</li>
+</ul>
+<h4 id="1-11-4-2-drawbacks-1-11-4-2-缺点">1.11.4.2. Drawbacks<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#id26">¶</a> 1.11.4.2. 缺点 ¶</h4>
+<ul>
+<li>Contrary to inertia, <strong>FMI-based measures require the knowledge of the ground truth classes</strong> while almost never available in practice or requires manual assignment by human annotators (as in the supervised learning setting).<br>
+与惯性相反，基于 FMI 的测量需要了解基本实况类，而在实践中几乎不可用，或者需要人工注释者手动分配（如在监督学习设置中）。</li>
+</ul>
+<h3 id="silhouette-coefficient-轮廓系数">Silhouette Coefficient<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#silhouette-coefficient">¶</a> 轮廓系数 ¶</h3>
+<p>If the ground truth labels are not known, evaluation must be performed using the model itself. The Silhouette Coefficient (<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.silhouette_score.html#sklearn.metrics.silhouette_score"><code>sklearn.metrics.silhouette_score</code></a>) is an example of such an evaluation, where a higher Silhouette Coefficient score relates to a model with better defined clusters. The Silhouette Coefficient is defined for each sample and is composed of two scores:<br>
+如果地面实况标签未知，则必须使用模型本身执行评估。轮廓系数 （ <code>sklearn.metrics.silhouette_score</code> ） 是此类评估的一个示例，其中较高的轮廓系数分数与具有更好定义聚类的模型相关。轮廓系数是为每个样本定义的，由两个分数组成：</p>
+<ul>
+<li><strong>a</strong>: The mean distance between a sample and all other points in the same class.<br>
+a：样本与同一类别中所有其他点之间的平均距离。</li>
+<li><strong>b</strong>: The mean distance between a sample and all other points in the <em>next nearest cluster</em>.<br>
+b：样本与下一个最近聚类中所有其他点之间的平均距离。</li>
+</ul>
+<p>The Silhouette Coefficient <em>s</em> for a single sample is then given as:<br>
+然后，单个样本的轮廓系数 s 为：</p>
+<p>[s = \frac{b - a}{max(a, b)}]<br>
+[s = \frac{b - a}{max（a， b）}]</p>
+<p>The Silhouette Coefficient for a set of samples is given as the mean of the Silhouette Coefficient for each sample.<br>
+一组样本的轮廓系数是每个样本的轮廓系数的平均值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from sklearn import metrics</span><br><span class="line">&gt;&gt;&gt; from sklearn.metrics import pairwise_distances</span><br><span class="line">&gt;&gt;&gt; from sklearn import datasets</span><br><span class="line">&gt;&gt;&gt; X, y = datasets.load_iris(return_X_y=True)</span><br></pre></td></tr></table></figure>
+<p>In normal usage, the Silhouette Coefficient is applied to the results of a cluster analysis.<br>
+在正常使用中，轮廓系数应用于聚类分析的结果。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import numpy as np</span><br><span class="line">&gt;&gt;&gt; from sklearn.cluster import KMeans</span><br><span class="line">&gt;&gt;&gt; kmeans_model = KMeans(n_clusters=3, random_state=1).fit(X)</span><br><span class="line">&gt;&gt;&gt; labels = kmeans_model.labels_</span><br><span class="line">&gt;&gt;&gt; metrics.silhouette_score(X, labels, metric=&#x27;euclidean&#x27;)</span><br><span class="line">0.55...</span><br></pre></td></tr></table></figure>
+<h4 id="advantages-优点">Advantages<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#id28">¶</a> 优点 ¶</h4>
+<ul>
+<li>The score is bounded between -1 for incorrect clustering and +1 for highly dense clustering. Scores around zero indicate overlapping clusters.<br>
+分数介于 -1（对于不正确的聚类）和 +1（对于高密度聚类）之间。分数接近零表示聚类重叠。</li>
+<li>The score is higher when clusters are dense and well separated, which relates to a standard concept of a cluster.<br>
+当聚类密集且分离良好时，分数会更高，这与聚类的标准概念有关。</li>
+</ul>
+<h4 id="drawbacks-缺点">Drawbacks<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#id29">¶</a>  缺点 ¶</h4>
+<ul>
+<li>The Silhouette Coefficient is generally higher for convex clusters than other concepts of clusters, such as density based clusters like those obtained through DBSCAN.<br>
+凸簇的轮廓系数通常高于其他簇的概念，例如通过 DBSCAN 获得的基于密度的簇。</li>
+</ul>
+<h3 id="calinski-harabasz-index-calinski-harabasz-索引">Calinski-Harabasz Index<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#calinski-harabasz-index">¶</a>  Calinski-Harabasz 索引 ¶</h3>
+<p>If the ground truth labels are not known, the Calinski-Harabasz index (<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.calinski_harabasz_score.html#sklearn.metrics.calinski_harabasz_score"><code>sklearn.metrics.calinski_harabasz_score</code></a>) - also known as the Variance Ratio Criterion - can be used to evaluate the model, where a higher Calinski-Harabasz score relates to a model with better defined clusters.<br>
+如果真值标签未知，则可以使用 Calinski-Harabasz 指数 （ <code>sklearn.metrics.calinski_harabasz_score</code> ） - 也称为方差比准则 - 用于评估模型，其中较高的 Calinski-Harabasz 分数与具有更好定义的聚类的模型相关。</p>
+<p>The index is the ratio of the sum of between-clusters dispersion and of within-cluster dispersion for all clusters (where dispersion is defined as the sum of distances squared):<br>
+该指数是所有聚类的簇间离散度和簇内色散之和的比率（其中色散定义为距离的平方和）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from sklearn import metrics</span><br><span class="line">&gt;&gt;&gt; from sklearn.metrics import pairwise_distances</span><br><span class="line">&gt;&gt;&gt; from sklearn import datasets</span><br><span class="line">&gt;&gt;&gt; X, y = datasets.load_iris(return_X_y=True)</span><br></pre></td></tr></table></figure>
+<p>In normal usage, the Calinski-Harabasz index is applied to the results of a cluster analysis:<br>
+在正常用法中，Calinski-Harabasz 指数应用于聚类分析的结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import numpy as np</span><br><span class="line">&gt;&gt;&gt; from sklearn.cluster import KMeans</span><br><span class="line">&gt;&gt;&gt; kmeans_model = KMeans(n_clusters=3, random_state=1).fit(X)</span><br><span class="line">&gt;&gt;&gt; labels = kmeans_model.labels_</span><br><span class="line">&gt;&gt;&gt; metrics.calinski_harabasz_score(X, labels)</span><br><span class="line">561.62...</span><br></pre></td></tr></table></figure>
+<h4 id="advantages-优点">Advantages<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#id31">¶</a> 优点 ¶</h4>
+<ul>
+<li>The score is higher when clusters are dense and well separated, which relates to a standard concept of a cluster.<br>
+当聚类密集且分离良好时，分数会更高，这与聚类的标准概念有关。</li>
+<li>The score is fast to compute.<br>
+分数计算速度很快。</li>
+</ul>
+<h4 id="drawbacks-缺点">Drawbacks<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#id32">¶</a> 缺点 ¶</h4>
+<ul>
+<li>The Calinski-Harabasz index is generally higher for convex clusters than other concepts of clusters, such as density based clusters like those obtained through DBSCAN.<br>
+凸簇的 Calinski-Harabasz 指数通常高于其他簇概念，例如通过 DBSCAN 获得的基于密度的簇。</li>
+</ul>
+<h4 id="mathematical-formulation-数学公式">Mathematical formulation<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#id33">¶</a>  数学公式 ¶</h4>
+<p>For a set of data (E) of size (n_E) which has been clustered into (k) clusters, the Calinski-Harabasz score (s) is defined as the ratio of the between-clusters dispersion mean and the within-cluster dispersion:<br>
+对于已聚类成 \（k\） 个聚类的一组大小为 \（n_E\） 的数据 \（E\），Calinski-Harabasz 分数 \（s\） 定义为聚类间离散均值与聚类内离散度的比值：</p>
+<p>[s = \frac{\mathrm{tr}(B_k)}{\mathrm{tr}(W_k)} \times \frac{n_E - k}{k - 1}]<br>
+[s = \frac{\mathrm{tr}（B_k）}{\mathrm{tr}（W_k）} \times \frac{n_E - k}{k - 1}]</p>
+<p>where (\mathrm{tr}(B_k)) is trace of the between group dispersion matrix and (\mathrm{tr}(W_k)) is the trace of the within-cluster dispersion matrix defined by:<br>
+其中 \（\mathrm{tr}（B_k）\） 是群间色散矩阵的迹线，\（\mathrm{tr}（W_k）\） 是簇内色散矩阵的迹线，定义如下：</p>
+<p>[W_k = \sum_{q=1}^k \sum_{x \in C_q} (x - c_q) (x - c_q)^T]<br>
+[W_k = \sum_{q=1}^k \sum_{x \in C_q} （x - c_q） （x - c_q）^T]</p>
+<p>[B_k = \sum_{q=1}^k n_q (c_q - c_E) (c_q - c_E)^T]<br>
+[B_k = \sum_{q=1}^k n_q （c_q - c_E） （c_q - c_E）^T]</p>
+<p>with (C_q) the set of points in cluster (q), (c_q) the center of cluster (q), (c_E) the center of (E), and (n_q) the number of points in cluster (q).<br>
+其中\（C_q\）是聚类\（q\）中的点集，\（c_q\）是聚类\（q\）的中心，\（c_E\）是\（E\）的中心，\（n_q\）是聚类\（q\）中的点数。</p>
+<h3 id="davies-bouldin-index-davies-bouldin指数">Davies-Bouldin Index<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#davies-bouldin-index">¶</a> Davies-Bouldin指数 ¶</h3>
+<p>If the ground truth labels are not known, the Davies-Bouldin index (<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.davies_bouldin_score.html#sklearn.metrics.davies_bouldin_score"><code>sklearn.metrics.davies_bouldin_score</code></a>) can be used to evaluate the model, where a lower Davies-Bouldin index relates to a model with better separation between the clusters.<br>
+如果真值标签未知，则 Davies-Bouldin 指数 （ <code>sklearn.metrics.davies_bouldin_score</code> ） 可用于评估模型，其中较低的 Davies-Bouldin 指数与聚类之间分离较好的模型相关。</p>
+<p>This index signifies the average ‘similarity’ between clusters, where the similarity is a measure that compares the distance between clusters with the size of the clusters themselves.<br>
+该指数表示聚类之间的平均“相似性”，其中相似性是将聚类之间的距离与聚类本身的大小进行比较的度量。</p>
+<p>Zero is the lowest possible score. Values closer to zero indicate a better partition.<br>
+零是可能的最低分数。值越接近于零，表示分区越好。</p>
+<p>In normal usage, the Davies-Bouldin index is applied to the results of a cluster analysis as follows:<br>
+在正常用法中，Davies-Bouldin 指数应用于聚类分析的结果，如下所示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from sklearn import datasets</span><br><span class="line">&gt;&gt;&gt; iris = datasets.load_iris()</span><br><span class="line">&gt;&gt;&gt; X = iris.data</span><br><span class="line">&gt;&gt;&gt; from sklearn.cluster import KMeans</span><br><span class="line">&gt;&gt;&gt; from sklearn.metrics import davies_bouldin_score</span><br><span class="line">&gt;&gt;&gt; kmeans = KMeans(n_clusters=3, random_state=1).fit(X)</span><br><span class="line">&gt;&gt;&gt; labels = kmeans.labels_</span><br><span class="line">&gt;&gt;&gt; davies_bouldin_score(X, labels)</span><br><span class="line">0.6619...</span><br></pre></td></tr></table></figure>
+<h4 id="advantages-优点">Advantages<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#id35">¶</a>  优点 ¶</h4>
+<ul>
+<li>The computation of Davies-Bouldin is simpler than that of Silhouette scores.<br>
+Davies-Bouldin 的计算比 Silhouette 分数的计算更简单。</li>
+<li>The index is solely based on quantities and features inherent to the dataset as its computation only uses point-wise distances.<br>
+该指数仅基于数据集固有的数量和特征，因为其计算仅使用逐点距离。</li>
+</ul>
+<h4 id="drawbacks-缺点">Drawbacks<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#id36">¶</a> 缺点 ¶</h4>
+<ul>
+<li>The Davies-Boulding index is generally higher for convex clusters than other concepts of clusters, such as density based clusters like those obtained from DBSCAN.<br>
+凸聚类的 Davies-Boulding 指数通常高于其他聚类概念，例如基于 密度的聚类，例如从 DBSCAN 获得的聚类。</li>
+<li>The usage of centroid distance limits the distance metric to Euclidean space.<br>
+质心距离的使用将距离度量限制为欧几里得空间。</li>
+</ul>
+<h4 id="mathematical-formulation-数学公式">Mathematical formulation<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#id37">¶</a> 数学公式 ¶</h4>
+<p>The index is defined as the average similarity between each cluster (C_i) for (i=1, …, k) and its most similar one (C_j). In the context of this index, similarity is defined as a measure (R_{ij}) that trades off:<br>
+该指数定义为 \（i=1， …， k\） 的每个聚类 \（C_i\） 与其最相似的聚类 \（C_j\） 之间的平均相似度。在此索引的上下文中，相似性被定义为权衡以下因素的度量 \（R_{ij}\）：</p>
+<ul>
+<li>(s_i), the average distance between each point of cluster (i) and the centroid of that cluster – also know as cluster diameter.<br>
+\（s_i\），簇 \（i\） 的每个点与该簇的质心之间的平均距离——也称为簇直径。</li>
+<li>(d_{ij}), the distance between cluster centroids (i) and (j).<br>
+\（d_{ij}\），簇质心\（i\）和\（j\）之间的距离。</li>
+</ul>
+<p>A simple choice to construct (R_{ij}) so that it is nonnegative and symmetric is:<br>
+构造\（R_{ij}\）以使其为非负和对称的简单选择是：</p>
+<p>[R_{ij} = \frac{s_i + s_j}{d_{ij}}]</p>
+<p>Then the Davies-Bouldin index is defined as:<br>
+那么 Davies-Bouldin 指数定义为：</p>
+<p>[DB = \frac{1}{k} \sum_{i=1}^k \max_{i \neq j} R_{ij}]</p>
+<h3 id="contingency-matrix-列联矩阵">Contingency Matrix<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#contingency-matrix">¶</a>  列联矩阵 ¶</h3>
+<p>Contingency matrix (<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.cluster.contingency_matrix.html#sklearn.metrics.cluster.contingency_matrix"><code>sklearn.metrics.cluster.contingency_matrix</code></a>) reports the intersection cardinality for every true/predicted cluster pair. The contingency matrix provides sufficient statistics for all clustering metrics where the samples are independent and identically distributed and one doesn’t need to account for some instances not being clustered.<br>
+列联矩阵 （ <code>sklearn.metrics.cluster.contingency_matrix</code> ） 报告每个真实/预测聚类对的交集基数。列联矩阵为所有聚类指标提供了足够的统计数据，其中样本是独立且分布相同的，并且不需要考虑某些未聚类的实例。</p>
+<p>Here is an example:<br>
+下面是一个示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from sklearn.metrics.cluster import contingency_matrix</span><br><span class="line">&gt;&gt;&gt; x = [&quot;a&quot;, &quot;a&quot;, &quot;a&quot;, &quot;b&quot;, &quot;b&quot;, &quot;b&quot;]</span><br><span class="line">&gt;&gt;&gt; y = [0, 0, 1, 1, 2, 2]</span><br><span class="line">&gt;&gt;&gt; contingency_matrix(x, y)</span><br><span class="line">array([[2, 1, 0],</span><br><span class="line">       [0, 1, 2]])</span><br></pre></td></tr></table></figure>
+<p>The first row of output array indicates that there are three samples whose true cluster is “a”. Of them, two are in predicted cluster 0, one is in 1, and none is in 2. And the second row indicates that there are three samples whose true cluster is “b”. Of them, none is in predicted cluster 0, one is in 1 and two are in 2.<br>
+输出数组的第一行表示有三个样本，其真实聚类为“a”。其中，两个在预测的聚类 0 中，一个在聚类 1 中，没有一个在聚类 2 中。第二行表示有三个样本，其真实聚类为“b”。其中，没有一个在预测的聚类 0 中，一个在 1 中，两个在 2 中。</p>
+<p>A <a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/model_evaluation.html#confusion-matrix">confusion matrix</a> for classification is a square contingency matrix where the order of rows and columns correspond to a list of classes.<br>
+用于分类的混淆矩阵是一个方形列联矩阵，其中行和列的顺序对应于类列表。</p>
+<h4 id="advantages-优点">Advantages<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#id39">¶</a>  优点 ¶</h4>
+<ul>
+<li>Allows to examine the spread of each true cluster across predicted clusters and vice versa.<br>
+允许检查每个真实聚类在预测聚类中的分布，反之亦然。</li>
+<li>The contingency table calculated is typically utilized in the calculation of a similarity statistic (like the others listed in this document) between the two clusterings.<br>
+计算的列联表通常用于计算两个聚类之间的相似性统计量（如本文档中列出的其他统计量）。</li>
+</ul>
+<h4 id="drawbacks-缺点">Drawbacks<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#id40">¶</a> 缺点 ¶</h4>
+<ul>
+<li>Contingency matrix is easy to interpret for a small number of clusters, but becomes very hard to interpret for a large number of clusters.<br>
+列联矩阵对于少量聚类很容易解释，但对于大量聚类则变得非常困难。</li>
+<li>It doesn’t give a single metric to use as an objective for clustering optimisation.<br>
+它没有提供一个指标作为聚类优化的目标。</li>
+</ul>
+<h3 id="pair-confusion-matrix-对混淆矩阵">Pair Confusion Matrix<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/clustering.html#pair-confusion-matrix">¶</a>  对混淆矩阵 ¶</h3>
+<p>The pair confusion matrix (<a target="_blank" rel="noopener" href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.cluster.pair_confusion_matrix.html#sklearn.metrics.cluster.pair_confusion_matrix"><code>sklearn.metrics.cluster.pair_confusion_matrix</code></a>) is a 2x2 similarity matrix<br>
+对混淆矩阵 （ <code>sklearn.metrics.cluster.pair_confusion_matrix</code> ） 是一个 2x2 的相似性矩阵</p>
+<p>[\begin{split}C = \left[\begin{matrix} C_{00} &amp; C_{01} \ C_{10} &amp; C_{11} \end{matrix}\right]\end{split}]</p>
+<p>between two clusterings computed by considering all pairs of samples and counting pairs that are assigned into the same or into different clusters under the true and predicted clusterings.<br>
+通过考虑所有样本对并计数在真实聚类和预测聚类下分配到相同或不同聚类中的对来计算的两个聚类之间。</p>
+<p>It has the following entries:<br>
+它包含以下条目：</p>
+<p>(C_{00}) : number of pairs with both clusterings having the samples not clustered together<br>
+\（C_{00}\） ： 两个聚类的样本未聚类在一起的对数</p>
+<p>(C_{10}) : number of pairs with the true label clustering having the samples clustered together but the other clustering not having the samples clustered together<br>
+\（C_{10}\） ： 具有真实标签聚类的对数，这些聚类的样本聚类在一起，但另一个聚类没有将样本聚类在一起</p>
+<p>(C_{01}) : number of pairs with the true label clustering not having the samples clustered together but the other clustering having the samples clustered together<br>
+\（C_{01}\） ： 具有真实标签聚类的对数，没有将样本聚类在一起，但另一个聚类将样本聚类在一起</p>
+<p>(C_{11}) : number of pairs with both clusterings having the samples clustered together<br>
+\（C_{11}\） ： 两个聚类的对数，样本聚类在一起</p>
+<p>Considering a pair of samples that is clustered together a positive pair, then as in binary classification the count of true negatives is (C_{00}), false negatives is (C_{10}), true positives is (C_{11}) and false positives is (C_{01}).<br>
+考虑一对样本聚集在一起的正对，那么在二元分类中，真阴性的计数是\（C_{00}\），假阴性是\（C_{10}\），真阳性是\（C_{11}\），假阳性是\（C_{01}\）。</p>
+<p>Perfectly matching labelings have all non-zero entries on the diagonal regardless of actual label values:<br>
+完全匹配的标签在对角线上具有所有非零条目，而不管实际标签值如何：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; from sklearn.metrics.cluster import pair_confusion_matrix</span><br><span class="line">&gt;&gt;&gt; pair_confusion_matrix([0, 0, 1, 1], [0, 0, 1, 1])</span><br><span class="line">array([[8, 0],</span><br><span class="line">       [0, 4]])</span><br><span class="line">&gt;&gt;&gt; pair_confusion_matrix([0, 0, 1, 1], [1, 1, 0, 0])</span><br><span class="line">array([[8, 0],</span><br><span class="line">       [0, 4]])</span><br></pre></td></tr></table></figure>
+<p>Labelings that assign all classes members to the same clusters are complete but may not always be pure, hence penalized, and have some off-diagonal non-zero entries:<br>
+将所有类成员分配给同一聚类的标签是完整的，但可能并不总是纯的，因此会受到惩罚，并且有一些非对角线的非零条目：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; pair_confusion_matrix([0, 0, 1, 2], [0, 0, 1, 1])</span><br><span class="line">array([[8, 2],</span><br><span class="line">       [0, 2]])</span><br></pre></td></tr></table></figure>
+<p>The matrix is not symmetric:<br>
+矩阵不对称：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; pair_confusion_matrix([0, 0, 1, 1], [0, 0, 1, 2])</span><br><span class="line">array([[8, 0],</span><br><span class="line">       [2, 2]])</span><br></pre></td></tr></table></figure>
+<p>If classes members are completely split across different clusters, the assignment is totally incomplete, hence the matrix has all zero diagonal entries:<br>
+如果类成员完全拆分到不同的聚类中，则赋值是完全不完整的，因此矩阵的对角线条目全部为零：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; pair_confusion_matrix([0, 0, 0, 0], [0, 1, 2, 3])</span><br><span class="line">array([[ 0,  0],</span><br><span class="line">       [12,  0]])</span><br></pre></td></tr></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://genewlan.github.io">ZhangLei</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://genewlan.github.io/2023/11/30/Clustering/">http://genewlan.github.io/2023/11/30/Clustering/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://genewlan.github.io" target="_blank">GeneWlan</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/clustering/">clustering</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/11/30/Transformer/" title="Transformer"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Transformer</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ZhangLei</div><div class="author-info__description">change or die!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">18</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/genewlan/" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:xiaolobglee@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">Clustering  聚类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#overview-of-clustering-methods-1-1-%E8%81%9A%E7%B1%BB%E6%96%B9%E6%B3%95%E6%A6%82%E8%BF%B0"><span class="toc-number">1.1.</span> <span class="toc-text">Overview of clustering methods 1.1. 聚类方法概述 ¶</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#k-means"><span class="toc-number">1.2.</span> <span class="toc-text">K-means</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#low-level-parallelism-%E4%BD%8E%E7%BA%A7%E5%B9%B6%E8%A1%8C%E6%80%A7"><span class="toc-number">1.2.1.</span> <span class="toc-text">Low-level parallelism  低级并行性 ¶</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mini-batch-k-means-%E6%89%B9%E9%87%8F-k-means"><span class="toc-number">1.2.2.</span> <span class="toc-text">Mini Batch K-Means 批量 K-Means ¶</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#affinity-propagation-%E4%BA%B2%E5%92%8C%E4%BC%A0%E6%92%AD"><span class="toc-number">1.3.</span> <span class="toc-text">Affinity Propagation 亲和传播 ¶</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mean-shift-%E5%9D%87%E5%80%BC%E5%81%8F%E7%A7%BB"><span class="toc-number">1.4.</span> <span class="toc-text">Mean Shift  均值偏移 ¶</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#spectral-clustering-%E5%85%89%E8%B0%B1%E8%81%9A%E7%B1%BB"><span class="toc-number">1.5.</span> <span class="toc-text">Spectral clustering  光谱聚类 ¶</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#different-label-assignment-strategies-%E4%B8%8D%E5%90%8C%E7%9A%84%E6%A0%87%E7%AD%BE%E5%88%86%E9%85%8D%E7%AD%96%E7%95%A5"><span class="toc-number">1.5.1.</span> <span class="toc-text">Different label assignment strategies 不同的标签分配策略 ¶</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#spectral-clustering-graphs-%E8%B0%B1%E8%81%9A%E7%B1%BB%E5%9B%BE"><span class="toc-number">1.5.2.</span> <span class="toc-text">Spectral Clustering Graphs 谱聚类图 ¶</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hierarchical-clustering-%E5%88%86%E5%B1%82%E8%81%9A%E7%B1%BB"><span class="toc-number">1.6.</span> <span class="toc-text">Hierarchical clustering  分层聚类 ¶</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#different-linkage-type-ward-complete-average-and-single-linkage"><span class="toc-number">1.6.1.</span> <span class="toc-text">Different linkage type: Ward, complete, average, and single linkage</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#visualization-of-cluster-hierarchy-%E9%9B%86%E7%BE%A4%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84%E7%9A%84%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="toc-number">1.6.2.</span> <span class="toc-text">Visualization of cluster hierarchy  集群层次结构的可视化 ¶</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-3-adding-connectivity-constraints-1-6-3-%E6%B7%BB%E5%8A%A0%E8%BF%9E%E6%8E%A5%E7%BA%A6%E6%9D%9F"><span class="toc-number">1.6.3.</span> <span class="toc-text">1.6.3. Adding connectivity constraints 1.6.3. 添加连接约束 ¶</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-6-4-varying-the-metric-1-6-4-%E6%94%B9%E5%8F%98%E6%8C%87%E6%A0%87"><span class="toc-number">1.6.4.</span> <span class="toc-text">1.6.4. Varying the metric 1.6.4. 改变指标 ¶</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bisecting-k-means-%E5%B9%B3%E5%88%86-k-means"><span class="toc-number">1.6.5.</span> <span class="toc-text">Bisecting K-Means 平分 K-Means ¶</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dbscan"><span class="toc-number">1.7.</span> <span class="toc-text">DBSCAN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hdbscan"><span class="toc-number">1.8.</span> <span class="toc-text">HDBSCAN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mutual-reachability-graph-%E7%9B%B8%E4%BA%92%E5%8F%AF%E8%BE%BE%E6%80%A7%E5%9B%BE"><span class="toc-number">1.8.1.</span> <span class="toc-text">Mutual Reachability Graph  相互可达性图 ¶</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#hierarchical-clustering-%E5%88%86%E5%B1%82%E8%81%9A%E7%B1%BB"><span class="toc-number">1.8.2.</span> <span class="toc-text">Hierarchical Clustering 分层聚类 ¶</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#optics"><span class="toc-number">1.9.</span> <span class="toc-text">OPTICS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#birch"><span class="toc-number">1.10.</span> <span class="toc-text">BIRCH</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#clustering-performance-evaluation-%E8%81%9A%E7%B1%BB%E6%80%A7%E8%83%BD%E8%AF%84%E4%BC%B0"><span class="toc-number">1.11.</span> <span class="toc-text">Clustering performance evaluation 聚类性能评估 ¶</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#rand-index-%E5%85%B0%E5%BE%B7%E7%B4%A2%E5%BC%95"><span class="toc-number">1.11.1.</span> <span class="toc-text">Rand index 兰德索引 ¶</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#advantages-%E4%BC%98%E7%82%B9"><span class="toc-number">1.11.1.1.</span> <span class="toc-text">Advantages  优点 ¶</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#drawbacks-%E7%BC%BA%E7%82%B9"><span class="toc-number">1.11.1.2.</span> <span class="toc-text">Drawbacks 缺点 ¶</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mathematical-formulation-%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F"><span class="toc-number">1.11.1.3.</span> <span class="toc-text">Mathematical formulation 数学公式 ¶</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#mutual-information-based-scores"><span class="toc-number">1.11.2.</span> <span class="toc-text">Mutual Information based scores</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#advantages-%E4%BC%98%E7%82%B9"><span class="toc-number">1.11.2.1.</span> <span class="toc-text">Advantages 优点 ¶</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#drawbacks-%E7%BC%BA%E7%82%B9"><span class="toc-number">1.11.2.2.</span> <span class="toc-text">Drawbacks 缺点 ¶</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mathematical-formulation-%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F"><span class="toc-number">1.11.2.3.</span> <span class="toc-text">Mathematical formulation 数学公式 ¶</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#homogeneity-completeness-and-v-measure-%E5%90%8C%E8%B4%A8%E6%80%A7-%E5%AE%8C%E6%95%B4%E6%80%A7%E5%92%8C-v-measure"><span class="toc-number">1.11.3.</span> <span class="toc-text">Homogeneity, completeness and V-measure 同质性、完整性和 V-measure ¶</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#advantages-%E4%BC%98%E7%82%B9"><span class="toc-number">1.11.3.1.</span> <span class="toc-text">Advantages  优点 ¶</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#drawbacks-%E7%BC%BA%E7%82%B9"><span class="toc-number">1.11.3.2.</span> <span class="toc-text">Drawbacks  缺点 ¶</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mathematical-formulation-%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F"><span class="toc-number">1.11.3.3.</span> <span class="toc-text">Mathematical formulation 数学公式 ¶</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fowlkes-mallows-scores-fowlkes-mallows%E5%BE%97%E5%88%86"><span class="toc-number">1.11.4.</span> <span class="toc-text">Fowlkes-Mallows scores  Fowlkes-Mallows得分 ¶</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#advantages-%E4%BC%98%E7%82%B9"><span class="toc-number">1.11.4.1.</span> <span class="toc-text">Advantages 优点 ¶</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-11-4-2-drawbacks-1-11-4-2-%E7%BC%BA%E7%82%B9"><span class="toc-number">1.11.4.2.</span> <span class="toc-text">1.11.4.2. Drawbacks 1.11.4.2. 缺点 ¶</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#silhouette-coefficient-%E8%BD%AE%E5%BB%93%E7%B3%BB%E6%95%B0"><span class="toc-number">1.11.5.</span> <span class="toc-text">Silhouette Coefficient 轮廓系数 ¶</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#advantages-%E4%BC%98%E7%82%B9"><span class="toc-number">1.11.5.1.</span> <span class="toc-text">Advantages 优点 ¶</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#drawbacks-%E7%BC%BA%E7%82%B9"><span class="toc-number">1.11.5.2.</span> <span class="toc-text">Drawbacks  缺点 ¶</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#calinski-harabasz-index-calinski-harabasz-%E7%B4%A2%E5%BC%95"><span class="toc-number">1.11.6.</span> <span class="toc-text">Calinski-Harabasz Index  Calinski-Harabasz 索引 ¶</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#advantages-%E4%BC%98%E7%82%B9"><span class="toc-number">1.11.6.1.</span> <span class="toc-text">Advantages 优点 ¶</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#drawbacks-%E7%BC%BA%E7%82%B9"><span class="toc-number">1.11.6.2.</span> <span class="toc-text">Drawbacks 缺点 ¶</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mathematical-formulation-%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F"><span class="toc-number">1.11.6.3.</span> <span class="toc-text">Mathematical formulation  数学公式 ¶</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#davies-bouldin-index-davies-bouldin%E6%8C%87%E6%95%B0"><span class="toc-number">1.11.7.</span> <span class="toc-text">Davies-Bouldin Index Davies-Bouldin指数 ¶</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#advantages-%E4%BC%98%E7%82%B9"><span class="toc-number">1.11.7.1.</span> <span class="toc-text">Advantages  优点 ¶</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#drawbacks-%E7%BC%BA%E7%82%B9"><span class="toc-number">1.11.7.2.</span> <span class="toc-text">Drawbacks 缺点 ¶</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#mathematical-formulation-%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F"><span class="toc-number">1.11.7.3.</span> <span class="toc-text">Mathematical formulation 数学公式 ¶</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#contingency-matrix-%E5%88%97%E8%81%94%E7%9F%A9%E9%98%B5"><span class="toc-number">1.11.8.</span> <span class="toc-text">Contingency Matrix  列联矩阵 ¶</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#advantages-%E4%BC%98%E7%82%B9"><span class="toc-number">1.11.8.1.</span> <span class="toc-text">Advantages  优点 ¶</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#drawbacks-%E7%BC%BA%E7%82%B9"><span class="toc-number">1.11.8.2.</span> <span class="toc-text">Drawbacks 缺点 ¶</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pair-confusion-matrix-%E5%AF%B9%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5"><span class="toc-number">1.11.9.</span> <span class="toc-text">Pair Confusion Matrix  对混淆矩阵 ¶</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/30/Clustering/" title="Clustering">Clustering</a><time datetime="2023-11-30T13:03:41.000Z" title="发表于 2023-11-30 21:03:41">2023-11-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/30/Transformer/" title="Transformer">Transformer</a><time datetime="2023-11-30T12:44:09.000Z" title="发表于 2023-11-30 20:44:09">2023-11-30</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/31/ggplot-picture/" title="ggplot_picture_bioinformation">ggplot_picture_bioinformation</a><time datetime="2023-10-31T09:08:06.000Z" title="发表于 2023-10-31 17:08:06">2023-10-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/31/picture/" title="50_ggplot_picture">50_ggplot_picture</a><time datetime="2023-10-31T08:48:54.000Z" title="发表于 2023-10-31 16:48:54">2023-10-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/09/30/Neural-Network-Frame/" title="Neural-Network-Frame">Neural-Network-Frame</a><time datetime="2023-09-30T10:55:16.000Z" title="发表于 2023-09-30 18:55:16">2023-09-30</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By ZhangLei</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'J0s1l0MeDfMbgw4y4awgy2jX-MdYXbMMI',
+      appKey: '3vZoaKxqWQYlKbXXdXuSxBsT',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div><!-- hexo injector body_end start --><div id="background-effect"></div><script src="https://cdn.jsdelivr.net/npm/three@0.121.1/build/three.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.birds.min.js"></script><script>VANTA.BIRDS({"el":"#background-effect","mouseControls":true,"touchControls":true,"gyroControls":false,"minHeight":200,"minWidth":200,"scale":1,"scaleMobile":1})</script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body></html>
