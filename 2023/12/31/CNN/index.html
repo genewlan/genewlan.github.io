@@ -1,0 +1,348 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>GeneWlan | GeneWlan</title><meta name="author" content="ZhangLei"><meta name="copyright" content="ZhangLei"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="第三章——卷积神经网络 卷积神经网络应用领域 CV领域发展：   比赛中预测错误率的百分比，每年逐步下降。Human是人类肉眼的识别能力，2016年开始已经远高于人类肉眼死别能力，后面就取消了该方向的比赛了。  检测任务：  分类与检索：   分类：将图片分到对应类别。 检索：找到相似的图片。  还有图片重构、无人驾驶、人脸识别 卷积的作用 卷积网络与传统网络的区别：   输出的数据直接是三维的，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GeneWlan">
+<meta property="og:url" content="http://genewlan.github.io/2023/12/31/CNN/index.html">
+<meta property="og:site_name" content="GeneWlan">
+<meta property="og:description" content="第三章——卷积神经网络 卷积神经网络应用领域 CV领域发展：   比赛中预测错误率的百分比，每年逐步下降。Human是人类肉眼的识别能力，2016年开始已经远高于人类肉眼死别能力，后面就取消了该方向的比赛了。  检测任务：  分类与检索：   分类：将图片分到对应类别。 检索：找到相似的图片。  还有图片重构、无人驾驶、人脸识别 卷积的作用 卷积网络与传统网络的区别：   输出的数据直接是三维的，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png">
+<meta property="article:published_time" content="2023-12-31T14:20:11.058Z">
+<meta property="article:modified_time" content="2023-10-12T02:01:52.000Z">
+<meta property="article:author" content="ZhangLei">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://genewlan.github.io/2023/12/31/CNN/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'GeneWlan',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-10-12 10:01:52'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><!-- hexo injector head_end start -->
+    <style>
+      #background-effect {
+        position: fixed !important;
+        top: 0px;
+        left: 0px;
+        z-index: -1;
+        width: 100%;
+        height: 100%
+      }
+    </style>
+  <!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"><link rel="alternate" href="/atom.xml" title="GeneWlan" type="application/atom+xml">
+<link href="https://cdn.bootcss.com/KaTeX/0.11.1/katex.min.css" rel="stylesheet" /></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/03/21/ZVUmQFknE2JosXT.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="GeneWlan"><span class="site-name">GeneWlan</span></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> Home</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> Tags</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> Categories</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> Link</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> About</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">无题</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-12-31T14:20:11.058Z" title="发表于 2023-12-31 22:20:11">2023-12-31</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-10-12T02:01:52.000Z" title="更新于 2023-10-12 10:01:52">2023-10-12</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="第三章-卷积神经网络">第三章——卷积神经网络</h3>
+<h4 id="卷积神经网络应用领域">卷积神经网络应用领域</h4>
+<p>CV领域发展：</p>
+<p><img src="/2023/12/31/CNN/1609377452885.png" alt="1609377452885"></p>
+<blockquote>
+<p>比赛中预测错误率的百分比，每年逐步下降。Human是人类肉眼的识别能力，2016年开始已经远高于人类肉眼死别能力，后面就取消了该方向的比赛了。</p>
+</blockquote>
+<p>检测任务：</p>
+<p><img src="/2023/12/31/CNN/1609377623695.png" alt="1609377623695"></p>
+<p>分类与检索：</p>
+<p><img src="/2023/12/31/CNN/1609377675754.png" alt="1609377675754"></p>
+<blockquote>
+<p>分类：将图片分到对应类别。</p>
+<p>检索：找到相似的图片。</p>
+</blockquote>
+<p>还有图片重构、无人驾驶、人脸识别</p>
+<h4 id="卷积的作用">卷积的作用</h4>
+<p>卷积网络与传统网络的区别：</p>
+<p><img src="/2023/12/31/CNN/1609378885963.png" alt="1609378885963"></p>
+<blockquote>
+<p>输出的数据直接是三维的，还多了深度</p>
+</blockquote>
+<p>整体架构：</p>
+<p>输入层、卷积层、池化层、全连接层</p>
+<p><img src="/2023/12/31/CNN/1609378970489.png" alt="1609378970489"></p>
+<blockquote>
+<p>这里只有卷积层和池化层我们没有了解过</p>
+</blockquote>
+<p>卷积做了什么事：</p>
+<p><img src="/2023/12/31/CNN/1609379061067.png" alt="1609379061067"></p>
+<blockquote>
+<p>比如一个猫的图，眼睛鼻子特征和周围环境特征的重要性明显不一样，需要区别对待。先把图像进行分割（最左边），分割成多个小区域，提取其中一个小区域（第二个5×5×3），蓝色图的右下角3×3矩阵，大字体的值是X的值，而小字体的值是w权重，会不断循环获取最优的w权重和对应的值，并输出右边绿色的14（特征值）。</p>
+</blockquote>
+<p>如果看了不理解，下面的具体计算方法一定能帮助你理解。</p>
+<h4 id="卷积的计算方法">卷积的计算方法</h4>
+<p><img src="/2023/12/31/CNN/202012310000.gif" alt="202012310000"></p>
+<blockquote>
+<p>input是输入，W0是第一层的权重，W1是第二层的权重，Output是输出</p>
+</blockquote>
+<p>我们以input三个块（RGB三颜色）左上角3×3矩阵值 和 第二层W1来计算，内积是乘法再相加。</p>
+<ul>
+<li>
+<p>先来第一个（R颜色）左上角3×3：[0,0,0],[0,0,1],[0,0,1] 和 权重 [-1,-1,0],[-1,1,0],[-1,1,0]</p>
+<p><code>(0*(-1) + 0*(-1) + 0*0)</code> + <code>(0*(-1) + 0*1 + 1*0)</code> + <code>(0*(-1) + 0*1 + 1*0)</code> = 0 得出R颜色的左上角矩阵的值为0；</p>
+</li>
+<li>
+<p>第二个（G颜色） 左上角3×3矩阵值 和 第二层W1来计算</p>
+<p><code>(0*1 + 0*(-1) + 0*0)</code> + <code>(0*(-1) + 1*0 + 1*(-1))</code> + <code>(0*(-1) + 0*0 + 2*0)</code> = -1</p>
+</li>
+<li>
+<p>第三个（B颜色） 左上角3×3矩阵值 和 第二层W1来计算</p>
+<p><code>((-1)*0 + 0*0 + 1)</code> + <code>(0*1 + 2*0 + 0*1)</code> + <code>(0*0 + 0*(-1) + 0*0)</code> = 0</p>
+</li>
+<li>
+<p>最后再把三者结果相加并加上bias b1（偏值b）</p>
+<p>0 + (-1) + 0 + 0 = -1</p>
+<p>这级得到了output（0[:,:,1]）中左上角的结果 -1。</p>
+</li>
+</ul>
+<h4 id="卷积层的参数">卷积层的参数</h4>
+<p>卷积层涉及参数：滑动窗口步长、卷积核尺寸、边缘填充、卷积核个数</p>
+<p><img src="/2023/12/31/CNN/1609382597717.png" alt="1609382597717"></p>
+<ul>
+<li>
+<p>步长（移动多少个单元格）：</p>
+<ul>
+<li>
+<p>步长为1的卷积：</p>
+<p><img src="/2023/12/31/CNN/1609382708847.png" alt="1609382708847"></p>
+<p>移动一个步长，得到红色绿色特征值，移动的步长越小，特征值越多</p>
+</li>
+<li>
+<p>步长为2的卷积：</p>
+<p><img src="/2023/12/31/CNN/1609382724744.png" alt="1609382724744"></p>
+<p>移动两个步长，得到特征值越少</p>
+</li>
+<li>
+<p>一般图像识别的用步长为1的，</p>
+</li>
+</ul>
+</li>
+<li>
+<p>卷积核尺寸：选择区域的大小，如上面是3×3的矩阵，可以选择4×4、5×5的，核尺寸越小，越细粒度提取，特征越多。</p>
+</li>
+<li>
+<p>边缘填充：</p>
+<p><img src="/2023/12/31/CNN/1609385289111.png" alt="1609385289111"></p>
+<p>+pad表示+1边缘，原本数据只有蓝色背景的部分（中间部分），而周围都是边缘增加的0，为什么这么做，滑动窗口时，边缘数据点明显滑动少，中间多，那能说明中间的就重要吗，为了使边缘的数据点也滑动多几次，就增加了这个边缘填充。文本分类中，有的文本有100个字，有的120字，不同长度无法训练，所以也会对其填充20个字，变成同样120的长度。</p>
+</li>
+<li>
+<p>卷积核个数：最终计算的结果，要得到多少个特征图，个数多少，特征图多少。</p>
+<p><img src="/2023/12/31/CNN/1609385564766.png" alt="1609385564766"></p>
+</li>
+<li>
+<p>卷积参数共享：即input使用的W部分的参数是共享的，卷积网络比之前的全连接大大减少了参数，不再需要每个对应的W。</p>
+</li>
+</ul>
+<h4 id="池化层的作用">池化层的作用</h4>
+<p>将原始input的所有数据，进行压缩</p>
+<p><img src="/2023/12/31/CNN/1609386518724.png" alt="1609386518724"></p>
+<blockquote>
+<p>减少长宽以减少数据量的体积。</p>
+</blockquote>
+<p>最大池化MAX POOLING：</p>
+<p><img src="/2023/12/31/CNN/2021010109030000.gif" alt="2021010109030000"></p>
+<ul>
+<li>
+<p>如上图，从可选中，选出最大的值。为什么选择最大的值，因为前面是有权重W相乘的，还记得前面的W0和W1吗，如果计算完成得到的结果最大，那说明该结果是最重要的，所以这里选最大的，即挑最重要的。</p>
+</li>
+<li>
+<p>体积也从上图的2×2矩阵变成4×4的矩阵</p>
+</li>
+<li>
+<p>除了最大池化还有平均池化，不过平均池化基本没人用，既然有最好的结果，就应该拿最好的。</p>
+</li>
+<li>
+<p>池化层没有结果任何计算，只是选最大的</p>
+</li>
+</ul>
+<h4 id="整体网络架构">整体网络架构</h4>
+<p>只有带参数的才能算层，Relu和池化不算</p>
+<p><img src="/2023/12/31/CNN/1609463898618.png" alt="1609463898618"></p>
+<p>将一张图，通过不断卷积、池化、最后变成一条向量，接上全连接层，进行分类。</p>
+<h4 id="残差网络resnet">残差网络ResNet</h4>
+<p>深度网络遇到的问题：越大的层数理论上意味着越好，但实际是这样吗？下面是一组很早前测试的图</p>
+<p><img src="/2023/12/31/CNN/1609464833488.png" alt="1609464833488"></p>
+<blockquote>
+<p>左边的训练集和右边的预测集都是20层的反而比56层的好，那么说明多出的36层起负作用。</p>
+</blockquote>
+<p>解决方案：</p>
+<p><img src="/2023/12/31/CNN/1609464902930.png" alt="1609464902930"></p>
+<blockquote>
+<p>我们还是跟原来一样增加层数，但在此基础上增加残差，也就是如果多的一层网络效果并不比上一层好，那么依然使用上一层的结果，可以看到X直接跳过了两层，这样就能保证了效果一定是越来越好的。</p>
+</blockquote>
+<p>传统神经网络和Resnet的对比</p>
+<p><img src="/2023/12/31/CNN/1609465049960.png" alt="1609465049960"></p>
+<blockquote>
+<p>ResNet是层数越多效果越好。</p>
+</blockquote>
+<p>下图是某个比赛中，冠军方案使用ResNet的层数是152层，第二名的22层有6.7的残差，而第一名的152层只有3.57的残差，相差近一倍的效果</p>
+<p><img src="/2023/12/31/CNN/1609465201423.png" alt="1609465201423"></p>
+<blockquote>
+<p>当然层数越多，可能收益越少，但是保证残差一定是小于等于之前的低层数，也就是结果一定是向好的发展。</p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://genewlan.github.io">ZhangLei</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://genewlan.github.io/2023/12/31/CNN/">http://genewlan.github.io/2023/12/31/CNN/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://genewlan.github.io" target="_blank">GeneWlan</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/12/31/nero/" title=""><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info"></div></div></a></div><div class="next-post pull-right"><a href="/2023/12/31/deeplearning/" title=""><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info"></div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://i.loli.net/2021/02/24/5O1day2nriDzjSu.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">ZhangLei</div><div class="author-info__description">change or die!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/genewlan/" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="mailto:xiaolobglee@gmail.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="toc-number">1.</span> <span class="toc-text">第三章——卷积神经网络</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8%E9%A2%86%E5%9F%9F"><span class="toc-number">1.1.</span> <span class="toc-text">卷积神经网络应用领域</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%B7%E7%A7%AF%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">1.2.</span> <span class="toc-text">卷积的作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%B7%E7%A7%AF%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">卷积的计算方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8D%B7%E7%A7%AF%E5%B1%82%E7%9A%84%E5%8F%82%E6%95%B0"><span class="toc-number">1.4.</span> <span class="toc-text">卷积层的参数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B1%A0%E5%8C%96%E5%B1%82%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">1.5.</span> <span class="toc-text">池化层的作用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E7%BD%91%E7%BB%9C%E6%9E%B6%E6%9E%84"><span class="toc-number">1.6.</span> <span class="toc-text">整体网络架构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AE%8B%E5%B7%AE%E7%BD%91%E7%BB%9Cresnet"><span class="toc-number">1.7.</span> <span class="toc-text">残差网络ResNet</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/12/31/RNN/" title="无题">无题</a><time datetime="2023-12-31T14:20:11.073Z" title="发表于 2023-12-31 22:20:11">2023-12-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/12/31/nero/" title="无题">无题</a><time datetime="2023-12-31T14:20:11.073Z" title="发表于 2023-12-31 22:20:11">2023-12-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/12/31/CNN/" title="无题">无题</a><time datetime="2023-12-31T14:20:11.058Z" title="发表于 2023-12-31 22:20:11">2023-12-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/12/31/deeplearning/" title="无题">无题</a><time datetime="2023-12-31T14:20:11.058Z" title="发表于 2023-12-31 22:20:11">2023-12-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/30/Clustering/" title="Clustering">Clustering</a><time datetime="2023-11-30T13:03:41.000Z" title="发表于 2023-11-30 21:03:41">2023-11-30</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By ZhangLei</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css"><script src="https://cdn.jsdelivr.net/npm/katex/dist/contrib/copy-tex.min.js"></script><script>(() => {
+  document.querySelectorAll('#article-container span.katex-display').forEach(item => {
+    btf.wrap(item, 'div', { class: 'katex-wrap'})
+  })
+})()</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: 'J0s1l0MeDfMbgw4y4awgy2jX-MdYXbMMI',
+      appKey: '3vZoaKxqWQYlKbXXdXuSxBsT',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js"></script></div><!-- hexo injector body_end start --><div id="background-effect"></div><script src="https://cdn.jsdelivr.net/npm/three@0.121.1/build/three.min.js"></script><script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.birds.min.js"></script><script>VANTA.BIRDS({"el":"#background-effect","mouseControls":true,"touchControls":true,"gyroControls":false,"minHeight":200,"minWidth":200,"scale":1,"scaleMobile":1})</script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true},"react":{"opacityDefault":1,"opacityOnHover":1},"log":false,"tagMode":false});</script></body></html>

@@ -6,7 +6,7 @@
   <link href="http://genewlan.github.io/atom.xml" rel="self"/>
   
   <link href="http://genewlan.github.io/"/>
-  <updated>2023-11-30T13:04:38.997Z</updated>
+  <updated>2023-12-31T14:34:11.921Z</updated>
   <id>http://genewlan.github.io/</id>
   
   <author>
@@ -15,6 +15,98 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://genewlan.github.io/2023/12/31/RNN/"/>
+    <id>http://genewlan.github.io/2023/12/31/RNN/</id>
+    <published>2023-12-31T14:20:11.073Z</published>
+    <updated>2023-12-31T14:34:11.921Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;第四章-递归神经网络与词向量原理解读&quot;&gt;第四章——递归神经网络与词向量原理解读&lt;/h3&gt;
+&lt;h4</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://genewlan.github.io/2023/12/31/nero/"/>
+    <id>http://genewlan.github.io/2023/12/31/nero/</id>
+    <published>2023-12-31T14:20:11.073Z</published>
+    <updated>2023-10-12T02:01:52.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;第二章-走进深度学习的世界-神经网络模型&quot;&gt;第二章——走进深度学习的世界 神经网络模型&lt;/h3&gt;
+&lt;h4 id=&quot;反向传播计算方法&quot;&gt;反向传播计算方法&lt;/h4&gt;
+&lt;p&gt;简单的例子：&lt;img</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://genewlan.github.io/2023/12/31/CNN/"/>
+    <id>http://genewlan.github.io/2023/12/31/CNN/</id>
+    <published>2023-12-31T14:20:11.058Z</published>
+    <updated>2023-10-12T02:01:52.000Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;第三章-卷积神经网络&quot;&gt;第三章——卷积神经网络&lt;/h3&gt;
+&lt;h4 id=&quot;卷积神经网络应用领域&quot;&gt;卷积神经网络应用领域&lt;/h4&gt;
+&lt;p&gt;CV领域发展：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/2023/12/31/CNN/1609377452885.png&quot;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://genewlan.github.io/2023/12/31/deeplearning/"/>
+    <id>http://genewlan.github.io/2023/12/31/deeplearning/</id>
+    <published>2023-12-31T14:20:11.058Z</published>
+    <updated>2023-12-01T07:32:00.578Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;第一章-深度学习必备知识点&quot;&gt;第一章——深度学习必备知识点&lt;/h3&gt;
+&lt;h4 id=&quot;深度学习要解决的问题&quot;&gt;深度学习要解决的问题&lt;/h4&gt;
+&lt;p&gt;&lt;img</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Clustering</title>
@@ -421,53 +513,6 @@
     
     
     <category term="GANS" scheme="http://genewlan.github.io/tags/GANS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>分子指纹与其应用</title>
-    <link href="http://genewlan.github.io/2023/03/24/GUN1D/"/>
-    <id>http://genewlan.github.io/2023/03/24/GUN1D/</id>
-    <published>2023-03-24T12:50:38.738Z</published>
-    <updated>2023-08-31T07:43:11.115Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;在化学领域，分子的描述和搜索是非常重要的问题，因为分子的物理性质和化学活性是由其化学结构和拓扑结构等特征决定的。因此，为了理解和预测分子的性质和行为，需要一种有效的方法来描述和比较分子的化学特征和结构。&lt;/p&gt;
-&lt;p&gt;然而，分子的化学结构和拓扑结构非常复杂，无法直接用数字或</summary>
-        
-      
-    
-    
-    
-    
-    <category term="GUN" scheme="http://genewlan.github.io/tags/GUN/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Unraveling the Intricacies of Biological Complexity--- Delving into the Synergy of Genomics, Metagenomics, and Comparative Genomics</title>
-    <link href="http://genewlan.github.io/2023/03/21/Exploring-the-Unknowns-of-Biological-Complexity/"/>
-    <id>http://genewlan.github.io/2023/03/21/Exploring-the-Unknowns-of-Biological-Complexity/</id>
-    <published>2023-03-20T18:32:53.153Z</published>
-    <updated>2023-08-31T07:43:03.833Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;Greetings esteemed colleagues and fellow enthusiasts in the realm of bioinformatics research. As a scientist with expertise in</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Genomics" scheme="http://genewlan.github.io/tags/Genomics/"/>
     
   </entry>
   
