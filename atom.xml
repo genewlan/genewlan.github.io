@@ -6,7 +6,7 @@
   <link href="http://genewlan.github.io/atom.xml" rel="self"/>
   
   <link href="http://genewlan.github.io/"/>
-  <updated>2023-12-31T14:34:11.921Z</updated>
+  <updated>2024-01-31T10:08:55.483Z</updated>
   <id>http://genewlan.github.io/</id>
   
   <author>
@@ -15,6 +15,67 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>regression</title>
+    <link href="http://genewlan.github.io/2024/01/31/regression/"/>
+    <id>http://genewlan.github.io/2024/01/31/regression/</id>
+    <published>2024-01-31T09:52:35.000Z</published>
+    <updated>2024-01-31T10:08:55.483Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;x&lt;/th&gt;
+&lt;th&gt;y&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1531&lt;/td&gt;
+&lt;td&gt;4320&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2220&lt;/td&gt;
+&lt;td&gt;2262&lt;/td&gt;
+&lt;/</summary>
+        
+      
+    
+    
+    
+    
+    <category term="regression" scheme="http://genewlan.github.io/tags/regression/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>classification</title>
+    <link href="http://genewlan.github.io/2024/01/31/classification/"/>
+    <id>http://genewlan.github.io/2024/01/31/classification/</id>
+    <published>2024-01-31T09:52:17.000Z</published>
+    <updated>2024-01-31T10:02:42.993Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2</summary>
+        
+      
+    
+    
+    
+    
+    <category term="classfication" scheme="http://genewlan.github.io/tags/classfication/"/>
+    
+  </entry>
   
   <entry>
     <title></title>
@@ -464,55 +525,6 @@
     
     
     <category term="Modeling" scheme="http://genewlan.github.io/tags/Modeling/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>five industrial algorithm</title>
-    <link href="http://genewlan.github.io/2023/04/29/five-industrial-algorithm/"/>
-    <id>http://genewlan.github.io/2023/04/29/five-industrial-algorithm/</id>
-    <published>2023-04-29T02:33:08.000Z</published>
-    <updated>2023-08-31T07:43:06.164Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/2023/04/29/five-industrial-algorithm/%E5%BB%BA%E6%A8%A1Rplot.png&quot;</summary>
-        
-      
-    
-    
-    
-    
-    <category term="algorithm" scheme="http://genewlan.github.io/tags/algorithm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>GANs网络在二维平面的实现</title>
-    <link href="http://genewlan.github.io/2023/04/14/GAN2D/"/>
-    <id>http://genewlan.github.io/2023/04/14/GAN2D/</id>
-    <published>2023-04-14T06:57:17.710Z</published>
-    <updated>2023-08-31T07:43:08.335Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h1&gt;GUNs的发迹史——刨根问底儿&lt;/h1&gt;
-&lt;p&gt;上一篇中，我们使用量GNN网络进行了辛烷溶解度的预测。那么问题来了，假如我们只有这些化合物是远远不能支撑人们日益增长的美好生活需要所需要的物质基础的。而现实生活中往往也是如此，化学家们经过几百年的努</summary>
-        
-      
-    
-    
-    
-    
-    <category term="GANS" scheme="http://genewlan.github.io/tags/GANS/"/>
     
   </entry>
   
