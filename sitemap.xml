@@ -252,7 +252,7 @@
   </url>
   
   <url>
-    <loc>http://genewlan.github.io/tags/clustering/</loc>
+    <loc>http://genewlan.github.io/tags/GUN/</loc>
     <lastmod>2024-01-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -266,7 +266,7 @@
   </url>
   
   <url>
-    <loc>http://genewlan.github.io/tags/GUN/</loc>
+    <loc>http://genewlan.github.io/tags/clustering/</loc>
     <lastmod>2024-01-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -301,7 +301,7 @@
   </url>
   
   <url>
-    <loc>http://genewlan.github.io/tags/bayes-net/</loc>
+    <loc>http://genewlan.github.io/tags/NLP/</loc>
     <lastmod>2024-01-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -315,7 +315,7 @@
   </url>
   
   <url>
-    <loc>http://genewlan.github.io/tags/NLP/</loc>
+    <loc>http://genewlan.github.io/tags/bayes-net/</loc>
     <lastmod>2024-01-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -343,14 +343,14 @@
   </url>
   
   <url>
-    <loc>http://genewlan.github.io/tags/Topic-Modeling/</loc>
+    <loc>http://genewlan.github.io/tags/regression/</loc>
     <lastmod>2024-01-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>http://genewlan.github.io/tags/regression/</loc>
+    <loc>http://genewlan.github.io/tags/Topic-Modeling/</loc>
     <lastmod>2024-01-31</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
