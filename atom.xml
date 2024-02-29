@@ -6,7 +6,7 @@
   <link href="http://genewlan.github.io/atom.xml" rel="self"/>
   
   <link href="http://genewlan.github.io/"/>
-  <updated>2024-01-31T10:08:55.483Z</updated>
+  <updated>2024-02-29T11:18:46.297Z</updated>
   <id>http://genewlan.github.io/</id>
   
   <author>
@@ -15,6 +15,155 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>20244302_Validation_and_Model_Selection</title>
+    <link href="http://genewlan.github.io/2024/04/30/20244302/"/>
+    <id>http://genewlan.github.io/2024/04/30/20244302/</id>
+    <published>2024-04-30T10:16:27.000Z</published>
+    <updated>2024-02-29T11:18:46.297Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h1&gt;Validation and Model Selection&lt;/h1&gt;
+&lt;p&gt;Credits: Forked from &lt;a href=&quot;https://github.com/jakevdp/sklearn_pycon2015&quot;&gt;PyCon</summary>
+        
+      
+    
+    
+    
+    
+    <category term="Validation Model Selection" scheme="http://genewlan.github.io/tags/Validation-Model-Selection/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>20244301_random forest</title>
+    <link href="http://genewlan.github.io/2024/04/30/20244301/"/>
+    <id>http://genewlan.github.io/2024/04/30/20244301/</id>
+    <published>2024-04-30T10:16:10.000Z</published>
+    <updated>2024-02-29T11:18:53.684Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h1&gt;scikit-learn-random forest&lt;/h1&gt;
+&lt;p&gt;Credits: Forked from &lt;a href=&quot;https://github.com/jakevdp/sklearn_pycon2015&quot;&gt;PyCon 2015</summary>
+        
+      
+    
+    
+    
+    
+    <category term="random_forest" scheme="http://genewlan.github.io/tags/random-forest/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>20243312_PCA</title>
+    <link href="http://genewlan.github.io/2024/03/31/20243312/"/>
+    <id>http://genewlan.github.io/2024/03/31/20243312/</id>
+    <published>2024-03-31T10:04:12.000Z</published>
+    <updated>2024-02-29T11:15:50.769Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1&gt;scikit-learn-pca&lt;/h1&gt;
+&lt;p&gt;Credits: Forked from &lt;a href=&quot;https://github.com/jakevdp/sklearn_pycon2015&quot;&gt;PyCon 2015 Scikit-learn</summary>
+        
+      
+    
+    
+    
+    
+    <category term="PCA" scheme="http://genewlan.github.io/tags/PCA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>20243311_SVM</title>
+    <link href="http://genewlan.github.io/2024/03/31/20243311/"/>
+    <id>http://genewlan.github.io/2024/03/31/20243311/</id>
+    <published>2024-03-31T10:03:56.000Z</published>
+    <updated>2024-02-29T11:15:54.753Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h1&gt;scikit-learn-svm&lt;/h1&gt;
+&lt;p&gt;Credits: Forked from &lt;a href=&quot;https://github.com/jakevdp/sklearn_pycon2015&quot;&gt;PyCon 2015</summary>
+        
+      
+    
+    
+    
+    
+    <category term="SVM" scheme="http://genewlan.github.io/tags/SVM/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>20242292_k-means</title>
+    <link href="http://genewlan.github.io/2024/02/29/20242292/"/>
+    <id>http://genewlan.github.io/2024/02/29/20242292/</id>
+    <published>2024-02-29T09:43:33.000Z</published>
+    <updated>2024-02-29T11:12:44.146Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h1&gt;scikit-learn-k-means&lt;/h1&gt;
+&lt;p&gt;Credits: Forked from &lt;a href=&quot;https://github.com/jakevdp/sklearn_pycon2015&quot;&gt;PyCon 2015</summary>
+        
+      
+    
+    
+    
+    
+    <category term="k-means" scheme="http://genewlan.github.io/tags/k-means/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>20242291_Density_Estimation</title>
+    <link href="http://genewlan.github.io/2024/02/29/20242291/"/>
+    <id>http://genewlan.github.io/2024/02/29/20242291/</id>
+    <published>2024-02-29T09:43:18.000Z</published>
+    <updated>2024-02-29T11:11:09.390Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h1&gt;Density Estimation: Gaussian Mixture Models&lt;/h1&gt;
+&lt;p&gt;Credits: Forked from &lt;a</summary>
+        
+      
+    
+    
+    
+    
+    <category term="GMM" scheme="http://genewlan.github.io/tags/GMM/"/>
+    
+  </entry>
   
   <entry>
     <title>regression</title>
@@ -375,156 +524,6 @@
     
     
     <category term="-Topic Modeling -LDA -Dirichlet 分布" scheme="http://genewlan.github.io/tags/Topic-Modeling-LDA-Dirichlet-%E5%88%86%E5%B8%83/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>outlier_detection</title>
-    <link href="http://genewlan.github.io/2023/07/31/outlier-detection/"/>
-    <id>http://genewlan.github.io/2023/07/31/outlier-detection/</id>
-    <published>2023-07-31T14:40:34.000Z</published>
-    <updated>2023-08-31T07:43:31.154Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h1&gt;单变量和多变量异常值&lt;/h1&gt;
-&lt;p&gt;&lt;strong&gt;异常值&lt;/strong&gt;是偏离数据集中大多数样本点的数据点。出现异常值的原因有很多，例如自然偏差、欺诈活动、人为或系统错误。不过，在我们进行任何统计分析或训练机器学习模型之前，对数据检测和识别</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Modeling" scheme="http://genewlan.github.io/tags/Modeling/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Nature of Matrix</title>
-    <link href="http://genewlan.github.io/2023/07/31/Matrix/"/>
-    <id>http://genewlan.github.io/2023/07/31/Matrix/</id>
-    <published>2023-07-31T13:40:13.000Z</published>
-    <updated>2023-08-31T07:43:29.074Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;写在前面&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;这个月真实服了，爬了一趟山，毁了两块手机屏幕，一次直接碎了；另一次是我嫌安装的不完美，手贱拆坏了，于是扔了。买了个新手机，莫名的摄像头还不好使了，害我至今无法登微信。前几天，他喵的也不知道什</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Math Matrix" scheme="http://genewlan.github.io/tags/Math-Matrix/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Interpolation and Fitting</title>
-    <link href="http://genewlan.github.io/2023/06/11/mathmodeling2/"/>
-    <id>http://genewlan.github.io/2023/06/11/mathmodeling2/</id>
-    <published>2023-06-11T07:04:03.000Z</published>
-    <updated>2023-08-31T07:43:22.171Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h1&gt;插值法&lt;/h1&gt;
-&lt;p&gt;建模时，常常需要根据已知的函数点进行数据、模型的处理和分析，而有时候现有的数据是极少的，不足以支撑分析的进行，这时就需要使用一些数学的方法，“&lt;strong&gt;模拟产生”一些新的但又比较靠谱的值&lt;/strong&gt;来满足需求，</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Mathmodeling" scheme="http://genewlan.github.io/tags/Mathmodeling/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>AHP and TOPSIS</title>
-    <link href="http://genewlan.github.io/2023/06/11/mathmodeling1/"/>
-    <id>http://genewlan.github.io/2023/06/11/mathmodeling1/</id>
-    <published>2023-06-11T07:03:47.000Z</published>
-    <updated>2023-08-31T07:43:19.651Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h1&gt;层次分析法&lt;/h1&gt;
-&lt;p&gt;The analytic hierarchy process,</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Mathmodeling" scheme="http://genewlan.github.io/tags/Mathmodeling/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Linear_programming</title>
-    <link href="http://genewlan.github.io/2023/05/31/Linear-programming/"/>
-    <id>http://genewlan.github.io/2023/05/31/Linear-programming/</id>
-    <published>2023-05-31T15:53:30.000Z</published>
-    <updated>2023-08-31T07:43:25.884Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;说在前面——线性规划的解本质上就是找到单纯形的顶点，并且定位顶点在哪里，那么其解的组成部分就包括两部分，前半部分代表顶点坐标，后半部分代表定位该坐标的数值信息，其实就是顶点坐标到超平面的截距。&lt;/strong&gt;&lt;/p&gt;
-&lt;h1&gt;线性</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Mathmodeling" scheme="http://genewlan.github.io/tags/Mathmodeling/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>如何避免建模中的陷阱</title>
-    <link href="http://genewlan.github.io/2023/05/16/how-to-modeling/"/>
-    <id>http://genewlan.github.io/2023/05/16/how-to-modeling/</id>
-    <published>2023-05-16T11:35:52.000Z</published>
-    <updated>2023-08-31T07:43:13.255Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h1&gt;作者简介&lt;/h1&gt;
-&lt;p&gt;&lt;strong&gt;How to avoid machine learning pitfalls: a guide for academic researchersMichael</summary>
-        
-      
-    
-    
-    
-    
-    <category term="Modeling" scheme="http://genewlan.github.io/tags/Modeling/"/>
     
   </entry>
   
